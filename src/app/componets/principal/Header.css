@@ -3,9 +3,14 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 40px;
-    background-color: #273469;
+    background-color: #fafaff;
     width: 100%;
     box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .header-left, .header-right {
@@ -19,7 +24,7 @@
     font-family: var(--font-monserrat);
     font-size: 2.3lh;
     font-weight: 800;
-    color: #fafaff;
+    color: #30343f;
 }
 
 .nav ul {
@@ -34,7 +39,7 @@
     font-family: var(--font-lato);
     font-size: 1.1lh;
     font-weight: 400;
-    color: #fafaff;
+    color: #30343f;
 }
 
 .nav li {
@@ -56,7 +61,7 @@
 
 .header-right .icon-button,
 .header-right .icon-link {
-    color: #fafaff;
+    color: #30343f;
     transition: transform 0.3s ease;
     display: flex;
     align-items: center;
@@ -85,7 +90,7 @@
 .mobile-menu-button {
     background: none;
     border: none;
-    color: #fafaff;
+    color: #30343f;
     cursor: pointer;
     padding: 8px;
     display: none; /* Oculto por defecto, se muestra en móvil */
