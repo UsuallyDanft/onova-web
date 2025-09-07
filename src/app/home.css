@@ -1,0 +1,423 @@
+.welcolme-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #273469;
+    width: 100%;
+    height: 95vh;
+}
+
+.text-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin: 0 5rem;
+}
+
+.text-section h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #fafaff;
+    margin: 0;
+}
+
+.text-section p {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    max-width: 500px;
+    color: #fafaff;
+    margin: 0;
+}
+
+.explore-button {
+    background-color: #fafaff;
+    color: #2a2f4f;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 36px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    align-self: flex-start;
+}
+
+.explore-button:hover {
+    transform: scale(1.05);
+    background-color: #fafaff;
+}
+
+.image-section {
+    flex: 1;
+    position: relative;
+    height: 550px;
+    margin-right: 4rem;
+}
+
+.responsive-image {
+    object-fit: contain;
+}
+
+.info-section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 45vh;
+}
+.info-item{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin: 0 5rem;
+}
+.info-item h2{
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #30343f;
+    margin: 0;
+}
+.info-item p{
+    font-size: 1.3rem;
+    line-height: 1.5;
+    max-width: 700px;
+    color: #30343f;
+    margin: 0;
+} 
+
+.content-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+.content-title h2{
+    font-size: 2.9rem;
+    font-weight: 800;
+    color: #30343f;
+}
+
+.content-items {
+    width: 100%;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem 0;
+}
+.content-item {
+  width: 25%;
+  max-width: 350px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #e4d9ff; /* Puedes quitarlo si la imagen siempre va a estar */
+  border-radius: 30px;
+  padding: 1rem;
+  position: relative; /* ¡Esencial para que 'fill' funcione! */
+  overflow: hidden; /* Evita que la imagen se salga de los bordes redondeados */
+}
+
+/* Estilos para la imagen */
+.content-item-img {
+  object-fit: cover; /* ✨ La propiedad clave: escala la imagen para cubrir sin distorsión */
+  /* object-position: center;  puedes usar esto para centrar una parte específica de la imagen */
+}
+
+.content-item > h3 {
+  font-size: 2lh;
+  font-weight: 700;
+  position: relative; 
+  z-index: 2; 
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Recomendado para legibilidad */
+}
+
+/* Unificamos TODO lo del ícono en una sola regla */
+.icon-conten {
+  position: absolute;   /* ✨ Clave: Lo saca del flujo normal para posicionarlo en la esquina */
+  z-index: 2;           /* ✨ Clave: Lo pone por encima de la imagen */
+  top: 1.5rem;
+  right: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.icon-conten:hover {
+    background-color: #c8c6c6;
+}
+.contac-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 40vh;
+    background-color: #fafaff;
+}
+.contac-items {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+}
+.contac-title h2{
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #30343f;
+}
+.contac-item {
+    width: 25%;
+    max-width: 110px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    perspective: 800px;
+}
+
+.icon-logo-1, .icon-logo-2, .icon-logo-3, .icon-logo-4, .icon-logo-5, .icon-logo-6 {
+    transition: transform 0.3s ease-out;
+}
+
+[class^="icon-logo-"] {
+    transition: transform 0.3s ease-out, filter 0.3s ease-out;
+    }
+    .contac-item:hover [class^="icon-logo-"] {
+    transform: translateY(-10px) scale(1.1);
+    filter: drop-shadow(0 10px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    .final-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fafaff;
+        width: 100%;
+        height: 90vh;
+    }
+    .text-sectionB {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+        margin: 0 5rem;
+    }
+    
+    .text-sectionB h1 {
+        font-size: 4rem;
+        font-weight: 800;
+        line-height: 1.2;
+        color: #30343f;
+        margin: 0;
+    }
+    
+    .text-sectionB p {
+        font-size: 1.4rem;
+        line-height: 1.6;
+        max-width: 500px;
+        color: #30343f;
+        margin: 0;
+    }
+    
+    .explore-buttonB {
+        background-color: #30343f;
+        color: #e4d9ff;
+        border: none;
+        border-radius: 50px;
+        padding: 14px 36px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s ease, background-color 0.2s ease;
+        align-self: flex-start;
+    }
+    
+    .explore-buttonB:hover {
+        transform: scale(1.05);
+        background-color: #30343f;
+    }
+    
+    .image-sectionB {
+        flex: 1;
+        position: relative;
+        height: 550px;
+        margin-right: 4rem;
+    }
+    
+    .responsive-imageB {
+        object-fit: contain;
+    }
+
+/* --- ESTILOS RESPONSIVOS --- */
+
+/* --- Pantallas Medianas (Tablets) - hasta 1024px --- */
+@media (max-width: 1024px) {
+    .text-section,
+    .text-sectionB {
+      margin: 0 3rem; /* Reduce el margen lateral */
+    }
+  
+    .text-section h1,
+    .text-sectionB h1 {
+      font-size: 3.2rem; /* Reduce el tamaño de la fuente del título */
+    }
+  
+    .text-section p,
+    .text-sectionB p {
+      font-size: 1.2rem; /* Reduce el tamaño de la fuente del párrafo */
+    }
+  
+    .info-item h2 {
+      font-size: 2.5rem;
+    }
+    .info-item p {
+      font-size: 1.1rem;
+    }
+  
+    .content-items {
+      gap: 1.5rem; /* Reduce el espacio entre las tarjetas */
+    }
+  
+    .content-item {
+      width: 30%; /* Ajusta el ancho de las tarjetas */
+    }
+  
+    .contac-items {
+      gap: 2rem; /* Reduce el espacio entre los logos */
+    }
+  }
+  
+  
+  /* --- Pantallas Pequeñas (Móviles) - hasta 768px --- */
+  @media (max-width: 768px) {
+    /* --- Sección de Bienvenida --- */
+    .welcolme-section {
+      flex-direction: column; /* Apila el texto sobre la imagen */
+      height: auto; /* Altura automática para adaptarse al contenido */
+      padding: 4rem 1.5rem;
+      text-align: center;
+    }
+  
+    .text-section {
+      margin: 0;
+      align-items: center; /* Centra los elementos */
+    }
+  
+    .text-section h1 {
+      font-size: 2.5rem; /* Tamaño de fuente más pequeño para móviles */
+    }
+  
+    .text-section p {
+      font-size: 1rem;
+    }
+  
+    .image-section {
+      order: -1; /* Mueve la imagen arriba del texto */
+      height: 300px; /* Reduce la altura de la imagen */
+      width: 90%;
+      margin: 0 0 2rem 0; /* Elimina margen derecho y añade margen inferior */
+    }
+  
+    /* --- Separadores --- */
+    .separation-1 {
+      height: 150px;
+    }
+  
+    .separation-2 {
+      height: 100px;
+    }
+  
+    /* --- Sección de Información --- */
+    .info-section {
+      height: auto;
+      padding: 4rem 1.5rem;
+      text-align: center;
+    }
+  
+    .info-item {
+      margin: 0;
+    }
+  
+    .info-item h2 {
+      font-size: 2rem;
+    }
+  
+    /* --- Sección de Contenido --- */
+    .content-section {
+      height: auto;
+      padding: 2rem 0;
+    }
+  
+    .content-items {
+      flex-direction: column; /* Apila las tarjetas verticalmente */
+      align-items: center;
+      gap: 2rem;
+    }
+  
+    .content-item {
+      width: 85%; /* Las tarjetas ocupan más ancho */
+      max-width: 400px;
+    }
+  
+    /* --- Sección de Contacto --- */
+    .contac-section {
+      height: auto;
+      padding: 3rem 1.5rem;
+    }
+  
+    .contac-items {
+      flex-wrap: wrap; /* Permite que los logos se envuelvan en varias líneas */
+      gap: 1.5rem;
+    }
+  
+    .contac-item {
+      width: auto; /* Ancho automático para los logos */
+      max-width: 80px; /* Tamaño máximo más pequeño */
+    }
+    
+    /* --- Sección Final --- */
+    .final-section {
+      flex-direction: column; /* Apila los elementos */
+      height: auto;
+      padding: 4rem 1.5rem;
+      text-align: center;
+    }
+  
+    .text-sectionB {
+      margin: 0;
+      align-items: center; /* Centra los elementos */
+    }
+  
+    .text-sectionB h1 {
+      font-size: 2.5rem;
+    }
+  
+    .text-sectionB p {
+      font-size: 1rem;
+    }
+  
+    .image-sectionB {
+      height: 300px;
+      width: 90%;
+      margin: 2rem 0 0 0;
+    }
+  }

@@ -1,103 +1,141 @@
-import Image from "next/image";
+"use client";
+import React, { use } from 'react';
+import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
+import Image from 'next/image';
+import './home.css';
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <main className="home-container">
+      <section className="welcolme-section">
+        <div  className="text-section">
+          <h1>El Futuro del Software y la IA, Hoy.</h1>
+          <p>Accede a un catálogo de software e inteligencia artificial diseñado para potenciar tu negocio. Optimiza, crea e innova con las mejores herramientas del mercado.</p>
+          <button className="explore-button">Explorar</button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <div  className="image-section">
+            <Image
+              src="/women-img-01.png"
+              alt="Imagen de tecnología"
+              fill
+              className="responsive-image"
+              >
+            </Image>
+        </div>
+      </section>
+      <div className='separation-1'></div>
+      <section className="info-section">
+        <div className="info-item">
+          <h2>¿Quienes somos?</h2>
+          <p>En Onovatech, somos expertos en tecnología con una misión clara: conectar a profesionales y empresas como tú con las mejores herramientas de software e inteligencia artificial. Actuamos como curadores, seleccionando solo productos que impulsan tu eficiencia, creatividad y te dan una ventaja competitiva real. Tu éxito es nuestro objetivo.</p>
+        </div>
+      </section>
+
+      <section className="content-section">
+        <div className="content-title">
+          <h2>Explora nuestra Web</h2>
+        </div>
+        <div className="content-items">
+          <div className="content-item">
+          <Link href="/login" className="icon-conten"><ArrowUpRight size={35} color={'#30343f'}/></Link>
+          <Image src="/img-section/im1.png" alt="Descripción de la imagen" 
+                fill
+                className="content-item-img"
+              />
+            <h3>Comunidad</h3>
+          </div>
+          <div className="content-item">
+          <Link href="/shop" className="icon-conten"><ArrowUpRight size={35} color={'#30343f'}/></Link>
+          <Image src="/img-section/im3.png" alt="Descripción de la imagen" 
+                fill
+                className="content-item-img"
+              />
+            <h3>Tienda</h3>
+          </div>
+          <div className="content-item">
+          <Link href="/shop" className="icon-conten"><ArrowUpRight size={35} color={'#30343f'}/></Link>
+          <Image src="/img-section/im2.png" alt="Descripción de la imagen" 
+                fill
+                className="content-item-img"
+              />
+            <h3>Servicios</h3>
+          </div>
+        </div>
+      </section>
+
+      <section className="contac-section">
+        <div className="contac-title">
+          <h2>Contáctanos</h2>
+        </div>
+        <div className="contac-items">
+          <div className="contac-item">
+            <Link href="/login" className="icon-logo-1">
+              <Image src="/social-logos/8.png" alt="Descripción de la imagen"
+                width={130}
+                height={130} 
+              />
+            </Link>
+          </div>
+          <div className="contac-item">
+            <Link href="/login" className="icon-logo-2">
+              <Image src="/social-logos/5.png" alt="Descripción de la imagen"
+                width={130}
+                height={130} 
+              />
+            </Link>
+          </div>
+          <div className="contac-item">
+            <Link href="/login" className="icon-logo-3">
+              <Image src="/social-logos/3.png" alt="Descripción de la imagen" 
+                width={130}
+                height={130} 
+              />
+            </Link>
+          </div>
+          <div className="contac-item">
+            <Link href="/login" className="icon-logo-4">
+              <Image src="/social-logos/7.png" alt="Descripción de la imagen" 
+                width={130}
+                height={130}  
+              />
+            </Link>
+          </div>
+          <div className="contac-item">
+            <Link href="/login" className="icon-logo-5">
+              <Image src="/social-logos/6.png" alt="Descripción de la imagen" 
+                width={130}
+                height={130} 
+              />
+            </Link>
+          </div>
+          <div className="contac-item">
+            <Link href="/login" className="icon-logo-6">
+              <Image src="/social-logos/2.png" alt="Descripción de la imagen" 
+                width={130}
+                height={130} 
+              />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="final-section">
+        <div  className="text-sectionB">
+          <h1>Únete a Nuestra Comunidad</h1>
+          <p>Descubre lo último en innovación. Inicia sesión o crea una cuenta para obtener ofertas exclusivas en tecnología, IA y software. éxito es nuestro objetivo.</p>
+          <button className="explore-buttonB">Regístrate</button>
+        </div>
+        <div  className="image-sectionB">
+            <Image
+              src="/women-img-02.png"
+              alt="Imagen de tecnología"
+              fill
+              className="responsive-imageB"
+              >
+            </Image>
+        </div>
+      </section>
+    </main>
   );
 }
