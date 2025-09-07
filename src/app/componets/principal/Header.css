@@ -20,10 +20,6 @@
     opacity: 0;
 }
 
-.header.scrolled {
-    background-color: #fafaff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
 
 .header-left, .header-right {
     display: flex;
@@ -37,11 +33,6 @@
     font-size: 2.3lh;
     font-weight: 800;
     color: #fafaff;
-    transition: color 0.3s ease;
-}
-
-.header.scrolled .logo {
-    color: #30343f;
 }
 
 .nav ul {
@@ -57,11 +48,6 @@
     font-size: 1.1lh;
     font-weight: 400;
     color: #fafaff;
-    transition: color 0.3s ease;
-}
-
-.header.scrolled .nav li a {
-    color: #30343f;
 }
 
 .nav li {
@@ -84,16 +70,11 @@
 .header-right .icon-button,
 .header-right .icon-link {
     color: #fafaff;
-    transition: transform 0.3s ease, color 0.3s ease;
+    transition: transform 0.3s ease;
     display: flex;
     align-items: center;
     padding: 8px;
     border-radius: 8px;
-}
-
-.header.scrolled .header-right .icon-button,
-.header.scrolled .header-right .icon-link {
-    color: #30343f;
 }
 
 .desktop-icons {
@@ -123,11 +104,7 @@
     display: none; /* Oculto por defecto, se muestra en móvil */
     align-items: center;
     justify-content: center;
-    transition: transform 0.3s ease, color 0.3s ease;
-}
-
-.header.scrolled .mobile-menu-button {
-    color: #30343f;
+    transition: transform 0.3s ease;
 }
 
 .mobile-menu-button:hover {

@@ -19,7 +19,6 @@ export default function Header() {
     const shopIconsRef = useRef(null);
     
     // Estados para el scroll
-    const [isScrolled, setIsScrolled] = useState(false);
     const [isHeaderVisible, setIsHeaderVisible] = useState(true);
     const lastScrollY = useRef(0);
     
@@ -50,19 +49,11 @@ export default function Header() {
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
             
-            if (currentScrollY > 80) {
-                setIsScrolled(true);
-                
-                if (currentScrollY > lastScrollY.current && currentScrollY > 200) {
-                    // Scrolling hacia abajo y ya ha scrolled suficiente - ocultar header
-                    setIsHeaderVisible(false);
-                } else {
-                    // Scrolling hacia arriba o cerca del top - mostrar header
-                    setIsHeaderVisible(true);
-                }
+            if (currentScrollY > lastScrollY.current && currentScrollY > 200) {
+                // Scrolling hacia abajo y ya ha scrolled suficiente - ocultar header
+                setIsHeaderVisible(false);
             } else {
-                // Cerca del top - mostrar header con colores originales
-                setIsScrolled(false);
+                // Scrolling hacia arriba o cerca del top - mostrar header
                 setIsHeaderVisible(true);
             }
             
@@ -91,7 +82,7 @@ export default function Header() {
     };
 
     return (
-        <header className={`header ${isScrolled ? 'scrolled' : ''} ${!isHeaderVisible ? 'hidden' : ''}`}>
+        <header className={`header ${!isHeaderVisible ? 'hidden' : ''}`}>
             <div className="header-left">
                 <Link href="/" className="logo">
                     <span>Onovatech</span>
