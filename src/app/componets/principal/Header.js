@@ -18,8 +18,10 @@ export default function Header() {
     // Referencia para los iconos del shop
     const shopIconsRef = useRef(null);
     
-    // Estado para el scroll
+    // Estados para el scroll
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+    const lastScrollY = useRef(0);
     
     // Animación GSAP para los iconos del shop
     useGSAP(() => {
@@ -43,14 +45,28 @@ export default function Header() {
         }
     }, [showShopIcons]);
     
-    // Efecto para detectar el scroll
+    // Efecto para detectar el scroll con dirección
     React.useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 50) {
+            const currentScrollY = window.scrollY;
+            
+            if (currentScrollY > 80) {
                 setIsScrolled(true);
+                
+                if (currentScrollY > lastScrollY.current && currentScrollY > 200) {
+                    // Scrolling hacia abajo y ya ha scrolled suficiente - ocultar header
+                    setIsHeaderVisible(false);
+                } else {
+                    // Scrolling hacia arriba o cerca del top - mostrar header
+                    setIsHeaderVisible(true);
+                }
             } else {
+                // Cerca del top - mostrar header con colores originales
                 setIsScrolled(false);
+                setIsHeaderVisible(true);
             }
+            
+            lastScrollY.current = currentScrollY;
         };
 
         window.addEventListener('scroll', handleScroll);
@@ -75,7 +91,7 @@ export default function Header() {
     };
 
     return (
-        <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
+        <header className={`header ${isScrolled ? 'scrolled' : ''} ${!isHeaderVisible ? 'hidden' : ''}`}>
             <div className="header-left">
                 <Link href="/" className="logo">
                     <span>Onovatech</span>
