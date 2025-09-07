@@ -18,6 +18,9 @@ export default function Header() {
     // Referencia para los iconos del shop
     const shopIconsRef = useRef(null);
     
+    // Estado para el scroll
+    const [isScrolled, setIsScrolled] = useState(false);
+    
     // Animación GSAP para los iconos del shop
     useGSAP(() => {
         if (showShopIcons && shopIconsRef.current) {
@@ -39,6 +42,23 @@ export default function Header() {
             });
         }
     }, [showShopIcons]);
+    
+    // Efecto para detectar el scroll
+    React.useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     const handleSearchClick = () => alert('Mostrar búsqueda');
     const handleCartClick = () => alert('Mostrar carrito');
@@ -55,7 +75,7 @@ export default function Header() {
     };
 
     return (
-        <header className="header">
+        <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
             <div className="header-left">
                 <Link href="/" className="logo">
                     <span>Onovatech</span>
