@@ -25,3 +25,16 @@ body {
   font-family: var(--font-lato);
   padding-top: 70px; /* Espacio para el header fijo */
 }
+
+/* Ajustar padding para móviles */
+@media (max-width: 768px) {
+  body {
+    padding-top: 60px; /* Menos espacio en móviles */
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-top: 55px; /* Aún menos espacio en pantallas muy pequeñas */
+  }
+}
