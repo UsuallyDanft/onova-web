@@ -107,7 +107,115 @@
     font-size: 0.9em;
 }
 
-@media (min-width: 768px) {
+/* Responsive Design para el Footer */
+@media (max-width: 768px) {
+    .footer {
+        padding: 40px 20px 15px 20px; /* Reduce el padding en móviles */
+    }
+    
+    .footer-container {
+        grid-template-columns: 1fr; /* Una sola columna en móviles */
+        gap: 30px;
+        margin-bottom: 30px;
+        text-align: center; /* Centra el contenido */
+    }
+    
+    .footer-column h3, .footer-column h4 {
+        font-size: 1.4rem; /* Reduce el tamaño de los títulos */
+        margin-bottom: 15px;
+    }
+    
+    .footer-logo {
+        font-size: 1.8rem; /* Reduce el tamaño del logo */
+    }
+    
+    .footer-about p {
+        font-size: 0.95rem; /* Texto más pequeño */
+        line-height: 1.5;
+        max-width: 350px;
+        margin: 0 auto 20px auto; /* Centra el párrafo */
+    }
+    
+    .social-icons {
+        justify-content: center; /* Centra los iconos sociales */
+        gap: 20px;
+    }
+    
+    .social-icons a {
+        font-size: 28px; /* Iconos más grandes para móvil */
+    }
+    
+    .footer-links ul li {
+        margin-bottom: 15px; /* Más espacio entre enlaces */
+    }
+    
+    .footer-links a {
+        font-size: 1rem;
+    }
+    
+    .newsletter-form {
+        flex-direction: column;
+        max-width: 300px;
+        margin: 0 auto; /* Centra el formulario */
+    }
+    
+    .newsletter-form input {
+        padding: 15px; /* Botones más grandes para móvil */
+        font-size: 1rem;
+    }
+    
+    .newsletter-form button {
+        padding: 15px;
+        font-size: 1rem;
+        margin-top: 5px;
+    }
+    
+    .footer-bottom {
+        font-size: 0.85rem;
+        padding-top: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 30px 15px 10px 15px; /* Padding aún más reducido */
+    }
+    
+    .footer-container {
+        gap: 25px;
+    }
+    
+    .footer-logo {
+        font-size: 1.6rem;
+    }
+    
+    .footer-column h3, .footer-column h4 {
+        font-size: 1.2rem;
+    }
+    
+    .footer-about p {
+        font-size: 0.9rem;
+        max-width: 280px;
+    }
+    
+    .social-icons {
+        gap: 15px;
+    }
+    
+    .social-icons a {
+        font-size: 24px;
+    }
+    
+    .newsletter-form {
+        max-width: 280px;
+    }
+    
+    .footer-bottom {
+        font-size: 0.8rem;
+    }
+}
+
+@media (min-width: 769px) {
     .newsletter-form {
         flex-direction: row;    
     }
