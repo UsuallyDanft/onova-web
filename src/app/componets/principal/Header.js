@@ -33,9 +33,9 @@ export default function Header() {
             gsap.to(icons, {
                 opacity: 1,
                 x: 0,
-                duration: 0.5,
-                ease: "power2.out",
-                stagger: 0.1
+                duration: 0.2,
+                ease: "power1.out",
+                stagger: 0.05
             });
         }
     }, [showShopIcons]);
