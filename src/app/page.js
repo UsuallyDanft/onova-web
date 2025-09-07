@@ -37,29 +37,35 @@ export default function Home() {
           <h2>Explora nuestra Web</h2>
         </div>
         <div className="content-items">
-          <div className="content-item">
-          <Link href="/login" className="icon-conten"><ArrowUpRight size={35} color={'#30343f'}/></Link>
-          <Image src="/img-section/im1.png" alt="Descripción de la imagen" 
-                fill
-                className="content-item-img"
-              />
-            <h3>Comunidad</h3>
+          <div className="content-card">
+            <div className="content-item">
+              <Link href="/login" className="icon-conten"><ArrowUpRight size={35} color={'#30343f'}/></Link>
+              <Image src="/img-section/im1.png" alt="Descripción de la imagen" 
+                    fill
+                    className="content-item-img"
+                  />
+            </div>
+            <h3 className="content-item-title">Comunidad</h3>
           </div>
-          <div className="content-item">
-          <Link href="/shop" className="icon-conten"><ArrowUpRight size={35} color={'#30343f'}/></Link>
-          <Image src="/img-section/im3.png" alt="Descripción de la imagen" 
-                fill
-                className="content-item-img"
-              />
-            <h3>Tienda</h3>
+          <div className="content-card">
+            <div className="content-item">
+              <Link href="/shop" className="icon-conten"><ArrowUpRight size={35} color={'#30343f'}/></Link>
+              <Image src="/img-section/im3.png" alt="Descripción de la imagen" 
+                    fill
+                    className="content-item-img"
+                  />
+            </div>
+            <h3 className="content-item-title">Tienda</h3>
           </div>
-          <div className="content-item">
-          <Link href="/shop" className="icon-conten"><ArrowUpRight size={35} color={'#30343f'}/></Link>
-          <Image src="/img-section/im2.png" alt="Descripción de la imagen" 
-                fill
-                className="content-item-img"
-              />
-            <h3>Servicios</h3>
+          <div className="content-card">
+            <div className="content-item">
+              <Link href="/shop" className="icon-conten"><ArrowUpRight size={35} color={'#30343f'}/></Link>
+              <Image src="/img-section/im2.png" alt="Descripción de la imagen" 
+                    fill
+                    className="content-item-img"
+                  />
+            </div>
+            <h3 className="content-item-title">Servicios</h3>
           </div>
         </div>
       </section>

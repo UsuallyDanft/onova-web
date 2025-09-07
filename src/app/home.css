@@ -120,19 +120,28 @@
     gap: 2rem;
     padding: 2rem 0;
 }
-.content-item {
+/* Contenedor de cada tarjeta completa (imagen + título) */
+.content-card {
   width: 25%;
   max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.content-item {
+  width: 100%;
   aspect-ratio: 1 / 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #e4d9ff; /* Puedes quitarlo si la imagen siempre va a estar */
+  background-color: #e4d9ff;
   border-radius: 30px;
   padding: 1rem;
-  position: relative; /* ¡Esencial para que 'fill' funcione! */
-  overflow: hidden; /* Evita que la imagen se salga de los bordes redondeados */
+  position: relative;
+  overflow: hidden;
 }
 
 /* Estilos para la imagen */
@@ -141,13 +150,14 @@
   /* object-position: center;  puedes usar esto para centrar una parte específica de la imagen */
 }
 
-.content-item > h3 {
-  font-size: 2lh;
+/* Título debajo de cada tarjeta */
+.content-item-title {
+  font-size: 1.5rem;
   font-weight: 700;
-  position: relative; 
-  z-index: 2; 
-  color: white;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Recomendado para legibilidad */
+  color: #30343f;
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-monserrat);
 }
 
 /* Unificamos TODO lo del ícono en una sola regla */
@@ -415,9 +425,17 @@
       gap: 2rem;
     }
   
-    .content-item {
+    .content-card {
       width: 85%; /* Las tarjetas ocupan más ancho */
       max-width: 400px;
+    }
+    
+    .content-item {
+      width: 100%;
+    }
+    
+    .content-item-title {
+      font-size: 1.3rem; /* Título más pequeño en móvil */
     }
   
     /* --- Sección de Contacto --- */
