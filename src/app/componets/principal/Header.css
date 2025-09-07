@@ -70,6 +70,12 @@
     gap: 8px;
 }
 
+.shop-icons-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .header-right .icon-button:hover,
 .header-right .icon-link:hover {
     transform: translateY(-3px);

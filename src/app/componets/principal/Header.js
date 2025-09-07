@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'; // 1. Importar el hook
 import './Header.css';
@@ -14,6 +14,33 @@ export default function Header() {
     
     // Estado para el menú móvil
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    
+    // Referencia para los iconos del shop
+    const shopIconsRef = useRef(null);
+    
+    // Animación GSAP para los iconos del shop
+    useGSAP(() => {
+        if (showShopIcons && shopIconsRef.current) {
+            const icons = shopIconsRef.current.children;
+            
+            // Configurar estado inicial de los iconos
+            gsap.set(icons, {
+                opacity: 0,
+                y: -20,
+                scale: 0.8
+            });
+            
+            // Animar la entrada de los iconos
+            gsap.to(icons, {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 0.6,
+                ease: "back.out(1.7)",
+                stagger: 0.1
+            });
+        }
+    }, [showShopIcons]);
 
     const handleSearchClick = () => alert('Mostrar búsqueda');
     const handleCartClick = () => alert('Mostrar carrito');
@@ -51,7 +78,7 @@ export default function Header() {
                 {/* Iconos de la tienda para escritorio */}
                 <div className="desktop-icons">
                     {showShopIcons && (
-                        <>
+                        <div ref={shopIconsRef} className="shop-icons-container">
                             <button className="icon-button" onClick={handleSearchClick}>
                                 <Search size={25}/>
                             </button>
@@ -61,7 +88,7 @@ export default function Header() {
                             <button className="icon-button" onClick={handleBookmarkClick}>
                                 <Bookmark size={25}/>
                             </button>
-                        </>
+                        </div>
                     )}
                     
                     <Link href="/login" className="icon-link">
