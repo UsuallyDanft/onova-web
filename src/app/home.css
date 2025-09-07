@@ -429,12 +429,19 @@
   
     .contac-items {
       flex-wrap: wrap; /* Permite que los logos se envuelvan en varias líneas */
-      gap: 1.5rem;
+      gap: 2.5rem; /* Más espacio entre las imágenes */
+      justify-content: center; /* Centra las imágenes */
+      padding: 0 1rem; /* Padding adicional a los lados */
     }
   
     .contac-item {
       width: auto; /* Ancho automático para los logos */
-      max-width: 80px; /* Tamaño máximo más pequeño */
+      max-width: 60px; /* Imágenes más pequeñas */
+    }
+    
+    .contac-item img {
+      width: 60px !important; /* Fuerza el tamaño más pequeño */
+      height: 60px !important;
     }
     
     /* --- Sección Final --- */
