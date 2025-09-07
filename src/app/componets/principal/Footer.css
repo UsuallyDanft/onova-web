@@ -3,7 +3,10 @@
     background-color: #30343f;
     color: #e4d9ff;
     padding: 60px 40px 20px 40px;
-    font-family: var(--font-lato);                                    
+    font-family: var(--font-lato);
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 
@@ -110,7 +113,9 @@
 /* Responsive Design para el Footer */
 @media (max-width: 768px) {
     .footer {
-        padding: 40px 20px 15px 20px; /* Reduce el padding en móviles */
+        padding: 40px 15px 15px 15px; /* Padding más reducido para evitar desbordamiento */
+        margin: 0;
+        width: 100%;
     }
     
     .footer-container {
@@ -178,7 +183,9 @@
 
 @media (max-width: 480px) {
     .footer {
-        padding: 30px 15px 10px 15px; /* Padding aún más reducido */
+        padding: 20px 10px 10px 10px; /* Padding mínimo para pantallas muy pequeñas */
+        margin: 0;
+        width: 100%;
     }
     
     .footer-container {

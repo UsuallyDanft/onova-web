@@ -4,6 +4,8 @@
     align-items: center;
     padding: 10px 40px;
     background-color: #273469;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .header-left, .header-right {

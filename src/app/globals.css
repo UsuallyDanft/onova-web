@@ -3,12 +3,23 @@
   --foreground: #30343f;
 }
 
+/* Reset y configuración base para responsividad */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden; /* Evita scroll horizontal */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-monserrat); 
 }
 
 body {
-  margin: 0;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-lato);
