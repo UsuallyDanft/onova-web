@@ -319,8 +319,13 @@
       gap: 1.5rem; /* Reduce el espacio entre las tarjetas */
     }
   
-    .content-item {
-      width: 30%; /* Ajusta el ancho de las tarjetas */
+    .content-card {
+      width: 30%; /* Ajusta el ancho de las tarjetas para tablets */
+      max-width: 250px; /* Tamaño máximo para tablets */
+    }
+    
+    .content-item-title {
+      font-size: 1.4rem; /* Tamaño apropiado para tablets */
     }
   
     .contac-items {
