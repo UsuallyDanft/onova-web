@@ -105,9 +105,8 @@
 /* Hover unificado para todos los iconos del header */
 .header-right .icon-button:hover,
 .header-right .icon-link:hover,
-.desktop-icons .icon-button:hover,
-.shop-icons-container .icon-button:hover {
-    transform: translateY(-3px);
+.header-right .desktop-icons .shop-icons-container .icon-button:hover {
+    transform: translateY(-3px) !important;
 }
 
 /* Estilos para el botón del menú móvil */
