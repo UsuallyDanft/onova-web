@@ -77,6 +77,11 @@ export default function Header() {
             
             {/* Menú móvil deslizable */}
             <div className={`mobile-menu ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
+                {/* Botón X para cerrar el menú */}
+                <button className="mobile-menu-close" onClick={closeMobileMenu}>
+                    <X size={24}/>
+                </button>
+                
                 <nav className="mobile-nav">
                     <ul>
                         <li><Link href="/shop" onClick={closeMobileMenu}>Tienda</Link></li>
