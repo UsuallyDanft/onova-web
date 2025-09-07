@@ -48,15 +48,27 @@
     font-size: 1.1lh;
     font-weight: 400;
     color: #fafaff;
+    position: relative;
+    padding-bottom: 8px;
+    transition: color 0.3s ease;
 }
 
-.nav li {
-    transition: transform 0.3s ease;
+.nav li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #fafaff;
+    transition: width 0.3s ease;
 }
 
-.nav li:hover {
-    transform: translateY(-3px);
+.nav li a:hover::after,
+.nav li a.active::after {
+    width: 100%;
 }
+
 
 
 .header-right .icon-button {
@@ -174,11 +186,28 @@
     font-size: 1.1rem;
     font-weight: 400;
     transition: background-color 0.3s ease, padding-left 0.3s ease;
+    position: relative;
 }
 
 .mobile-nav ul li a:hover {
     background-color: rgba(250, 250, 255, 0.1);
     padding-left: 40px;
+}
+
+.mobile-nav ul li a.active {
+    background-color: rgba(250, 250, 255, 0.15);
+    font-weight: 600;
+}
+
+.mobile-nav ul li a.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
+    background-color: #fafaff;
 }
 
 /* Iconos de la tienda en móvil */

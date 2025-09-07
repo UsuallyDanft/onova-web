@@ -91,10 +91,10 @@ export default function Header() {
                 {/* Navegación para escritorio */}
                 <nav className="nav desktop-nav">
                     <ul>
-                        <li><Link href="/shop">Tienda</Link></li>
-                        <li><Link href="/comunidad">Comunidad</Link></li>
-                        <li><Link href="/servicios">Servicios</Link></li>
-                        <li><Link href="/contacto">Contacto</Link></li>
+                        <li><Link href="/shop" className={pathname === '/shop' ? 'active' : ''}>Tienda</Link></li>
+                        <li><Link href="/comunidad" className={pathname === '/comunidad' ? 'active' : ''}>Comunidad</Link></li>
+                        <li><Link href="/servicios" className={pathname === '/servicios' ? 'active' : ''}>Servicios</Link></li>
+                        <li><Link href="/contacto" className={pathname === '/contacto' ? 'active' : ''}>Contacto</Link></li>
                     </ul>
                 </nav>
             </div>
@@ -136,10 +136,10 @@ export default function Header() {
                 
                 <nav className="mobile-nav">
                     <ul>
-                        <li><Link href="/shop" onClick={closeMobileMenu}>Tienda</Link></li>
-                        <li><Link href="/comunidad" onClick={closeMobileMenu}>Comunidad</Link></li>
-                        <li><Link href="/servicios" onClick={closeMobileMenu}>Servicios</Link></li>
-                        <li><Link href="/contacto" onClick={closeMobileMenu}>Contacto</Link></li>
+                        <li><Link href="/shop" onClick={closeMobileMenu} className={pathname === '/shop' ? 'active' : ''}>Tienda</Link></li>
+                        <li><Link href="/comunidad" onClick={closeMobileMenu} className={pathname === '/comunidad' ? 'active' : ''}>Comunidad</Link></li>
+                        <li><Link href="/servicios" onClick={closeMobileMenu} className={pathname === '/servicios' ? 'active' : ''}>Servicios</Link></li>
+                        <li><Link href="/contacto" onClick={closeMobileMenu} className={pathname === '/contacto' ? 'active' : ''}>Contacto</Link></li>
                     </ul>
                     
                     {/* Iconos de la tienda para móvil */}
