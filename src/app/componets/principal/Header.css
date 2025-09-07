@@ -82,7 +82,7 @@
 .header-right .icon-button,
 .header-right .icon-link {
     color: #fafaff;
-    transition: transform 0.3s ease, background-color 0.3s ease;
+    transition: transform 0.3s ease;
     display: flex;
     align-items: center;
     padding: 8px;
@@ -105,9 +105,9 @@
 /* Hover unificado para todos los iconos del header */
 .header-right .icon-button:hover,
 .header-right .icon-link:hover,
+.desktop-icons .icon-button:hover,
 .shop-icons-container .icon-button:hover {
-    transform: translateY(-1px);
-    background-color: rgba(250, 250, 255, 0.1);
+    transform: translateY(-3px);
 }
 
 /* Estilos para el botón del menú móvil */
@@ -124,7 +124,7 @@
 }
 
 .mobile-menu-button:hover {
-    transform: translateY(-1px);
+    transform: translateY(-3px);
 }
 
 /* Menú móvil deslizable */
