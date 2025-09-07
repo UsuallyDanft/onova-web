@@ -210,9 +210,13 @@
   justify-content: center;
   transition: background-color 0.2s ease-in-out;
 }
+.icon-conten{
+  color: #30343f;
+}
 
 .icon-conten:hover {
-    background-color: #c8c6c6;
+    background-color: #273469;
+    color:#fafaff;
 }
 .contac-section{
     display: flex;
