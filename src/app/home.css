@@ -398,6 +398,15 @@
     .content-section {
       height: auto;
       padding: 2rem 0;
+      text-align: center; /* Centra el contenido */
+    }
+    
+    .content-title {
+      text-align: center; /* Centra el título */
+    }
+    
+    .content-title h2 {
+      text-align: center; /* Asegura que el título esté centrado */
     }
   
     .content-items {
