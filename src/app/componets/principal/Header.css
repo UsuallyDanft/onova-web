@@ -106,7 +106,7 @@
 .header-right .icon-button:hover,
 .header-right .icon-link:hover,
 .shop-icons-container .icon-button:hover {
-    transform: translateY(-3px);
+    transform: translateY(-1px);
     background-color: rgba(250, 250, 255, 0.1);
 }
 
@@ -124,7 +124,7 @@
 }
 
 .mobile-menu-button:hover {
-    transform: translateY(-3px);
+    transform: translateY(-1px);
 }
 
 /* Menú móvil deslizable */
