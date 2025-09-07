@@ -142,7 +142,6 @@
   padding: 1rem;
   position: relative;
   overflow: hidden;
-  cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
