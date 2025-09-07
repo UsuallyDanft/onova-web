@@ -142,6 +142,42 @@
   padding: 1rem;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.content-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Overlay de descripción */
+.content-item-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(48, 52, 63, 0.95), rgba(48, 52, 63, 0.85));
+  color: #fafaff;
+  padding: 20px;
+  border-radius: 0 0 30px 30px;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: all 0.4s ease;
+  z-index: 3;
+}
+
+.content-item:hover .content-item-overlay {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.content-item-overlay p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  text-align: center;
+  font-family: var(--font-lato);
 }
 
 /* Estilos para la imagen */

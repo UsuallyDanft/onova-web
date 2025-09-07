@@ -44,6 +44,9 @@ export default function Home() {
                     fill
                     className="content-item-img"
                   />
+              <div className="content-item-overlay">
+                <p>Conéctate con profesionales y expertos en tecnología. Comparte conocimientos y construye relaciones.</p>
+              </div>
             </div>
             <h3 className="content-item-title">Comunidad</h3>
           </div>
@@ -54,6 +57,9 @@ export default function Home() {
                     fill
                     className="content-item-img"
                   />
+              <div className="content-item-overlay">
+                <p>Descubre las mejores herramientas de software e IA seleccionadas especialmente para tu negocio.</p>
+              </div>
             </div>
             <h3 className="content-item-title">Tienda</h3>
           </div>
@@ -64,6 +70,9 @@ export default function Home() {
                     fill
                     className="content-item-img"
                   />
+              <div className="content-item-overlay">
+                <p>Servicios especializados en tecnología e innovación para impulsar tu transformación digital.</p>
+              </div>
             </div>
             <h3 className="content-item-title">Servicios</h3>
           </div>
