@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'; // 1. Importar el hook
 import './Header.css';
-import { User, ShoppingCart, Search, Bookmark, Menu, X } from 'lucide-react';
+import { User, ShoppingCart, Search, Bookmark, Menu, X, ChevronDown } from 'lucide-react';
 import { gsap } from "gsap"; // Importa gsap
 import { useGSAP } from "@gsap/react"; // Importa el hook useGSAP
 
@@ -14,6 +14,9 @@ export default function Header() {
     
     // Estado para el menú móvil
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    
+    // Estados para los menús desplegables
+    const [activeDropdown, setActiveDropdown] = useState(null);
     
     // Referencia para los iconos del shop
     const shopIconsRef = useRef(null);
@@ -80,6 +83,15 @@ export default function Header() {
     const closeMobileMenu = () => {
         setIsMobileMenuOpen(false);
     };
+    
+    // Funciones para manejar los menús desplegables
+    const handleMouseEnter = (menu) => {
+        setActiveDropdown(menu);
+    };
+    
+    const handleMouseLeave = () => {
+        setActiveDropdown(null);
+    };
 
     return (
         <header className={`header ${!isHeaderVisible ? 'hidden' : ''}`}>
@@ -91,8 +103,38 @@ export default function Header() {
                 {/* Navegación para escritorio */}
                 <nav className="nav desktop-nav">
                     <ul>
-                        <li><Link href="/shop" className={pathname === '/shop' ? 'active' : ''}>Tienda</Link></li>
-                        <li><Link href="/comunidad" className={pathname === '/comunidad' ? 'active' : ''}>Comunidad</Link></li>
+                        <li 
+                            className="dropdown-item" 
+                            onMouseEnter={() => handleMouseEnter('tienda')}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            <Link href="/shop" className={pathname === '/shop' ? 'active' : ''}>
+                                Tienda <ChevronDown size={16} className="dropdown-icon" />
+                            </Link>
+                            {activeDropdown === 'tienda' && (
+                                <div className="dropdown-menu">
+                                    <Link href="/shop/categorias" onClick={() => setActiveDropdown(null)}>Categorías</Link>
+                                    <Link href="/shop/ofertas" onClick={() => setActiveDropdown(null)}>Ofertas</Link>
+                                    <Link href="/shop/noticias" onClick={() => setActiveDropdown(null)}>Noticias</Link>
+                                </div>
+                            )}
+                        </li>
+                        <li 
+                            className="dropdown-item" 
+                            onMouseEnter={() => handleMouseEnter('comunidad')}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            <Link href="/comunidad" className={pathname === '/comunidad' ? 'active' : ''}>
+                                Comunidad <ChevronDown size={16} className="dropdown-icon" />
+                            </Link>
+                            {activeDropdown === 'comunidad' && (
+                                <div className="dropdown-menu">
+                                    <Link href="/comunidad/tutoriales" onClick={() => setActiveDropdown(null)}>Tutoriales</Link>
+                                    <Link href="/comunidad/foros" onClick={() => setActiveDropdown(null)}>Foros</Link>
+                                    <Link href="/comunidad/noticias" onClick={() => setActiveDropdown(null)}>Noticias</Link>
+                                </div>
+                            )}
+                        </li>
                         <li><Link href="/servicios" className={pathname === '/servicios' ? 'active' : ''}>Servicios</Link></li>
                         <li><Link href="/contacto" className={pathname === '/contacto' ? 'active' : ''}>Contacto</Link></li>
                     </ul>
