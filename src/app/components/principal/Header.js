@@ -178,8 +178,22 @@ export default function Header() {
                 
                 <nav className="mobile-nav">
                     <ul>
-                        <li><Link href="/shop" onClick={closeMobileMenu} className={pathname === '/shop' ? 'active' : ''}>Tienda</Link></li>
-                        <li><Link href="/comunidad" onClick={closeMobileMenu} className={pathname === '/comunidad' ? 'active' : ''}>Comunidad</Link></li>
+                        <li>
+                            <Link href="/shop" onClick={closeMobileMenu} className={pathname === '/shop' ? 'active' : ''}>Tienda</Link>
+                            <div className="mobile-submenu">
+                                <Link href="/shop/categorias" onClick={closeMobileMenu}>Categorías</Link>
+                                <Link href="/shop/ofertas" onClick={closeMobileMenu}>Ofertas</Link>
+                                <Link href="/shop/noticias" onClick={closeMobileMenu}>Noticias</Link>
+                            </div>
+                        </li>
+                        <li>
+                            <Link href="/comunidad" onClick={closeMobileMenu} className={pathname === '/comunidad' ? 'active' : ''}>Comunidad</Link>
+                            <div className="mobile-submenu">
+                                <Link href="/comunidad/tutoriales" onClick={closeMobileMenu}>Tutoriales</Link>
+                                <Link href="/comunidad/foros" onClick={closeMobileMenu}>Foros</Link>
+                                <Link href="/comunidad/noticias" onClick={closeMobileMenu}>Noticias</Link>
+                            </div>
+                        </li>
                         <li><Link href="/servicios" onClick={closeMobileMenu} className={pathname === '/servicios' ? 'active' : ''}>Servicios</Link></li>
                         <li><Link href="/contacto" onClick={closeMobileMenu} className={pathname === '/contacto' ? 'active' : ''}>Contacto</Link></li>
                     </ul>
