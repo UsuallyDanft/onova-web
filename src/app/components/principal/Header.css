@@ -105,6 +105,18 @@
     border: 1px solid rgba(48, 52, 63, 0.1);
 }
 
+/* Crear puente invisible para mantener el hover activo */
+.dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 0;
+    right: 0;
+    height: 15px;
+    background: transparent;
+    z-index: 1000;
+}
+
 .dropdown-menu a {
     display: block !important;
     padding: 12px 20px !important;
