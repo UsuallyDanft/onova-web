@@ -2,6 +2,9 @@
 
 Onova Web is a modern Next.js web application for Onovatech, a technology company that connects professionals and businesses with the best software and AI tools. The application serves as a marketplace platform featuring a home page, shop, community section, and various services. It's built with React 19 and Next.js 15, emphasizing modern web standards and performance optimization with Turbopack.
 
+## Recent Changes (September 2025)
+- **Color System Implementation**: Established a comprehensive CSS variables system for the Onovatech color palette in globals.css, replacing all hardcoded hex values across the codebase with semantic variable names for consistent theming and easier maintenance.
+
 # User Preferences
 
 Preferred communication style: Simple, everyday language.

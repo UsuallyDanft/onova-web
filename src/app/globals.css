@@ -1,6 +1,14 @@
 :root {
-  --background: #fafaff;
-  --foreground: #30343f;
+  /* Paleta de colores Onovatech */
+  --color-dark-gray: #30343f;      /* Gris oscuro para texto principal */
+  --color-light: #fafaff;          /* Blanco/crema para fondos claros */
+  --color-lavender: #e4d9ff;       /* Lavanda para acentos */
+  --color-dark-blue: #273469;      /* Azul oscuro principal */
+  --color-darker-blue: #1e2749;    /* Azul muy oscuro para contrastes */
+  
+  /* Variables semánticas */
+  --background: var(--color-light);
+  --foreground: var(--color-dark-gray);
 }
 
 /* Reset y configuración base para responsividad */

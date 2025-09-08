@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #273469;
+    background-color: var(--color-dark-blue);
     width: 100%;
     height: 95vh;
     box-sizing: border-box;
@@ -22,7 +22,7 @@
     font-size: 4rem;
     font-weight: 800;
     line-height: 1.2;
-    color: #fafaff;
+    color: var(--color-light);
     margin: 0;
 }
 
@@ -30,12 +30,12 @@
     font-size: 1.4rem;
     line-height: 1.6;
     max-width: 500px;
-    color: #fafaff;
+    color: var(--color-light);
     margin: 0;
 }
 
 .explore-button {
-    background-color: #fafaff;
+    background-color: var(--color-light);
     color: #2a2f4f;
     border: none;
     border-radius: 50px;
@@ -49,7 +49,7 @@
 
 .explore-button:hover {
     transform: scale(1.05);
-    background-color: #fafaff;
+    background-color: var(--color-light);
 }
 
 .image-section {
@@ -84,14 +84,14 @@
     font-size: 3rem;
     font-weight: 800;
     line-height: 1.2;
-    color: #30343f;
+    color: var(--color-dark-gray);
     margin: 0;
 }
 .info-item p{
     font-size: 1.3rem;
     line-height: 1.5;
     max-width: 700px;
-    color: #30343f;
+    color: var(--color-dark-gray);
     margin: 0;
 } 
 
@@ -107,7 +107,7 @@
 .content-title h2{
     font-size: 2.9rem;
     font-weight: 800;
-    color: #30343f;
+    color: var(--color-dark-gray);
 }
 
 .content-items {
@@ -137,7 +137,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #e4d9ff;
+  background-color: var(--color-lavender);
   border-radius: 30px;
   padding: 1rem;
   position: relative;
@@ -157,7 +157,7 @@
   left: 0;
   right: 0;
   background: linear-gradient(to top, rgba(48, 52, 63, 0.95), rgba(48, 52, 63, 0.85));
-  color: #fafaff;
+  color: var(--color-light);
   padding: 20px;
   border-radius: 0 0 30px 30px;
   transform: translateY(100%);
@@ -189,7 +189,7 @@
 .content-item-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #30343f;
+  color: var(--color-dark-gray);
   margin: 0;
   text-align: center;
   font-family: var(--font-monserrat);
@@ -211,12 +211,12 @@
   transition: background-color 0.2s ease-in-out;
 }
 .icon-conten{
-  color: #30343f;
+  color: var(--color-dark-gray);
 }
 
 .icon-conten:hover {
-    background-color: #273469;
-    color:#fafaff;
+    background-color: var(--color-dark-blue);
+    color: var(--color-light);
 }
 .contac-section{
     display: flex;
@@ -224,7 +224,7 @@
     align-items: center;
     width: 100%;
     height: 40vh;
-    background-color: #fafaff;
+    background-color: var(--color-light);
     box-sizing: border-box;
     overflow-x: hidden;
 }
@@ -239,7 +239,7 @@
 .contac-title h2{
     font-size: 2.5rem;
     font-weight: 800;
-    color: #30343f;
+    color: var(--color-dark-gray);
 }
 .contac-item {
     width: 25%;
@@ -269,7 +269,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #fafaff;
+        background-color: var(--color-light);
         width: 100%;
         height: 90vh;
         box-sizing: border-box;
@@ -287,7 +287,7 @@
         font-size: 4rem;
         font-weight: 800;
         line-height: 1.2;
-        color: #30343f;
+        color: var(--color-dark-gray);
         margin: 0;
     }
     
@@ -295,13 +295,13 @@
         font-size: 1.4rem;
         line-height: 1.6;
         max-width: 500px;
-        color: #30343f;
+        color: var(--color-dark-gray);
         margin: 0;
     }
     
     .explore-buttonB {
-        background-color: #30343f;
-        color: #e4d9ff;
+        background-color: var(--color-dark-gray);
+        color: var(--color-lavender);
         border: none;
         border-radius: 50px;
         padding: 14px 36px;
@@ -314,7 +314,7 @@
     
     .explore-buttonB:hover {
         transform: scale(1.05);
-        background-color: #30343f;
+        background-color: var(--color-dark-gray);
     }
     
     .image-sectionB {

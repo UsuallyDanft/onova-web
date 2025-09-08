@@ -1,7 +1,7 @@
 
 .footer {
-    background-color: #30343f;
-    color: #e4d9ff;
+    background-color: var(--color-dark-gray);
+    color: var(--color-lavender);
     padding: 60px 40px 20px 40px;
     font-family: var(--font-lato);
     width: 100%;
@@ -18,7 +18,7 @@
 }
 
 .footer-column h3, .footer-column h4 {
-    color: #fff;
+    color: var(--color-light);
     margin-bottom: 20px;
     font-family: var(--font-monserrat);
 }
