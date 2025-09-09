@@ -113,7 +113,7 @@ export default function Header() {
                             </Link>
                             {activeDropdown === 'tienda' && (
                                 <div className="dropdown-menu">
-                                    <Link href="/shop/categorias" onClick={() => setActiveDropdown(null)}>Categorías</Link>
+                                    <Link href="/shop/categories" onClick={() => setActiveDropdown(null)}>Categorías</Link>
                                     <Link href="/shop/ofertas" onClick={() => setActiveDropdown(null)}>Ofertas</Link>
                                     <Link href="/shop/noticias" onClick={() => setActiveDropdown(null)}>Noticias</Link>
                                 </div>
@@ -181,7 +181,7 @@ export default function Header() {
                         <li>
                             <Link href="/shop" onClick={closeMobileMenu} className={pathname === '/shop' ? 'active' : ''}>Tienda</Link>
                             <div className="mobile-submenu">
-                                <Link href="/shop/categorias" onClick={closeMobileMenu}>Categorías</Link>
+                                <Link href="/shop/categories" onClick={closeMobileMenu}>Categorías</Link>
                                 <Link href="/shop/ofertas" onClick={closeMobileMenu}>Ofertas</Link>
                                 <Link href="/shop/noticias" onClick={closeMobileMenu}>Noticias</Link>
                             </div>
