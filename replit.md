@@ -4,6 +4,9 @@ Onova Web is a modern Next.js web application for Onovatech, a technology compan
 
 ## Recent Changes (September 2025)
 - **Color System Implementation**: Established a comprehensive CSS variables system for the Onovatech color palette in globals.css, replacing all hardcoded hex values across the codebase with semantic variable names for consistent theming and easier maintenance.
+- **Project Structure Reorganization**: Completely restructured the project following Next.js best practices with proper component organization, route-based architecture, and clear separation between global components and page-specific components.
+- **Navigation Enhancement**: Implemented dropdown menus for Tienda and Comunidad sections with smooth animations and proper mobile support in the sliding menu.
+- **New Store Module**: Created complete store infrastructure with routes for products (/tienda), categories (/tienda/categorias), product details (/tienda/producto/[slug]), and checkout (/checkout).
 
 # User Preferences
 
