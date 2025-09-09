@@ -1,0 +1,91 @@
+Claro. Aplicar la estructura recomendada a tu proyecto actual implica reorganizar ligeramente tus componentes existentes y añadir las nuevas carpetas para el módulo de la tienda.
+
+El cambio principal será mover tus componentes globales (Header/Footer) fuera de la carpeta app y crear la estructura de rutas de la tienda dentro de app.
+
+Aquí tienes el paso a paso para adaptar tu estructura actual:
+
+Paso 1: Reorganizar Componentes Globales (Header/Footer)
+
+Tu Header y Footer son componentes de layout globales, no páginas. Es mejor moverlos fuera de src/app para mantener esa carpeta limpia y dedicada principalmente al enrutamiento.
+
+    Crea una carpeta components directamente dentro de src/.
+
+    Mueve el contenido de src/app/components/principal/ a una nueva subcarpeta en src/components/layout/.
+
+    Antes: src/app/components/principal/Header.js
+
+    Después: src/components/layout/Header.js
+
+Paso 2: Crear las Rutas de la Tienda (Módulo B)
+
+Ahora, crea las carpetas para cada página de la tienda dentro de src/app/, siguiendo la lógica de enrutamiento de Next.js.
+
+Paso 3: Integrar Componentes Específicos y Reutilizables
+
+Añade los componentes que definiste (Tarjeta de producto, Galería, etc.) en las ubicaciones correspondientes: reutilizables en src/components/ y específicos de página mediante co-ubicación.
+
+Estructura de Archivos Resultante (Aplicada a tu Proyecto)
+
+Así quedaría tu proyecto onova-web después de aplicar la organización sugerida. Los elementos marcados con [NUEVO] o [MOVIDO] indican los cambios.
+Plaintext
+
+📁 onova-web/
+├── 📁 public/
+│   └── ...
+├── 📁 src/
+│   ├── 📁 app/
+│   │   │
+│   │   ├── 📁 tienda/                     # [NUEVO] Ruta /tienda (Pantalla B-1)
+│   │   │   ├── 📁 components/             # [NUEVO] Componentes solo para /tienda
+│   │   │   │   ├── ProductGrid.js        # 🧩 Caja de productos B-1
+│   │   │   │   └── StoreFilters.js       # ⚙️ Barra lateral/filtros B-1
+│   │   │   └── 📄 page.js                # 📺 Pantalla B-1: Listado de Productos
+│   │   │
+│   │   ├── 📁 tienda/categorias/          # [NUEVO] Ruta /tienda/categorias (Pantalla B-2)
+│   │   │   ├── 📁 components/             # [NUEVO] Componentes solo para /tienda/categorias
+│   │   │   │   └── CategoryGrid.js       # 📦 Caja de Categorías B-2
+│   │   │   └── 📄 page.js                # 📺 Pantalla B-2: Listado de Categorías
+│   │   │
+│   │   ├── 📁 tienda/producto/[slug]/     # [NUEVO] Ruta dinámica /tienda/producto/id (Pantalla B-3)
+│   │   │   ├── 📁 components/             # [NUEVO] Componentes solo para /tienda/producto/[slug]
+│   │   │   │   ├── ImageGallery.js       # 🎴 Galería de Imágenes B-3
+│   │   │   │   └── ProductActions.js     # 📃 Sección de Acciones B-3
+│   │   │   └── 📄 page.js                # 📺 Pantalla B-3: Detalles del Producto
+│   │   │
+│   │   ├── 📁 checkout/                   # [NUEVO] Ruta /checkout (Pantalla B-4)
+│   │   │   ├── 📁 components/             # [NUEVO] Componentes solo para /checkout
+│   │   │   │   ├── CartSummary.js        # 🛒 Resumen del carrito B-4
+│   │   │   │   └── PaymentOptions.js     # 💸 Pasarelas de pago B-4
+│   │   │   └── 📄 page.js                # 📺 Pantalla B-4: Pago
+│   │   │
+│   │   ├── 📄 globals.css                # (Existente)
+│   │   ├── 📄 home.css                   # (Existente)
+│   │   ├── 📄 layout.js                 # (Existente) - Importará Header y Footer desde src/components/layout/
+│   │   └── 📄 page.js                   # (Existente) - Tu página de inicio actual
+│   │
+│   └── 📁 components/                     # [NUEVO] Directorio global de componentes
+│       │
+│       ├── 📁 layout/                     # [NUEVO] Componentes estructurales
+│       │   ├── Header.js                 # [MOVIDO] Aquí va tu Header.js
+│       │   ├── Header.css                # [MOVIDO]
+│       │   └── Footer.js                 # [MOVIDO] Aquí va tu Footer.js
+│       │
+│       ├── 📁 product/                    # [NUEVO] Componentes reutilizables de producto
+│       │   └── ProductCard.js            # 🛍️ Tarjeta de producto (reutilizable)
+│       │
+│       ├── 📁 category/                   # [NUEVO] Componentes reutilizables de categoría
+│       │   └── CategoryCard.js           # 🛍️ Tarjeta de categoría (reutilizable)
+│       │
+│       └── 📁 ui/                         # [NUEVO] Componentes genéricos (Botones, Sliders, Banners)
+│           ├── Banner.js
+│           └── Slider.js
+│
+└── ... (archivos de configuración como package.json, next.config.mjs, etc.)
+
+Resumen de la Lógica:
+
+    src/app/ (Enrutamiento): Cada carpeta dentro de src/app define una ruta URL. La página principal de esa ruta es page.js.
+
+    src/app/ruta/components/ (Co-ubicación): Componentes que solo se usan en la página de esa ruta. Esto mantiene el código organizado y específico.
+
+    src/components/ (Global): Componentes que se reutilizan en varias páginas (como ProductCard, que se usa en la tienda y quizás en un carrusel de la home).
