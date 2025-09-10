@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Grid3x3, AppWindow, LayoutGrid } from 'lucide-react';
 import './ProductViewController.css';
 
 export default function ProductViewController({ 
@@ -15,9 +14,9 @@ export default function ProductViewController({
 
   const quantityOptions = [15, 20, 35];
   const columnOptions = [
-    { value: 5, icon: LayoutGrid },
-    { value: 4, icon: AppWindow },
-    { value: 3, icon: Grid3x3 }
+    { value: 5, iconPath: '/icons/square-small.svg' },
+    { value: 4, iconPath: '/icons/square-medium.svg' },
+    { value: 3, iconPath: '/icons/square-big.svg' }
   ];
 
   const handleQuantityClick = (quantity) => {
@@ -50,19 +49,20 @@ export default function ProductViewController({
 
       {/* Selector de Columnas - Solo visible en desktop */}
       <div className="columns-selector desktop-only">
-        {columnOptions.map((option) => {
-          const IconComponent = option.icon;
-          return (
-            <button
-              key={option.value}
-              className={`columns-btn ${activeColumns === option.value ? 'active' : ''}`}
-              onClick={() => handleColumnsClick(option.value)}
-              title={`${option.value} columnas`}
-            >
-              <IconComponent size={16} />
-            </button>
-          );
-        })}
+        {columnOptions.map((option) => (
+          <button
+            key={option.value}
+            className={`columns-btn ${activeColumns === option.value ? 'active' : ''}`}
+            onClick={() => handleColumnsClick(option.value)}
+            title={`${option.value} columnas`}
+          >
+            <img 
+              src={option.iconPath} 
+              alt={`${option.value} columnas`}
+              className="column-icon"
+            />
+          </button>
+        ))}
       </div>
     </div>
   );

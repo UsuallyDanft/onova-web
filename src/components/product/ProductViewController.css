@@ -83,8 +83,14 @@
   border-color: var(--color-dark-gray);
 }
 
-.columns-btn.active svg {
-  color: white;
+.column-icon {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) saturate(100%);
+}
+
+.columns-btn.active .column-icon {
+  filter: brightness(0) saturate(100%) invert(1);
 }
 
 /* Responsive - Ocultar selector de columnas en móvil */
