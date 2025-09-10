@@ -170,13 +170,14 @@
 .product-details {
   padding: 16px;
   background: var(--color-light);
-  border-radius: 0 0 12px 12px;
+  border-radius: 0 0 20px 20px;
+  text-align: center;
 }
 
 .product-name {
   margin: 0 0 8px 0;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: bold;
   color: var(--color-dark-gray);
   line-height: 1.4;
   display: -webkit-box;
@@ -188,7 +189,7 @@
 .product-price {
   margin: 0;
   font-size: 18px;
-  font-weight: 700;
+  font-weight: bold;
   color: var(--color-dark-blue);
 }
 
