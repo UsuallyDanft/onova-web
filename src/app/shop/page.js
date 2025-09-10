@@ -1,5 +1,6 @@
 import ProductGrid from "./components/ProductGrid";
 import StoreFilters from "./components/StoreFilters";
+import './ShopPage.css';
 
 export default function ShopPage() {
   return (
