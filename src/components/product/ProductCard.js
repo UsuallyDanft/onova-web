@@ -7,6 +7,7 @@ import './ProductCard.css';
 export default function ProductCard({ product }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [showActions, setShowActions] = useState(false);
 
   // Datos por defecto del producto
   const productData = {
@@ -58,10 +59,20 @@ export default function ProductCard({ product }) {
             <ArrowUpRight size={20} />
           </Link>
 
+          {/* Área específica para activar hover de acciones */}
+          <div 
+            className="hover-trigger-area"
+            onMouseEnter={() => setShowActions(true)}
+            onMouseLeave={() => setShowActions(false)}
+          ></div>
         </div>
 
         {/* Sección de acciones (oculta por defecto, aparece en hover) */}
-        <div className="product-actions">
+        <div 
+          className={`product-actions ${showActions ? 'visible' : ''}`}
+          onMouseEnter={() => setShowActions(true)}
+          onMouseLeave={() => setShowActions(false)}
+        >
           <button 
             className="action-btn cart-btn"
             onClick={handleAddToCart}
