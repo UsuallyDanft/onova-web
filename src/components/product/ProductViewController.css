@@ -90,23 +90,24 @@
 
 /* Botón de filtros - Solo visible en móvil */
 .filters-btn {
-  background: var(--color-dark-blue);
+  background: #f3f4f6;
   border: none;
   border-radius: 6px;
-  padding: 8px;
+  padding: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  color: white;
+  width: 28px;
+  height: 28px;
+  color: var(--color-dark-gray);
+  margin-right: 12px;
 }
 
 .filters-btn:hover {
-  background: var(--color-accent);
-  transform: translateY(-2px);
+  background: #e5e7eb;
+  transform: translateY(-1px);
 }
 
 .mobile-only {
@@ -126,6 +127,10 @@
   .product-view-controller {
     gap: 0;
     padding: 6px 10px;
+  }
+  
+  .filters-btn {
+    margin-right: 8px;
   }
   
   .selector-label {
