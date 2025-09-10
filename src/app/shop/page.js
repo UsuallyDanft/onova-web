@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Filter } from 'lucide-react';
 import ProductGrid from "./components/ProductGrid";
 import ProductSidebar from "../../components/product/ProductSidebar";
 import './ShopPage.css';

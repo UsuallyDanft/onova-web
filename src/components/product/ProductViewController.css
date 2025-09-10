@@ -88,10 +88,39 @@
   filter: brightness(0) saturate(100%) invert(1);
 }
 
+/* Botón de filtros - Solo visible en móvil */
+.filters-btn {
+  background: var(--color-dark-blue);
+  border: none;
+  border-radius: 6px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: white;
+}
+
+.filters-btn:hover {
+  background: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.mobile-only {
+  display: none;
+}
+
 /* Responsive - Ocultar selector de columnas en móvil */
 @media (max-width: 768px) {
   .desktop-only {
     display: none;
+  }
+
+  .mobile-only {
+    display: flex;
   }
   
   .product-view-controller {

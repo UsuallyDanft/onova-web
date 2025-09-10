@@ -1,13 +1,15 @@
 "use client";
 
 import React, { useState } from 'react';
+import { Filter } from 'lucide-react';
 import './ProductViewController.css';
 
 export default function ProductViewController({ 
   onQuantityChange = () => {}, 
   onColumnsChange = () => {},
   currentQuantity = 15,
-  currentColumns = 3
+  currentColumns = 3,
+  onFiltersToggle
 }) {
   const [activeQuantity, setActiveQuantity] = useState(currentQuantity);
   const [activeColumns, setActiveColumns] = useState(currentColumns);
@@ -46,6 +48,17 @@ export default function ProductViewController({
           </React.Fragment>
         ))}
       </div>
+
+      {/* Botón de Filtros - Solo visible en móvil */}
+      {onFiltersToggle && (
+        <button 
+          className="filters-btn mobile-only"
+          onClick={onFiltersToggle}
+          title="Filtros"
+        >
+          <Filter size={16} />
+        </button>
+      )}
 
       {/* Selector de Columnas - Solo visible en desktop */}
       <div className="columns-selector desktop-only">
