@@ -46,13 +46,6 @@ export default function ShopPage() {
   return (
     <main className="shop-page">
       <div className="shop-container">
-        {/* Botón de filtros para móvil */}
-        <div className="mobile-filters-header">
-          <button className="mobile-filters-button" onClick={toggleMobileFilters}>
-            <Filter size={20} />
-            <span>Filtros</span>
-          </button>
-        </div>
         
         {/* Overlay/backdrop para móvil */}
         {isMobileFiltersOpen && (
@@ -70,7 +63,7 @@ export default function ShopPage() {
             />
           </aside>
           <section className="shop-products">
-            <ProductGrid />
+            <ProductGrid onFiltersToggle={toggleMobileFilters} />
           </section>
         </div>
       </div>

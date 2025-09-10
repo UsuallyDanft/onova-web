@@ -6,7 +6,7 @@ import ProductViewController from '../../../components/product/ProductViewContro
 import Pagination from '../../../components/product/Pagination';
 import './ProductGrid.css';
 
-export default function ProductGrid() {
+export default function ProductGrid({ onFiltersToggle }) {
   // Estados para el control de vista
   const [currentQuantity, setCurrentQuantity] = useState(15);
   const [currentColumns, setCurrentColumns] = useState(3);
@@ -401,6 +401,7 @@ export default function ProductGrid() {
           onColumnsChange={handleColumnsChange}
           currentQuantity={currentQuantity}
           currentColumns={currentColumns}
+          onFiltersToggle={onFiltersToggle}
         />
       </div>
 
