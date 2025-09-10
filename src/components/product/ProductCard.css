@@ -87,9 +87,22 @@
   transform: translateY(100%);
   transition: transform 0.3s ease;
   z-index: 2;
+  pointer-events: auto;
 }
 
-.product-card:hover .product-actions {
+/* Área de hover para activar acciones */
+.actions-hover-area {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.actions-hover-area:hover ~ .product-actions,
+.product-actions:hover {
   transform: translateY(0);
 }
 

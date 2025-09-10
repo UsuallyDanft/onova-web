@@ -57,6 +57,9 @@ export default function ProductCard({ product }) {
           <Link href={`/shop/product/${productData.slug}`} className="details-link">
             <ArrowUpRight size={20} />
           </Link>
+
+          {/* Área de hover para activar acciones */}
+          <div className="actions-hover-area"></div>
         </div>
 
         {/* Sección de acciones (oculta por defecto, aparece en hover) */}
