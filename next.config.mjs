@@ -2,14 +2,12 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  experimental: {
-    allowedHosts: true,
-  },
   allowedDevOrigins: [
-    "127.0.0.1",
-    "localhost",
+    "*.worf.replit.dev",
     "*.replit.dev",
-    "*.replit.com"
+    "*.replit.com", 
+    "127.0.0.1",
+    "localhost"
   ],
   async headers() {
     return [
@@ -20,6 +18,12 @@ const nextConfig = {
             key: 'X-Frame-Options',
             value: 'SAMEORIGIN',
           },
+        ],
+      },
+      // Only add no-cache to API routes and dynamic pages in development
+      {
+        source: '/api/:path*',
+        headers: [
           {
             key: 'Cache-Control',
             value: 'no-cache, no-store, must-revalidate',
