@@ -83,34 +83,8 @@
   border-color: var(--color-dark-gray);
 }
 
-.columns-btn.active .column-square {
-  background-color: white;
-}
-
-/* Iconos de columnas */
-.columns-icon {
-  display: grid;
-  gap: 2px;
-  grid-template-columns: repeat(var(--columns), 1fr);
-}
-
-.columns-btn[title="5 columnas"] .columns-icon {
-  grid-template-columns: repeat(5, 3px);
-}
-
-.columns-btn[title="4 columnas"] .columns-icon {
-  grid-template-columns: repeat(4, 3px);
-}
-
-.columns-btn[title="3 columnas"] .columns-icon {
-  grid-template-columns: repeat(3, 4px);
-}
-
-.column-square {
-  width: 3px;
-  height: 3px;
-  background-color: var(--color-dark-gray);
-  border-radius: 1px;
+.columns-btn.active svg {
+  color: white;
 }
 
 /* Responsive - Ocultar selector de columnas en móvil */
