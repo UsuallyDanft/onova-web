@@ -97,40 +97,36 @@
 
 .action-btn {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: none;
   color: white;
-  padding: 8px 12px;
-  border-radius: 6px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  flex: 1;
-  margin: 0 4px;
+  margin: 0 2px;
 }
 
 .action-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
 }
 
 .cart-btn:hover {
   background: var(--color-lavender);
   color: var(--color-dark-blue);
-  border-color: var(--color-lavender);
 }
 
 .favorite-btn.active {
   background: #ff4757;
-  border-color: #ff4757;
   color: white;
 }
 
 .favorite-btn:hover {
   background: #ff6b7d;
-  border-color: #ff6b7d;
   color: white;
 }
 
