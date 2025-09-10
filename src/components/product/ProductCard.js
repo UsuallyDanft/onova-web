@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ShoppingCart, Heart, ExternalLink } from 'lucide-react';
+import { ShoppingCart, Heart, ArrowUpRight } from 'lucide-react';
 import './ProductCard.css';
 
 export default function ProductCard({ product }) {
@@ -55,7 +55,7 @@ export default function ProductCard({ product }) {
           
           {/* Botón de ir a detalles */}
           <Link href={`/shop/product/${productData.slug}`} className="details-link">
-            <ExternalLink size={16} />
+            <ArrowUpRight size={16} />
           </Link>
         </div>
 
