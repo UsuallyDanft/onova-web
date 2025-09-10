@@ -110,20 +110,47 @@
   box-shadow: 0 0 0 4px rgba(228, 217, 255, 0.4);
 }
 
-.price-values {
+.price-inputs {
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--color-dark-gray);
+  gap: 12px;
+  margin-top: 8px;
 }
 
-.price-min,
-.price-max {
-  padding: 4px 8px;
-  background: var(--color-background);
+.price-input-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.price-input-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-dark-gray);
+  margin-bottom: 4px;
+}
+
+.price-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 2px solid #e5e7eb;
   border-radius: 6px;
-  border: 1px solid #e5e7eb;
+  background: var(--color-background);
+  color: var(--color-dark-gray);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.price-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(228, 217, 255, 0.2);
+}
+
+.price-input:hover {
+  border-color: #d1d5db;
 }
 
 /* Botón de cerrar para móvil */

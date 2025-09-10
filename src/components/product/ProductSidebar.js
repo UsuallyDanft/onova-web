@@ -21,6 +21,18 @@ export default function ProductSidebar({ onFiltersChange, isMobileOpen, onMobile
     // En el futuro, llamar onFiltersChange con los nuevos filtros
   };
 
+  const handleMinPriceChange = (e) => {
+    const value = parseFloat(e.target.value) || 1;
+    const clampedValue = Math.max(1, Math.min(value, priceRange[1] - 50));
+    setPriceRange([clampedValue, priceRange[1]]);
+  };
+
+  const handleMaxPriceChange = (e) => {
+    const value = parseFloat(e.target.value) || 10000;
+    const clampedValue = Math.min(10000, Math.max(value, priceRange[0] + 50));
+    setPriceRange([priceRange[0], clampedValue]);
+  };
+
   const handleCategoryChange = (newCategory) => {
     setCategory(newCategory);
     // En el futuro, llamar onFiltersChange con los nuevos filtros
@@ -133,9 +145,31 @@ export default function ProductSidebar({ onFiltersChange, isMobileOpen, onMobile
               />
             )}
           />
-          <div className="price-values">
-            <span className="price-min">{priceRange[0].toFixed(2)}</span>
-            <span className="price-max">{priceRange[1].toFixed(2)}</span>
+          <div className="price-inputs">
+            <div className="price-input-group">
+              <label className="price-input-label">Mín:</label>
+              <input
+                type="number"
+                className="price-input"
+                value={priceRange[0]}
+                onChange={handleMinPriceChange}
+                min={1}
+                max={priceRange[1] - 50}
+                step={50}
+              />
+            </div>
+            <div className="price-input-group">
+              <label className="price-input-label">Máx:</label>
+              <input
+                type="number"
+                className="price-input"
+                value={priceRange[1]}
+                onChange={handleMaxPriceChange}
+                min={priceRange[0] + 50}
+                max={10000}
+                step={50}
+              />
+            </div>
           </div>
         </div>
       </div>
