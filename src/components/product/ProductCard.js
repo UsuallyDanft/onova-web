@@ -77,19 +77,20 @@ export default function ProductCard({ product }) {
           </button>
         </div>
 
-        {/* Indicador de posición de imágenes */}
-        {productData.images.length > 1 && (
-          <div className="image-indicators">
-            {productData.images.map((_, index) => (
-              <div 
-                key={index}
-                className={`indicator ${index === currentImageIndex ? 'active' : ''}`}
-                onClick={() => setCurrentImageIndex(index)}
-              />
-            ))}
-          </div>
-        )}
       </div>
+
+      {/* Indicador de posición de imágenes */}
+      {productData.images.length > 1 && (
+        <div className="image-indicators">
+          {productData.images.map((_, index) => (
+            <div 
+              key={index}
+              className={`indicator ${index === currentImageIndex ? 'active' : ''}`}
+              onClick={() => setCurrentImageIndex(index)}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Sección de detalles */}
       <div className="product-details">
