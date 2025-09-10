@@ -20,7 +20,7 @@
 
 .shop-layout {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 280px 1fr;
   gap: 32px;
   align-items: start;
 }

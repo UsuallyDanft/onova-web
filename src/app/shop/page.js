@@ -8,9 +8,9 @@ export default function ShopPage() {
       <div className="shop-container">
         <h1>Tienda - Listado de Productos</h1>
         <div className="shop-layout">
-          {/* <aside className="shop-sidebar">
+          <aside className="shop-sidebar">
             <ProductSidebar />
-          </aside> */}
+          </aside>
           <section className="shop-products">
             <ProductGrid />
           </section>
