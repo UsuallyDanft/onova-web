@@ -57,32 +57,30 @@
 }
 
 .columns-btn {
-  background: var(--background);
-  border: 1px solid #e5e7eb;
+  background: transparent;
+  border: none;
   border-radius: 6px;
-  padding: 8px;
+  padding: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
 }
 
 .columns-btn:hover {
   background: #f3f4f6;
-  border-color: #d1d5db;
 }
 
 .columns-btn.active {
   background: var(--color-dark-blue);
-  border-color: var(--color-dark-blue);
 }
 
 .column-icon {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   filter: brightness(0) saturate(100%) opacity(0.6);
 }
 
