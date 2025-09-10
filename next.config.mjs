@@ -5,6 +5,12 @@ const nextConfig = {
   experimental: {
     allowedHosts: true,
   },
+  allowedDevOrigins: [
+    "127.0.0.1",
+    "localhost",
+    "*.replit.dev",
+    "*.replit.com"
+  ],
   async headers() {
     return [
       {
@@ -13,6 +19,10 @@ const nextConfig = {
           {
             key: 'X-Frame-Options',
             value: 'SAMEORIGIN',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'no-cache, no-store, must-revalidate',
           },
         ],
       },
