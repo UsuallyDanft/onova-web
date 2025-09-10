@@ -26,10 +26,6 @@
 }
 
 .shop-sidebar {
-  background: var(--color-light);
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 100px;
 }
@@ -45,9 +41,7 @@
     gap: 24px;
   }
   
-  .shop-sidebar {
-    padding: 20px;
-  }
+  /* Responsive adjustments handled by ProductSidebar component */
 }
 
 @media (max-width: 768px) {
