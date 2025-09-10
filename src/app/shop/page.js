@@ -1,5 +1,5 @@
 import ProductGrid from "./components/ProductGrid";
-import StoreFilters from "./components/StoreFilters";
+import ProductSidebar from "../../components/product/ProductSidebar";
 import './ShopPage.css';
 
 export default function ShopPage() {
@@ -9,7 +9,7 @@ export default function ShopPage() {
         <h1>Tienda - Listado de Productos</h1>
         <div className="shop-layout">
           <aside className="shop-sidebar">
-            <StoreFilters />
+            <ProductSidebar />
           </aside>
           <section className="shop-products">
             <ProductGrid />
