@@ -59,15 +59,13 @@
   justify-content: center;
   color: var(--color-dark-gray);
   text-decoration: none;
-  opacity: 0;
-  transform: translateY(-10px);
+  opacity: 1;
   transition: all 0.3s ease;
   z-index: 3;
 }
 
 .product-card:hover .details-link {
-  opacity: 1;
-  transform: translateY(0);
+  transform: translateY(-3px);
 }
 
 .details-link:hover {
