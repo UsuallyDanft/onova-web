@@ -3,42 +3,95 @@
   width: 100%;
 }
 
+/* Header con título y controlador */
+.product-grid-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 20px;
+}
+
 .product-grid h2 {
-  margin: 0 0 24px 0;
+  margin: 0;
   color: var(--color-dark-gray);
   font-size: 24px;
   font-weight: 600;
+  flex: 1;
 }
 
+/* Contenedor de productos con columnas dinámicas */
 .products-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
   width: 100%;
   justify-items: center;
 }
 
+/* Configuraciones de columnas para desktop */
+.products-container[data-columns="3"] {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.products-container[data-columns="4"] {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.products-container[data-columns="5"] {
+  grid-template-columns: repeat(5, 1fr);
+}
+
 /* Responsive Design */
-@media (max-width: 768px) {
-  .products-container {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+@media (max-width: 968px) {
+  .product-grid-header {
+    flex-direction: column;
+    align-items: flex-start;
     gap: 16px;
   }
   
   .product-grid h2 {
+    font-size: 22px;
+  }
+  
+  /* Forzar 2 columnas en tablet */
+  .products-container[data-columns="3"],
+  .products-container[data-columns="4"],
+  .products-container[data-columns="5"] {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .product-grid-header {
+    margin-bottom: 20px;
+  }
+  
+  .product-grid h2 {
     font-size: 20px;
-    margin-bottom: 16px;
+  }
+  
+  .products-container {
+    gap: 16px;
+  }
+  
+  /* Una sola columna en móvil */
+  .products-container[data-columns="3"],
+  .products-container[data-columns="4"],
+  .products-container[data-columns="5"] {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 480px) {
-  .products-container {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 12px;
+  .product-grid-header {
+    margin-bottom: 16px;
   }
   
   .product-grid h2 {
     font-size: 18px;
-    margin-bottom: 12px;
+  }
+  
+  .products-container {
+    gap: 12px;
   }
 }
