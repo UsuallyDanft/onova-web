@@ -6,7 +6,7 @@ import { ChevronDown, X } from 'lucide-react';
 import './ProductSidebar.css';
 
 export default function ProductSidebar({ onFiltersChange, isMobileOpen, onMobileClose }) {
-  const [priceRange, setPriceRange] = useState([0, 10000]);
+  const [priceRange, setPriceRange] = useState([1, 10000]);
   const [category, setCategory] = useState('Todos');
   const [sortOrder, setSortOrder] = useState('Por precio');
   const [tag, setTag] = useState('Ninguno');
@@ -113,8 +113,8 @@ export default function ProductSidebar({ onFiltersChange, isMobileOpen, onMobile
         <div className="price-range-container">
           <Range
             step={50}
-            min={0}
-            max={100000}
+            min={1}
+            max={10000}
             values={priceRange}
             onChange={handlePriceChange}
             renderTrack={({ props, children }) => (
