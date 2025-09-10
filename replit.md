@@ -8,6 +8,7 @@ Onova Web is a modern Next.js web application for Onovatech, a technology compan
 - **Navigation Enhancement**: Implemented dropdown menus for Tienda and Comunidad sections with smooth animations and proper mobile support in the sliding menu.
 - **New Store Module**: Created complete store infrastructure with routes for products (/shop), categories (/shop/categories), product details (/shop/product/[slug]), and checkout (/checkout).
 - **English Directory Structure**: Converted all Spanish directory names to English for better developer experience and international standards (/tienda → /shop, /categorias → /categories, /producto → /product).
+- **ProductCard Component**: Created sophisticated product card component with image rotation, hover effects, interactive action buttons (cart/favorites), image indicators, and responsive design following the 4-section layout specification.
 
 # User Preferences
 
