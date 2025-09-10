@@ -4,6 +4,7 @@
   align-items: center;
   gap: 20px;
   padding: 8px 0;
+  margin-left: -20px;
 }
 
 /* Selector de Cantidad */
@@ -38,7 +39,7 @@
 }
 
 .quantity-btn.active {
-  background: var(--color-dark-gray);
+  background: #9ca3af;
   color: white;
 }
 
@@ -75,8 +76,8 @@
 }
 
 .columns-btn.active {
-  background: var(--color-dark-gray);
-  border-color: var(--color-dark-gray);
+  background: #9ca3af;
+  border-color: #9ca3af;
 }
 
 .column-icon {
