@@ -90,18 +90,23 @@
   pointer-events: auto;
 }
 
-/* Área de hover para activar acciones */
-.actions-hover-area {
+/* Hover en la parte inferior del contenedor de imagen */
+.product-image-container {
+  position: relative;
+}
+
+.product-image-container::after {
+  content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60px;
+  height: 50px;
   z-index: 1;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
-.actions-hover-area:hover ~ .product-actions,
+.product-image-container:hover .product-actions,
 .product-actions:hover {
   transform: translateY(0);
 }
