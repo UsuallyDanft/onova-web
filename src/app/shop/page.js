@@ -6,7 +6,6 @@ export default function ShopPage() {
   return (
     <main className="shop-page">
       <div className="shop-container">
-        <h1>Tienda - Listado de Productos</h1>
         <div className="shop-layout">
           <aside className="shop-sidebar">
             <ProductSidebar />
