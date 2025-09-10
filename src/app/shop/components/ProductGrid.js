@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from 'react';
 import ProductCard from '../../../components/product/ProductCard';
 import ProductViewController from '../../../components/product/ProductViewController';
