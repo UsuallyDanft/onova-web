@@ -23,7 +23,6 @@ const nextConfig = {
     ]
   },
 
-  // para iconos svg
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
