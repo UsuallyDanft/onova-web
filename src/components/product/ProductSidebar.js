@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { Range } from 'react-range';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, X } from 'lucide-react';
 import './ProductSidebar.css';
 
-export default function ProductSidebar({ onFiltersChange }) {
+export default function ProductSidebar({ onFiltersChange, isMobileOpen, onMobileClose }) {
   const [priceRange, setPriceRange] = useState([0, 10000]);
   const [category, setCategory] = useState('Todos');
   const [sortOrder, setSortOrder] = useState('Por precio');
@@ -37,7 +37,23 @@ export default function ProductSidebar({ onFiltersChange }) {
   };
 
   return (
-    <div className="product-sidebar">
+    <div 
+      className={`product-sidebar ${isMobileOpen ? 'mobile-open' : ''}`}
+      role={isMobileOpen ? "dialog" : undefined}
+      aria-modal={isMobileOpen ? "true" : undefined}
+      aria-label="Filtros de productos"
+    >
+      {/* Botón X para cerrar en móvil */}
+      {isMobileOpen && (
+        <button 
+          className="mobile-close-button" 
+          onClick={onMobileClose}
+          aria-label="Cerrar filtros"
+        >
+          <X size={24} />
+        </button>
+      )}
+      
       <h3 className="sidebar-title">Filtros</h3>
 
       {/* Categoría */}

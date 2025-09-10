@@ -126,6 +126,31 @@
   border: 1px solid #e5e7eb;
 }
 
+/* Botón de cerrar para móvil */
+.mobile-close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: var(--color-dark-gray);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  z-index: 1001;
+}
+
+.mobile-close-button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  transform: scale(1.1);
+}
+
 /* Estados responsivos */
 @media (max-width: 1024px) {
   .product-sidebar {
@@ -136,12 +161,29 @@
 
 @media (max-width: 768px) {
   .product-sidebar {
-    padding: 20px;
+    /* Menú deslizable en móvil */
+    position: fixed;
+    top: 0;
+    right: -100%; /* Oculto fuera de la pantalla */
+    width: 320px;
+    height: 100vh;
+    background: var(--color-light);
+    z-index: 1000;
+    transition: right 0.3s ease-in-out;
+    padding: 80px 24px 24px 24px; /* Espacio para el botón cerrar */
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    margin-bottom: 0;
+  }
+  
+  .product-sidebar.mobile-open {
+    right: 0; /* Mostrar el menú */
   }
   
   .sidebar-title {
     font-size: 18px;
     margin-bottom: 20px;
+    margin-top: 0;
   }
   
   .filter-section {

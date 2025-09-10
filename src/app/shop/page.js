@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Filter } from 'lucide-react';
 import ProductGrid from "./components/ProductGrid";
 import ProductSidebar from "../../components/product/ProductSidebar";
@@ -17,6 +17,32 @@ export default function ShopPage() {
     setIsMobileFiltersOpen(false);
   };
 
+  // Bloquear scroll del body cuando el menú móvil está abierto
+  useEffect(() => {
+    if (isMobileFiltersOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    // Cleanup al desmontar o cambiar el estado
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileFiltersOpen]);
+
+  // Manejar tecla Escape para cerrar el menú
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && isMobileFiltersOpen) {
+        closeMobileFilters();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isMobileFiltersOpen]);
+
   return (
     <main className="shop-page">
       <div className="shop-container">
@@ -27,6 +53,14 @@ export default function ShopPage() {
             <span>Filtros</span>
           </button>
         </div>
+        
+        {/* Overlay/backdrop para móvil */}
+        {isMobileFiltersOpen && (
+          <div 
+            className="mobile-filters-overlay" 
+            onClick={closeMobileFilters}
+          />
+        )}
         
         <div className="shop-layout">
           <aside className="shop-sidebar">

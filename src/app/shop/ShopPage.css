@@ -44,15 +44,60 @@
   /* Responsive adjustments handled by ProductSidebar component */
 }
 
+/* Botón de filtros para móvil */
+.mobile-filters-header {
+  display: none;
+}
+
 @media (max-width: 768px) {
+  .mobile-filters-header {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .mobile-filters-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--color-dark-blue);
+    color: var(--color-light);
+    border: none;
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .mobile-filters-button:hover {
+    background: var(--color-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Overlay/backdrop para el menú móvil */
+  .mobile-filters-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    cursor: pointer;
+  }
+
   .shop-layout {
     grid-template-columns: 1fr;
     gap: 20px;
   }
   
   .shop-sidebar {
+    /* Mantener visible para que el menú móvil funcione */
+    display: block;
     position: static;
-    order: 2;
   }
   
   .shop-products {
