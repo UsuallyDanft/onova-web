@@ -9,6 +9,8 @@ Onova Web is a modern Next.js web application for Onovatech, a technology compan
 - **New Store Module**: Created complete store infrastructure with routes for products (/shop), categories (/shop/categories), product details (/shop/product/[slug]), and checkout (/checkout).
 - **English Directory Structure**: Converted all Spanish directory names to English for better developer experience and international standards (/tienda → /shop, /categorias → /categories, /producto → /product).
 - **ProductCard Component**: Created sophisticated product card component with image rotation, hover effects, interactive action buttons (cart/favorites), image indicators, and responsive design following the 4-section layout specification.
+- **ProductCard Hover Precision**: Refined hover interaction to activate only in a specific 40px area at the bottom of the product image, using JavaScript state management for precise control over when action buttons appear.
+- **ProductSidebar Component**: Developed comprehensive filter sidebar with category selection, sort options, tag filtering, and integrated price range slider using react-range library for smooth user interaction and future filter functionality.
 
 # User Preferences
 
@@ -53,6 +55,7 @@ Preferred communication style: Simple, everyday language.
 - **@gsap/react 2.1.2**: React hooks and components for GSAP integration
 - **Lucide React 0.542.0**: Modern icon library with React components
 - **React Icons 5.5.0**: Popular icon library with multiple icon sets
+- **React Range 1.10.0**: Lightweight and customizable range slider component for price filtering and user input controls
 
 ## Styling and Development Tools
 - **Tailwind CSS 4**: Utility-first CSS framework with PostCSS integration
