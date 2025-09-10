@@ -39,7 +39,7 @@
 }
 
 .quantity-btn.active {
-  background: #9ca3af;
+  background: var(--color-dark-blue);
   color: white;
 }
 
@@ -76,8 +76,8 @@
 }
 
 .columns-btn.active {
-  background: #9ca3af;
-  border-color: #9ca3af;
+  background: var(--color-dark-blue);
+  border-color: var(--color-dark-blue);
 }
 
 .column-icon {
