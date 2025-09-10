@@ -33,6 +33,17 @@ export default function ProductViewController({
 
   return (
     <div className="product-view-controller">
+      {/* Botón de Filtros - Solo visible en móvil */}
+      {onFiltersToggle && (
+        <button 
+          className="filters-btn mobile-only"
+          onClick={onFiltersToggle}
+          title="Filtros"
+        >
+          <Filter size={16} />
+        </button>
+      )}
+
       {/* Selector de Cantidad */}
       <div className="quantity-selector">
         <span className="selector-label">Ver:</span>
@@ -48,17 +59,6 @@ export default function ProductViewController({
           </React.Fragment>
         ))}
       </div>
-
-      {/* Botón de Filtros - Solo visible en móvil */}
-      {onFiltersToggle && (
-        <button 
-          className="filters-btn mobile-only"
-          onClick={onFiltersToggle}
-          title="Filtros"
-        >
-          <Filter size={16} />
-        </button>
-      )}
 
       {/* Selector de Columnas - Solo visible en desktop */}
       <div className="columns-selector desktop-only">
