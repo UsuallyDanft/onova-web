@@ -196,7 +196,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .product-card {
-    max-width: 260px;
+    max-width: 300px;
   }
   
   .product-details {
@@ -219,7 +219,7 @@
 
 @media (max-width: 480px) {
   .product-card {
-    max-width: 220px;
+    max-width: 280px;
   }
   
   .product-actions {
