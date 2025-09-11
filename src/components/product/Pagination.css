@@ -32,11 +32,11 @@
 
 .page-btn:hover,
 .next-btn:hover {
-  background: #f3f4f6;
+  background: #d8d9d9;
 }
 
 .page-btn.active {
-  background: var(--color-dark-gray);
+  background: var(--color-dark-blue);
   color: white;
 }
 

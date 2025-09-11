@@ -2,6 +2,7 @@
 
 import React from 'react';
 import './Pagination.css';
+import { ChevronRight } from 'lucide-react';
 
 export default function Pagination({ 
   currentPage = 1, 
@@ -11,6 +12,7 @@ export default function Pagination({
   const handlePageClick = (page) => {
     if (page !== currentPage && page >= 1 && page <= totalPages) {
       onPageChange(page);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -42,7 +44,7 @@ export default function Pagination({
             className="next-btn"
             onClick={() => handlePageClick(currentPage + 1)}
           >
-            →
+            <ChevronRight />
           </button>
         )}
       </div>
