@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ShoppingCart, Heart, ArrowUpRight } from 'lucide-react';
 import './ProductCard.css';
 
@@ -9,75 +10,57 @@ export default function ProductCard({ product }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [showActions, setShowActions] = useState(false);
 
-  // Datos por defecto del producto
+  // La URL de la API de Strapi sin el sufijo /api
+  const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL?.replace('/api', '');
+
+  // Lectrura simplificada de los datos del producto
   const productData = {
     id: product?.id || '1',
     name: product?.name || 'Título del producto',
-    price: product?.price || '12.15',
-    images: product?.images || ['/placeholder-product-1.jpg', '/placeholder-product-2.jpg', '/placeholder-product-3.jpg'],
-    slug: product?.slug || 'producto-ejemplo'
+    price: product?.price || '0.00',
+    slug: product?.slug || 'producto-ejemplo',
+    images: product?.images?.map(img => 
+      `${STRAPI_URL}${img.url}`
+    ) || ['/placeholder-product-1.jpg'],
   };
 
-  // Función para rotar imágenes
   const handleImageClick = () => {
-    setCurrentImageIndex((prevIndex) => 
-      (prevIndex + 1) % productData.images.length
-    );
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % productData.images.length);
   };
-
-  // Función para agregar al carrito
-  const handleAddToCart = () => {
-    console.log('Agregado al carrito:', productData.name);
-    // Aquí iría la lógica del carrito
-  };
-
-  // Función para toggle favoritos
-  const handleToggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-    console.log('Favorito toggled:', productData.name);
-  };
+  const handleAddToCart = () => { console.log('Agregado al carrito:', productData.name); };
+  const handleToggleFavorite = () => { setIsFavorite(!isFavorite); };
 
   return (
     <div className="product-card">
-      {/* Sección de imagen del producto */}
       <div className="product-image-container">
         <div 
           className="product-image"
           onClick={handleImageClick}
           style={{ cursor: 'pointer' }}
         >
-          <img 
-            src={productData.images[currentImageIndex]} 
+          <Image
+            src={productData.images[currentImageIndex]}
             alt={productData.name}
-            onError={(e) => {
-              e.target.src = '/placeholder-product.jpg';
-            }}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            style={{ objectFit: 'cover' }}
+            onError={(e) => { e.target.src = '/placeholder-product.jpg'; }}
           />
-          
-          {/* Botón de ir a detalles */}
           <Link href={`/shop/product/${productData.slug}`} className="details-link">
             <ArrowUpRight size={20} />
           </Link>
-
-          {/* Área específica para activar hover de acciones */}
           <div 
             className="hover-trigger-area"
             onMouseEnter={() => setShowActions(true)}
             onMouseLeave={() => setShowActions(false)}
           ></div>
         </div>
-
-        {/* Sección de acciones (oculta por defecto, aparece en hover) */}
         <div 
           className={`product-actions ${showActions ? 'visible' : ''}`}
           onMouseEnter={() => setShowActions(true)}
           onMouseLeave={() => setShowActions(false)}
         >
-          <button 
-            className="action-btn cart-btn"
-            onClick={handleAddToCart}
-            title="Agregar al carrito"
-          >
+          <button className="action-btn cart-btn" onClick={handleAddToCart} title="Agregar al carrito">
             <ShoppingCart size={20} />
           </button>
           <button 
@@ -88,10 +71,7 @@ export default function ProductCard({ product }) {
             <Heart size={20} fill={isFavorite ? 'currentColor' : 'none'} />
           </button>
         </div>
-
       </div>
-
-      {/* Indicador de posición de imágenes */}
       {productData.images.length > 1 && (
         <div className="image-indicators">
           {productData.images.map((_, index) => (
@@ -103,11 +83,9 @@ export default function ProductCard({ product }) {
           ))}
         </div>
       )}
-
-      {/* Sección de detalles */}
       <div className="product-details">
         <h3 className="product-name">{productData.name}</h3>
-        <p className="product-price">{productData.price} $</p>
+        <p className="product-price">{parseFloat(productData.price).toFixed(2)} $</p>
       </div>
     </div>
   );

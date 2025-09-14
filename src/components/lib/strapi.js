@@ -1,6 +1,6 @@
 export async function queryAPI(path) {
-    const strapiHost = process.env.NEXT_PUBLIC_STRAPI_HOST;
-    const strapiToken = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+    const strapiHost = process.env.NEXT_PUBLIC_STRAPI_URL;
+    const strapiToken = process.env.STRAPI_API_TOKEN;
   
     if (!strapiHost) {
       console.error("Error: El host de Strapi no está configurado.");

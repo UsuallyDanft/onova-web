@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Filter } from 'lucide-react';
 import './ProductViewController.css';
+import Image from 'next/image'; 
 
 export default function ProductViewController({ 
   onQuantityChange = () => {}, 
@@ -16,9 +17,9 @@ export default function ProductViewController({
 
   const quantityOptions = [15, 20, 35];
   const columnOptions = [
-    { value: 5, iconPath: '/icons/square-small.svg' },
+    { value: 3, iconPath: '/icons/square-big.svg' },
     { value: 4, iconPath: '/icons/square-medium.svg' },
-    { value: 3, iconPath: '/icons/square-big.svg' }
+    { value: 5, iconPath: '/icons/square-small.svg' }
   ];
 
   const handleQuantityClick = (quantity) => {
@@ -69,11 +70,13 @@ export default function ProductViewController({
             onClick={() => handleColumnsClick(option.value)}
             title={`${option.value} columnas`}
           >
-            <img 
-              src={option.iconPath} 
+            <Image
+              src={option.iconPath}
               alt={`${option.value} columnas`}
               className="column-icon"
-            />
+              width={20}
+              height={20}
+          />
           </button>
         ))}
       </div>
