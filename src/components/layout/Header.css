@@ -397,3 +397,37 @@
         width: 100%; /* Menú ocupa toda la pantalla en móviles muy pequeños */
     }
 }
+/* --- Pega esto al final de tu archivo Header.css --- */
+
+/* Wrapper para el botón del carrito para posicionar la insignia */
+.cart-button-wrapper {
+    position: relative;
+  }
+  
+  /* Estilo de la insignia (el número) */
+  .cart-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #ff4444; /* Un color rojo llamativo */
+    color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    border: 2px solid var(--color-dark-blue); /* Borde del mismo color que el fondo del header */
+    transform: translate(30%, -30%); /* Ajusta la posición para que quede bien */
+  }
+  
+  /* Estilo para la insignia en el menú móvil */
+  .mobile-shop-icons .cart-badge {
+      border-color: var(--color-dark-blue); /* Asegura el color de borde correcto */
+      /* Puedes ajustar la posición si es necesario para el menú móvil */
+      right: auto;
+      left: 15px;
+      top: 5px;
+  }

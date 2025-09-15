@@ -1,14 +1,55 @@
 :root {
-  /* Paleta de colores Onovatech */
-  --color-dark-gray: #30343f;      /* Gris oscuro para texto principal */
-  --color-light: #fafaff;          /* Blanco/crema para fondos claros */
-  --color-lavender: #e4d9ff;       /* Lavanda para acentos */
-  --color-dark-blue: #273469;      /* Azul oscuro principal */
-  --color-darker-blue: #1e2749;    /* Azul muy oscuro para contrastes */
+  /* =================================== */
+  /* === Paleta de colores Onovatech === */
+  /* =================================== */
+  --color-dark-gray: #30343f;   /* Gris oscuro para texto principal */
+  --color-light: #fafaff;       /* Blanco/crema para fondos claros */
+  --color-lavender: #e4d9ff;    /* Lavanda para acentos suaves */
+  --color-dark-blue: #273469;   /* Azul oscuro principal */
+  --color-darker-blue: #1e2749; /* Azul muy oscuro para contrastes */
   
-  /* Variables semánticas */
-  --background: var(--color-light);
-  --foreground: var(--color-dark-gray);
+  /* ============================================================== */
+  /* === Variables Semánticas para Componentes (¡Esto es lo nuevo!) === */
+  /* ============================================================== */
+  
+  /* Fondos */
+  --bg-primary: var(--color-light);         /* Fondo principal de la página */
+  --bg-secondary: #ffffff;                  /* Fondo para tarjetas y modales (blanco puro) */
+  
+  /* Textos */
+  --text-primary: var(--color-dark-gray);   /* Texto principal y títulos */
+  --text-secondary: #5a5f6b;                /* Texto secundario (un gris más suave) */
+  
+  /* Bordes y Sombras */
+  --border-color: #e4e4e7;                  /* Bordes suaves */
+  --shadow-color: rgba(0, 0, 0, 0.1);       /* Sombra para dar profundidad */
+
+  /* Acentos y Colores Interactivos */
+  --accent-color: var(--color-dark-blue);   /* Color principal para botones y enlaces */
+  --accent-hover: var(--color-darker-blue); /* Color para cuando el mouse pasa por encima */
+}
+
+/* El resto de tu archivo globals.css no necesita cambios */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-monserrat); 
+}
+
+body {
+  background: var(--bg-primary); /* Ahora usará tu color --color-light */
+  color: var(--text-primary);   /* Ahora usará tu color --color-dark-gray */
+  font-family: var(--font-lato);
+  padding-top: 70px;
 }
 
 /* Reset y configuración base para responsividad */

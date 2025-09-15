@@ -1,8 +1,8 @@
 'use client';
 // Pagina principal de la tienda - contiene todo lo que interactua con el usuario
 import { useState, useEffect } from 'react';
-import ProductGrid from "./components/ProductGrid";
-import ProductSidebar from "../../components/product/ProductSidebar";
+import ProductGrid from "@/components/shop/ProductGrid";
+import ProductSidebar from "@/components/product/ProductSidebar";
 import './ShopPage.css';
 
 // Acepta 'products' como una prop

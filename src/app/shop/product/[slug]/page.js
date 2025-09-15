@@ -1,5 +1,6 @@
-import ImageGallery from "./components/ImageGallery";
-import ProductActions from "./components/ProductActions";
+import ImageGallery from "@/components/product/ImageGallery";
+import ProductActions from "@/components/product/ProductActions";
+
 
 export default function ProductPage({ params }) {
   const { slug } = params;

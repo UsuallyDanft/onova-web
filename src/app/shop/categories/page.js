@@ -1,4 +1,4 @@
-import CategoryGrid from "./components/CategoryGrid";
+import CategoryGrid from "@/components/shop/CategoryGrid";
 
 export default function CategoriesPage() {
   return (

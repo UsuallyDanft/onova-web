@@ -1,6 +1,7 @@
 import { Montserrat, Lato } from "next/font/google";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import { CartProvider } from "@/components/context/cartContext";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -25,9 +26,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${montserrat.variable} ${lato.variable} antialiased`}
       >
+        <CartProvider>
         <Header /> 
         {children}
         <Footer />
+        </CartProvider>
       </body>
     </html>
   );
