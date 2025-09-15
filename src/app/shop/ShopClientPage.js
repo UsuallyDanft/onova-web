@@ -1,5 +1,5 @@
 'use client';
-
+// Pagina principal de la tienda - contiene todo lo que interactua con el usuario
 import { useState, useEffect } from 'react';
 import ProductGrid from "./components/ProductGrid";
 import ProductSidebar from "../../components/product/ProductSidebar";
