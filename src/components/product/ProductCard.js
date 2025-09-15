@@ -1,19 +1,21 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ShoppingCart, Heart, ArrowUpRight } from 'lucide-react';
 import './ProductCard.css';
+import { useCart } from '../context/cartContext';
 
 export default function ProductCard({ product }) {
+  // Extraer funciones del contexto del carrito
+  const { addToCart, getItemQuantity, items } = useCart();
+  
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
   const [showActions, setShowActions] = useState(false);
 
-  // La URL de la API de Strapi sin el sufijo /api
   const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL?.replace('/api', '');
 
-  // Lectrura simplificada de los datos del producto
   const productData = {
     id: product?.id || '1',
     name: product?.name || 'Título del producto',
@@ -22,12 +24,30 @@ export default function ProductCard({ product }) {
     images: product?.images?.map(img => 
       `${STRAPI_URL}${img.url}`
     ) || ['/placeholder-product-1.jpg'],
+    stock: product?.stock || 0,
   };
+  
+  // Calcular el stock disponible restando la cantidad en el carrito
+  const quantityInCart = getItemQuantity(productData.id);
+  const availableStock = productData.stock - quantityInCart;
+
+  const imageUrl = productData.images.length > 0 ? productData.images[0] : '/placeholder-product-1.jpg';
 
   const handleImageClick = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % productData.images.length);
   };
-  const handleAddToCart = () => { console.log('Agregado al carrito:', productData.name); };
+  
+  // condicion para comprobar se hay stock
+  const handleAddToCart = () => {
+    if (availableStock <= 0) {
+      return;
+    }
+    
+    const productWithImage = { ...product, imageUrl: imageUrl };
+    addToCart(productWithImage, 1);
+    console.log('Agregado al carrito:', productData.name);
+  };
+
   const handleToggleFavorite = () => { setIsFavorite(!isFavorite); };
 
   return (
@@ -60,7 +80,13 @@ export default function ProductCard({ product }) {
           onMouseEnter={() => setShowActions(true)}
           onMouseLeave={() => setShowActions(false)}
         >
-          <button className="action-btn cart-btn" onClick={handleAddToCart} title="Agregar al carrito">
+          {/* Desactiva el boton cuando no hay mas stock */}
+          <button 
+            className="action-btn cart-btn" 
+            onClick={handleAddToCart} 
+            title="Agregar al carrito"
+            disabled={availableStock <= 0}
+          >
             <ShoppingCart size={20} />
           </button>
           <button 
@@ -86,6 +112,8 @@ export default function ProductCard({ product }) {
       <div className="product-details">
         <h3 className="product-name">{productData.name}</h3>
         <p className="product-price">{parseFloat(productData.price).toFixed(2)} $</p>
+        {/* muestra el stock disponible 
+        <p className="product-stock">{availableStock > 0 ? `${availableStock} disponibles` : 'Sin stock'}</p> */}
       </div>
     </div>
   );
