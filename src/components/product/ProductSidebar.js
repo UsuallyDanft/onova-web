@@ -5,47 +5,69 @@ import { Range } from 'react-range';
 import { ChevronDown, X } from 'lucide-react';
 import './ProductSidebar.css';
 
-export default function ProductSidebar({ onFiltersChange, isMobileOpen, onMobileClose }) {
+export default function ProductSidebar({ 
+  onFiltersChange, 
+  isMobileOpen, 
+  onMobileClose, 
+  categories = [], 
+  tags = [] 
+}) {
+  // Estado local para controlar los valores de los inputs del sidebar
   const [priceRange, setPriceRange] = useState([1, 10000]);
   const [category, setCategory] = useState('Todos');
   const [sortOrder, setSortOrder] = useState('Por precio');
   const [tag, setTag] = useState('Ninguno');
 
-  // Opciones para los dropdowns
-  const categories = ['Todos', 'Software', 'IA y Machine Learning', 'Desarrollo Web', 'Móvil', 'Diseño', 'Productividad'];
+  // Opciones estáticas para el dropdown de orden
   const sortOptions = ['Por precio', 'Menor precio', 'Mayor precio', 'Más popular', 'Más reciente', 'Mejor valorados'];
-  const tags = ['Ninguno', 'Nuevo', 'Promoción', 'Bestseller', 'Gratis', 'Premium', 'Empresarial'];
 
+  // Función centralizada para notificar al componente padre de cualquier cambio en los filtros
+  const notifyParentOfChange = (updatedFilters) => {
+    // Llama a la función onFiltersChange pasada por props
+    onFiltersChange({
+      priceRange,
+      category,
+      sortOrder,
+      tag,
+      ...updatedFilters // Aplica los cambios más recientes
+    });
+  };
+
+  // Handlers para cada uno de los filtros
   const handlePriceChange = (values) => {
     setPriceRange(values);
-    // En el futuro, llamar onFiltersChange con los nuevos filtros
+    notifyParentOfChange({ priceRange: values });
   };
 
   const handleMinPriceChange = (e) => {
     const value = parseFloat(e.target.value) || 1;
     const clampedValue = Math.max(1, Math.min(value, priceRange[1] - 50));
-    setPriceRange([clampedValue, priceRange[1]]);
+    const newPriceRange = [clampedValue, priceRange[1]];
+    setPriceRange(newPriceRange);
+    notifyParentOfChange({ priceRange: newPriceRange });
   };
 
   const handleMaxPriceChange = (e) => {
     const value = parseFloat(e.target.value) || 10000;
     const clampedValue = Math.min(10000, Math.max(value, priceRange[0] + 50));
-    setPriceRange([priceRange[0], clampedValue]);
+    const newPriceRange = [priceRange[0], clampedValue];
+    setPriceRange(newPriceRange);
+    notifyParentOfChange({ priceRange: newPriceRange });
   };
 
   const handleCategoryChange = (newCategory) => {
     setCategory(newCategory);
-    // En el futuro, llamar onFiltersChange con los nuevos filtros
+    notifyParentOfChange({ category: newCategory });
   };
 
   const handleSortChange = (newSort) => {
     setSortOrder(newSort);
-    // En el futuro, llamar onFiltersChange con los nuevos filtros
+    notifyParentOfChange({ sortOrder: newSort });
   };
 
   const handleTagChange = (newTag) => {
     setTag(newTag);
-    // En el futuro, llamar onFiltersChange con los nuevos filtros
+    notifyParentOfChange({ tag: newTag });
   };
 
   return (
@@ -55,7 +77,6 @@ export default function ProductSidebar({ onFiltersChange, isMobileOpen, onMobile
       aria-modal={isMobileOpen ? "true" : undefined}
       aria-label="Filtros de productos"
     >
-      {/* Botón X para cerrar en móvil */}
       {isMobileOpen && (
         <button 
           className="mobile-close-button" 
@@ -68,7 +89,7 @@ export default function ProductSidebar({ onFiltersChange, isMobileOpen, onMobile
       
       <h3 className="sidebar-title">Filtros</h3>
 
-      {/* Categoría */}
+      {/* Sección de Categoría (dinámica) */}
       <div className="filter-section">
         <label className="filter-label">Categoría:</label>
         <div className="custom-select">
@@ -77,15 +98,16 @@ export default function ProductSidebar({ onFiltersChange, isMobileOpen, onMobile
             onChange={(e) => handleCategoryChange(e.target.value)}
             className="select-input"
           >
+            <option value="Todos">Todos</option>
             {categories.map(cat => (
-              <option key={cat} value={cat}>{cat}</option>
+              <option key={cat.id} value={cat.name}>{cat.name}</option>
             ))}
           </select>
           <ChevronDown className="select-arrow" size={16} />
         </div>
       </div>
 
-      {/* Orden */}
+      {/* Sección de Orden */}
       <div className="filter-section">
         <label className="filter-label">Orden:</label>
         <div className="custom-select">
@@ -102,7 +124,7 @@ export default function ProductSidebar({ onFiltersChange, isMobileOpen, onMobile
         </div>
       </div>
 
-      {/* Etiqueta */}
+      {/* Sección de Etiqueta (dinámica) */}
       <div className="filter-section">
         <label className="filter-label">Etiqueta:</label>
         <div className="custom-select">
@@ -111,15 +133,16 @@ export default function ProductSidebar({ onFiltersChange, isMobileOpen, onMobile
             onChange={(e) => handleTagChange(e.target.value)}
             className="select-input"
           >
+            <option value="Ninguno">Ninguno</option>
             {tags.map(tagOption => (
-              <option key={tagOption} value={tagOption}>{tagOption}</option>
+              <option key={tagOption.id} value={tagOption.name}>{tagOption.name}</option>
             ))}
           </select>
           <ChevronDown className="select-arrow" size={16} />
         </div>
       </div>
 
-      {/* Rango de precio */}
+      {/* Sección de Rango de Precio */}
       <div className="filter-section">
         <label className="filter-label">Rango de precio:</label>
         <div className="price-range-container">
@@ -130,19 +153,12 @@ export default function ProductSidebar({ onFiltersChange, isMobileOpen, onMobile
             values={priceRange}
             onChange={handlePriceChange}
             renderTrack={({ props, children }) => (
-              <div
-                {...props}
-                className="range-track"
-              >
+              <div {...props} className="range-track">
                 {children}
               </div>
             )}
             renderThumb={({ props, index }) => (
-              <div
-                {...props}
-                className="range-thumb"
-                key={index}
-              />
+              <div {...props} className="range-thumb" key={index} />
             )}
           />
           <div className="price-inputs">

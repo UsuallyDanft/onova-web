@@ -1,0 +1,23 @@
+# Variables para la API de Strapi
+@strapiHost = http://localhost:1337
+@strapiToken = df8ee6866e64789a767c2fb77a91795edd6f4d0ab49294c7560d3855aa5bac0444099ffa27461dad7fde6eb0046aeaf70f107dbfa7b47f30a5e9542fce3ec7ff8763c0d37be97e79b4a00219d39537735127bf52c3141cf54e82b0c9a1ca8d72d06d5d53b48452717bc4394c319108d9eda49b96f42afffbf165e5e33e967651
+@contentType = application/json
+
+### 1. Obtener todos los productos
+# El parámetro `populate=images` le dice a Strapi que incluya los datos de las imágenes relacionadas.
+# Puedes usar `populate=*` para incluir TODAS las relaciones (categorías, etiquetas, etc.).
+GET {{strapiHost}}/api/products?populate=images
+Authorization: Bearer {{strapiToken}}
+Content-Type: {{contentType}}
+
+### 2. Obtener todas las categorías
+# Esta es una consulta simple para obtener la lista de todas las categorías.
+GET {{strapiHost}}/api/categories
+Authorization: Bearer {{strapiToken}}
+Content-Type: {{contentType}}
+
+### 3. Obtener todas las etiquetas (tags)
+# Similar a las categorías, esto te traerá todas las etiquetas que has creado.
+GET {{strapiHost}}/api/tags
+Authorization: Bearer {{strapiToken}}
+Content-Type: {{contentType}}
