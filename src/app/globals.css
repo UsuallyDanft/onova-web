@@ -1,89 +1,83 @@
+/* ============================================= */
+/* === 1. DEFINICIÓN DE VARIABLES GLOBALES === */
+/* ============================================= */
 :root {
-  /* =================================== */
-  /* === Paleta de colores Onovatech === */
-  /* =================================== */
+  /* Paleta de colores principal */
   --color-dark-gray: #30343f;   /* Gris oscuro para texto principal */
   --color-light: #fafaff;       /* Blanco/crema para fondos claros */
-  --color-lavender: #e4d9ff;    /* Lavanda para acentos suaves */
+  --color-lavender: #e4d9ff;     /* Lavanda para acentos suaves */
   --color-dark-blue: #273469;   /* Azul oscuro principal */
   --color-darker-blue: #1e2749; /* Azul muy oscuro para contrastes */
-  
-  /* ============================================================== */
-  /* === Variables Semánticas para Componentes (¡Esto es lo nuevo!) === */
-  /* ============================================================== */
-  
-  /* Fondos */
-  --bg-primary: var(--color-light);         /* Fondo principal de la página */
-  --bg-secondary: #ffffff;                  /* Fondo para tarjetas y modales (blanco puro) */
-  
-  /* Textos */
-  --text-primary: var(--color-dark-gray);   /* Texto principal y títulos */
-  --text-secondary: #5a5f6b;                /* Texto secundario (un gris más suave) */
-  
-  /* Bordes y Sombras */
-  --border-color: #e4e4e7;                  /* Bordes suaves */
-  --shadow-color: rgba(0, 0, 0, 0.1);       /* Sombra para dar profundidad */
 
-  /* Acentos y Colores Interactivos */
-  --accent-color: var(--color-dark-blue);   /* Color principal para botones y enlaces */
-  --accent-hover: var(--color-darker-blue); /* Color para cuando el mouse pasa por encima */
+  /* Variables semánticas (uso práctico) */
+
+  /* -- Fondos -- */
+  --bg-primary: var(--color-light);
+  --bg-secondary: #ffffff;
+
+  /* -- Textos -- */
+  --text-primary: var(--color-dark-gray);
+  --text-secondary: #5a5f6b;
+
+  /* -- Bordes y Sombras -- */
+  --border-color: #e4e4e7;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+
+  /* -- Acentos y Colores Interactivos -- */
+  --accent-color: var(--color-dark-blue);
+  --accent-hover: var(--color-darker-blue);
+
+  /* -- Fuentes (ejemplo, asegúrate de tener estas variables definidas) -- */
+  /* --font-lato: 'Lato', sans-serif; */
+  /* --font-monserrat: 'Montserrat', sans-serif; */
 }
 
-/* El resto de tu archivo globals.css no necesita cambios */
+
+/* ============================================= */
+/* === 2. RESETEO GLOBAL Y ESTILOS BASE      === */
+/* ============================================= */
+
+/* Reseteo universal para un modelo de caja consistente */
 * {
   box-sizing: border-box;
 }
 
+/* Evita el desbordamiento horizontal y resetea márgenes */
 html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
-  width: 100%;
-  margin: 0;
-  padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-monserrat); 
-}
-
+/* Estilos base para el cuerpo del documento */
 body {
-  background: var(--bg-primary); /* Ahora usará tu color --color-light */
-  color: var(--text-primary);   /* Ahora usará tu color --color-dark-gray */
-  font-family: var(--font-lato);
-  padding-top: 70px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-lato); /* Fuente por defecto para párrafos */
+  padding-top: 70px; /* Espacio reservado para un header fijo */
 }
 
-/* Reset y configuración base para responsividad */
-* {
-  box-sizing: border-box;
-}
-
-html, body {
-  overflow-x: hidden; /* Evita scroll horizontal */
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
+/* Estilos base para los encabezados */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-monserrat); 
+  font-family: var(--font-monserrat); /* Fuente específica para títulos */
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-lato);
-  padding-top: 70px; /* Espacio para el header fijo */
-}
 
-/* Ajustar padding para móviles */
+/* ============================================= */
+/* === 3. AJUSTES PARA DISEÑO RESPONSIVO     === */
+/* ============================================= */
+
+/* Ajusta el padding superior para tablets */
 @media (max-width: 768px) {
   body {
-    padding-top: 60px; /* Menos espacio en móviles */
+    padding-top: 60px;
   }
 }
 
+/* Ajusta el padding superior para móviles */
 @media (max-width: 480px) {
   body {
-    padding-top: 55px; /* Aún menos espacio en pantallas muy pequeñas */
+    padding-top: 55px;
   }
 }
