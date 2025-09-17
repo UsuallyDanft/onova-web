@@ -6,7 +6,7 @@
 ### 1. Obtener todos los productos
 # El parámetro `populate=images` le dice a Strapi que incluya los datos de las imágenes relacionadas.
 # Puedes usar `populate=*` para incluir TODAS las relaciones (categorías, etiquetas, etc.).
-GET {{strapiHost}}/api/products?populate=images
+GET {{strapiHost}}/api/products?populate=*
 Authorization: Bearer {{strapiToken}}
 Content-Type: {{contentType}}
 

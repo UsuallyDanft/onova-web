@@ -19,7 +19,7 @@ export default function ProductSidebar({
   const [tag, setTag] = useState('Ninguno');
 
   // Opciones estáticas para el dropdown de orden
-  const sortOptions = ['Por precio', 'Menor precio', 'Mayor precio', 'Más popular', 'Más reciente', 'Mejor valorados'];
+  const sortOptions = ['Por precio', 'Menor precio', 'Mayor precio', 'Más popular (en desarrollo)', 'Más reciente', 'Mejor valorados (en desarrollo)'];
 
   // Función centralizada para notificar al componente padre de cualquier cambio en los filtros
   const notifyParentOfChange = (updatedFilters) => {
