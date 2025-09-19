@@ -121,6 +121,10 @@
     font-weight: 600;
     margin-bottom: 0.25rem;
   }
+
+  .cart-modal-item-name {
+    font-size: 0.8lh;
+  }
   
   .cart-modal-item-details .cart-modal-item-price {
     color: var(--text-secondary);

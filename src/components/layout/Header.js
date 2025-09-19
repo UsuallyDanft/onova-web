@@ -125,32 +125,32 @@ export default function Header() {
                         {showShopIcons && (
                             <div ref={shopIconsRef} className="shop-icons-container">
                                 <button className="icon-button" onClick={handleSearchClick}>
-                                    <Search size={25}/>
+                                    <Search size={22}/>
                                 </button>
                                 {/* --- MODIFICADO: Botón del carrito con su wrapper y badge --- */}
                                 <button className="icon-button cart-button-wrapper" onClick={handleCartClick}>
-                                    <ShoppingCart size={25}/>
+                                    <ShoppingCart size={22}/>
                                     {itemCount > 0 && <span className="cart-badge">{itemCount}</span>}
                                 </button>
                                 <button className="icon-button" onClick={handleBookmarkClick}>
-                                    <Bookmark size={25}/>
+                                    <Bookmark size={22}/>
                                 </button>
                             </div>
                         )}
                         <Link href="/login" className="icon-link">
-                            <User size={25}/>
+                            <User size={22}/>
                         </Link>
                     </div>
                     
                     <button className="mobile-menu-button" onClick={toggleMobileMenu}>
-                        {isMobileMenuOpen ? <X size={25}/> : <Menu size={25}/>}
+                        {isMobileMenuOpen ? <X size={22}/> : <Menu size={22}/>}
                     </button>
                 </div>
                 
                 <div className={`mobile-menu ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
                    {/* Tu menú móvil no ha cambiado. El botón de carrito aquí también llama a handleCartClick */}
                    <button className="mobile-menu-close" onClick={closeMobileMenu}>
-                        <X size={24}/>
+                        <X size={23}/>
                     </button>
                     <nav className="mobile-nav">
                         <ul>

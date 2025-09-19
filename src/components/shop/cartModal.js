@@ -33,7 +33,7 @@ const CartModal = ({ isOpen, onClose }) => {
         <div className="cart-modal-header">
           <div className="cart-modal-title">
             <ShoppingCart className="cart-icon" />
-            <h2>Tu carrito</h2>
+            <h2>Carrito de compras</h2>
             {itemCount > 0 && <span className="cart-count">{itemCount}</span>}
           </div>
           <button className="close-button" onClick={onClose}>
@@ -44,7 +44,7 @@ const CartModal = ({ isOpen, onClose }) => {
           {items.length === 0 ? (
             <div className="empty-cart">
               <ShoppingCart size={48} className="empty-cart-icon" />
-              <p>Tu carrito está vacío</p>
+              <p>El carrito de compras está vacío</p>
               <span>Agrega algunos productos para comenzar</span>
             </div>
           ) : (

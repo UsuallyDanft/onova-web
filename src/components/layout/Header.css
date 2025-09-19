@@ -30,7 +30,7 @@
 .logo {
     text-decoration: none;
     font-family: var(--font-monserrat);
-    font-size: 2.3lh;
+    font-size: 2.2lh;
     font-weight: 800;
     color: var(--color-light);
 }
@@ -45,7 +45,7 @@
 .nav li a {
     text-decoration: none;
     font-family: var(--font-lato);
-    font-size: 1.1lh;
+    font-size: 0.9lh;
     font-weight: 400;
     color: var(--color-light);
     position: relative;
@@ -187,7 +187,7 @@
     color: var(--color-light);
     cursor: pointer;
     padding: 8px;
-    display: none; /* Oculto por defecto, se muestra en móvil */
+    display: none; 
     align-items: center;
     justify-content: center;
     transition: transform 0.3s ease;
@@ -201,13 +201,13 @@
 .mobile-menu {
     position: fixed;
     top: 0;
-    right: -100%; /* Oculto fuera de la pantalla */
+    right: -100%;
     width: 280px;
     height: 100vh;
     background-color: var(--color-dark-blue);
     z-index: 1000;
     transition: right 0.3s ease-in-out;
-    padding-top: 80px; /* Espacio para el header */
+    padding-top: 80px;
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -292,7 +292,7 @@
 
 .mobile-submenu a {
     display: block;
-    padding: 15px 30px 15px 50px; /* Más indentación para mostrar jerarquía */
+    padding: 15px 30px 15px 50px;
     color: var(--color-lavender);
     text-decoration: none;
     font-family: var(--font-lato);
@@ -380,13 +380,13 @@
     
     /* Ajustar logo */
     .logo {
-        font-size: 1.8rem; /* Tamaño más pequeño en móvil */
+        font-size: 1.8rem;
     }
 }
 
 @media (max-width: 480px) {
     .header {
-        padding: 10px 15px; /* Aún menos padding en pantallas muy pequeñas */
+        padding: 10px 15px;
     }
     
     .logo {
@@ -394,10 +394,9 @@
     }
     
     .mobile-menu {
-        width: 100%; /* Menú ocupa toda la pantalla en móviles muy pequeños */
+        width: 100%;
     }
 }
-/* --- Pega esto al final de tu archivo Header.css --- */
 
 /* Wrapper para el botón del carrito para posicionar la insignia */
 .cart-button-wrapper {
@@ -409,7 +408,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    background-color: #ff4444; /* Un color rojo llamativo */
+    background-color: #ff4444;
     color: white;
     width: 18px;
     height: 18px;
@@ -419,14 +418,13 @@
     align-items: center;
     font-size: 11px;
     font-weight: 600;
-    border: 2px solid var(--color-dark-blue); /* Borde del mismo color que el fondo del header */
-    transform: translate(30%, -30%); /* Ajusta la posición para que quede bien */
+    border: 2px solid var(--color-dark-blue);
+    transform: translate(5%, 15%);
   }
   
   /* Estilo para la insignia en el menú móvil */
   .mobile-shop-icons .cart-badge {
-      border-color: var(--color-dark-blue); /* Asegura el color de borde correcto */
-      /* Puedes ajustar la posición si es necesario para el menú móvil */
+      border-color: var(--color-dark-blue);
       right: auto;
       left: 15px;
       top: 5px;
