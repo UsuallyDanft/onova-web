@@ -21,9 +21,14 @@ export default function ProductCard({ product }) {
     name: product?.name || 'Título del producto',
     price: product?.price || '0.00',
     slug: product?.slug || 'producto-ejemplo',
-    images: product?.images?.map(img => 
-      `${STRAPI_URL}${img.url}`
-    ) || ['/placeholder-product-1.jpg'],
+    images: product?.images?.map(img => {
+      // Si la URL ya es absoluta (empieza con http), úsala directamente.
+      if (img.url.startsWith('http')) {
+        return img.url;
+      }
+      // Si no, es una URL relativa, así que añádele el dominio de Strapi.
+      return `${STRAPI_URL}${img.url}`;
+    }) || ['/placeholder-product-1.jpg'],
     stock: product?.stock || 0,
   };
   
@@ -112,7 +117,7 @@ export default function ProductCard({ product }) {
       <div className="product-details">
         <h3 className="product-name">{productData.name}</h3>
         <p className="product-price">{parseFloat(productData.price).toFixed(2)} $</p>
-        {/* muestra el stock disponible 
+        {/* muestra el stock disponible (opcionalmente)
         <p className="product-stock">{availableStock > 0 ? `${availableStock} disponibles` : 'Sin stock'}</p> */}
       </div>
     </div>
