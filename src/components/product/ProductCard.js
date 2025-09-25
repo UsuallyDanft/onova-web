@@ -117,8 +117,8 @@ export default function ProductCard({ product }) {
       <div className="product-details">
         <h3 className="product-name">{productData.name}</h3>
         <p className="product-price">{parseFloat(productData.price).toFixed(2)} $</p>
-        {/* muestra el stock disponible (opcionalmente)
-        <p className="product-stock">{availableStock > 0 ? `${availableStock} disponibles` : 'Sin stock'}</p> */}
+        {/* muestra el stock disponible (opcionalmente)*/}
+        <p className="product-stock">{availableStock > 0 ? `${availableStock} disponibles` : 'Sin stock'}</p> 
       </div>
     </div>
   );

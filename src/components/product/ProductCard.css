@@ -195,6 +195,13 @@
   color: var(--color-dark-blue);
 }
 
+.product-stock {
+  margin: 8px 0 0 ;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--text-secondary);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .product-card {

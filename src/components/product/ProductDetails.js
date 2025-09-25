@@ -2,7 +2,8 @@
 
 import React, { useMemo, useState } from 'react';
 import Image from 'next/image';
-import { ShoppingCart, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { ShoppingCart, Heart, ChevronLeft, ChevronRight, Plus, Minus } from 'lucide-react';
 import { useCart } from '@/components/context/cartContext';
 import './ProductDetails.css';
 
@@ -12,10 +13,10 @@ const THUMB_GAP = 12;
 
 export default function ProductDetails({ product }) {
   const { addToCart, getItemQuantity } = useCart();
+  const router = useRouter(); 
   const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL?.replace('/api', '');
 
   const normalized = useMemo(() => {
-    // ... (la lógica de normalización de datos no cambia)
     const images = Array.isArray(product?.images)
       ? product.images.map(img => {
           const url = typeof img === 'string' ? img : img?.url;
@@ -41,14 +42,40 @@ export default function ProductDetails({ product }) {
 
   const [currentImage, setCurrentImage] = useState(0);
   const [thumbnailStartIndex, setThumbnailStartIndex] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
   const quantityInCart = getItemQuantity(normalized.id);
-  const available = Math.max(0, (normalized.stock || 0) - quantityInCart);
+  const maxPurchasable = Math.max(0, (normalized.stock || 0) - quantityInCart);
 
   const handleAddToCart = () => {
-    if (available <= 0) return;
+    if (maxPurchasable <= 0) return;
     const productWithImage = { ...product, imageUrl: normalized.images[0] };
-    addToCart(productWithImage, 1);
+    const quantityToAdd = Math.min(quantity, maxPurchasable);
+    addToCart(productWithImage, quantityToAdd);
+  };
+
+  // --- LÓGICA CORREGIDA ---
+  const handleBuyNow = () => {
+    const itemAlreadyInCart = quantityInCart > 0;
+
+    // Si el producto no está en el carrito pero hay stock, lo agregamos primero.
+    if (!itemAlreadyInCart && maxPurchasable > 0) {
+      const productWithImage = { ...product, imageUrl: normalized.images[0] };
+      const quantityToAdd = Math.min(quantity, maxPurchasable);
+      addToCart(productWithImage, quantityToAdd);
+    }
+    
+    // Si el producto ya estaba en el carrito o se acaba de agregar, vamos al checkout.
+    if (itemAlreadyInCart || maxPurchasable > 0) {
+       router.push('/shop/checkout');
+    }
+  };
+
+  const handleIncreaseQuantity = () => {
+    setQuantity(prev => Math.min(prev + 1, maxPurchasable));
+  };
+  const handleDecreaseQuantity = () => {
+    setQuantity(prev => Math.max(1, prev - 1));
   };
 
   const handlePrevThumb = () => {
@@ -63,7 +90,6 @@ export default function ProductDetails({ product }) {
 
   return (
     <main className="product-details-page">
-      {/* --- CAMBIO AQUÍ: Se añade una clase condicional --- */}
       <div className={`details-container ${normalized.images.length === 1 ? 'single-image-layout' : ''}`}>
         <div className="gallery">
           <div className="main-image-container">
@@ -75,79 +101,67 @@ export default function ProductDetails({ product }) {
               style={{ objectFit: 'cover' }}
             />
           </div>
-          
-          {/* Esta sección ya se oculta correctamente si solo hay una imagen */}
           {normalized.images.length > 1 && (
             <div className="thumbs-carousel-wrapper">
-              {showCarousel && (
-                <button 
-                  className="carousel-arrow prev" 
-                  onClick={handlePrevThumb} 
-                  disabled={thumbnailStartIndex === 0}
-                  aria-label="Anterior"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-              )}
-              
+              {showCarousel && ( <button className="carousel-arrow prev" onClick={handlePrevThumb} disabled={thumbnailStartIndex === 0} aria-label="Anterior"><ChevronLeft size={20} /></button>)}
               <div className="thumbs-container">
-                <div 
-                  className="thumbs-track"
-                  style={{ 
-                    transform: `translateX(-${thumbnailStartIndex * (THUMB_WIDTH + THUMB_GAP)}px)` 
-                  }}
-                >
-                  {normalized.images.map((src, idx) => (
-                    <button
-                      key={idx}
-                      className={`thumb ${idx === currentImage ? 'active' : ''}`}
-                      onClick={() => setCurrentImage(idx)}
-                      aria-label={`Imagen ${idx + 1}`}
-                    >
-                      <Image src={src} alt={normalized.name} fill sizes="100px" style={{ objectFit: 'cover' }} />
-                    </button>
-                  ))}
+                <div className="thumbs-track" style={{ transform: `translateX(-${thumbnailStartIndex * (THUMB_WIDTH + THUMB_GAP)}px)` }}>
+                  {normalized.images.map((src, idx) => (<button key={idx} className={`thumb ${idx === currentImage ? 'active' : ''}`} onClick={() => setCurrentImage(idx)} aria-label={`Imagen ${idx + 1}`}><Image src={src} alt={normalized.name} fill sizes="100px" style={{ objectFit: 'cover' }} /></button>))}
                 </div>
               </div>
-
-              {showCarousel && (
-                <button 
-                  className="carousel-arrow next" 
-                  onClick={handleNextThumb} 
-                  disabled={thumbnailStartIndex >= normalized.images.length - THUMBNAILS_VISIBLE}
-                  aria-label="Siguiente"
-                >
-                  <ChevronRight size={20} />
-                </button>
-              )}
+              {showCarousel && (<button className="carousel-arrow next" onClick={handleNextThumb} disabled={thumbnailStartIndex >= normalized.images.length - THUMBNAILS_VISIBLE} aria-label="Siguiente"><ChevronRight size={20} /></button>)}
             </div>
           )}
         </div>
 
         <div className="info">
-          {/* ... El resto del JSX no cambia ... */}
-           <h1 className="title">{normalized.name}</h1>
-           <p className="price">${Number(normalized.price).toFixed(2)}</p>
-           {normalized.description && (
-             <p className="description">{normalized.description}</p>
-           )}
-           <div className="actions">
-             <button
-               className="add-btn"
-               onClick={handleAddToCart}
-               disabled={available <= 0}
-             >
-               <ShoppingCart size={20} />
-               <span>{available > 0 ? 'Añadir al carrito' : 'Sin Stock'}</span>
-             </button>
-             <button className="wish-btn" aria-label="Agregar a favoritos">
-               <Heart size={24} />
-             </button>
-           </div>
-           <p className="stock">
-             {available > 0 ? `Disponibles: ${available}` : 'Producto agotado'}
-           </p>
-         </div>
+          <h1 className="title">{normalized.name}</h1>
+          <p className="price">${Number(normalized.price).toFixed(2)}</p>
+          <p className={`stock ${maxPurchasable > 0 ? 'has-stock' : 'no-stock'}`}>
+            {maxPurchasable > 0 ? `Disponibles: ${maxPurchasable}` : 'sin stock'}
+          </p>
+          
+          {normalized.description && (
+            <p className="description">{normalized.description}</p>
+          )}
+          
+          <div className="quantity-selector-container">
+            <label htmlFor="quantity" className="quantity-label">Cantidad</label>
+            <div className="quantity-selector">
+              <button className="quantity-btn" onClick={handleDecreaseQuantity} disabled={quantity <= 1}>
+                <Minus size={16} />
+              </button>
+              <span className="quantity-input">{quantity}</span>
+              <button className="quantity-btn" onClick={handleIncreaseQuantity} disabled={quantity >= maxPurchasable}>
+                <Plus size={16} />
+              </button>
+            </div>
+          </div>
+
+          <div className="actions">
+            <div className="main-actions">
+              <button
+                className="add-btn"
+                onClick={handleAddToCart}
+                disabled={maxPurchasable <= 0}
+              >
+                <ShoppingCart size={20} />
+                <span>{maxPurchasable > 0 ? 'Añadir al carrito' : 'Sin Stock'}</span>
+              </button>
+              <button
+                 className="buy-now-btn"
+                 onClick={handleBuyNow}
+                 /* --- LÓGICA CORREGIDA --- */
+                 disabled={maxPurchasable <= 0 && quantityInCart === 0}
+              >
+                <span>Comprar Ahora</span>
+              </button>
+            </div>
+            <button className="wish-btn" aria-label="Agregar a favoritos">
+              <Heart size={24} />
+            </button>
+          </div>
+        </div>
       </div>
     </main>
   );

@@ -23,6 +23,10 @@
   --border-color: #e4e4e7;
   --shadow-color: rgba(0, 0, 0, 0.1);
 
+  /* -- Indicadores -- */
+  --color-blue-ok: #4189f5;     /* indicador de normalidad */
+  --color-red-alert: #bf013d;   /* indicador de alerta */
+
   /* -- Acentos y Colores Interactivos -- */
   --accent-color: var(--color-dark-blue);
   --accent-hover: var(--color-darker-blue);
