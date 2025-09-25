@@ -21,3 +21,9 @@ Content-Type: {{contentType}}
 GET {{strapiHost}}/api/tags
 Authorization: Bearer {{strapiToken}}
 Content-Type: {{contentType}}
+
+### 3. Obtener los productos por slug
+# slug es el nombre que le das a cada producto
+GET {{strapiHost}}/api/products?filters[slug][$eq]=&populate=*
+Authorization: Bearer {{strapiToken}}
+Content-Type: {{contentType}}

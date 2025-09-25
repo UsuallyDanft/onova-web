@@ -1,0 +1,229 @@
+/* --- General Page Layout --- */
+.product-details-page {
+  padding: 40px 32px;
+}
+
+.details-container {
+  display: grid;
+  grid-template-columns: minmax(300px, 440px) 1fr;
+  gap: 80px;
+  align-items: flex-start;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* --- Image Gallery --- */
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  align-items: center;
+}
+
+.main-image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: var(--bg-secondary);
+}
+
+/* --- Carrusel de Miniaturas --- */
+.thumbs-carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 440px;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.carousel-arrow:hover:not(:disabled) {
+  background-color: white;
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.carousel-arrow:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.carousel-arrow.prev {
+  left: -16px;
+}
+
+.carousel-arrow.next {
+  right: -16px;
+}
+
+.thumbs-container {
+  overflow: hidden;
+}
+
+.thumbs-track {
+  display: flex;
+  gap: 12px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.thumb {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  background-color: var(--bg-secondary);
+  padding: 0;
+}
+
+.thumb:hover {
+  border-color: var(--text-secondary);
+}
+
+.thumb.active {
+  border-color: var(--accent-color);
+}
+
+
+/* --- Product Info --- */
+.info {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+}
+
+.title {
+  font-size: 2.75rem;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.price {
+  font-size: 2.25rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  margin: 0 0 24px 0;
+}
+
+.description {
+  margin: 0 0 32px 0;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* --- Action Buttons --- */
+.actions {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  width: 100%;
+}
+
+.add-btn {
+  flex-grow: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--accent-color);
+  color: var(--color-light);
+  border: none;
+  border-radius: 30px;
+  padding: 16px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.add-btn:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.add-btn:disabled {
+  background: #a3a3a3;
+  cursor: not-allowed;
+}
+
+.wish-btn {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--accent-color);
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.wish-btn:hover {
+  background: var(--color-lavender);
+  border-color: var(--accent-color);
+}
+
+.stock {
+  margin-top: 16px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 900px) {
+  .product-details-page {
+    padding: 40px 24px;
+  }
+  .details-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .info {
+    padding-top: 0;
+  }
+  .title {
+    font-size: 2.25rem;
+  }
+  .price {
+    font-size: 2rem;
+  }
+}
+
+
+/* --- AÑADIDO: Ajuste para cuando solo hay una imagen --- */
+.details-container.single-image-layout {
+  /* La columna de la imagen se hace más ancha */
+  grid-template-columns: minmax(400px, 520px) 1fr;
+}

@@ -1,5 +1,5 @@
 "use client";
-// --- AÑADIDO: 'useEffect' para detectar el tamaño de la ventana ---
+// --- 'useEffect' para detectar el tamaño de la ventana ---
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -7,26 +7,26 @@ import './Header.css';
 import { User, ShoppingCart, Search, Bookmark, Menu, X, ChevronDown } from 'lucide-react';
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-// --- AÑADIDO: Importaciones para el carrito ---
+// --- Importaciones para el carrito ---
 import { useCart } from '@/components/context/cartContext';
 import CartModal from '@/components/shop/cartModal';
 import CartSidebar from '@/components/shop/cartSidebar';
 
 export default function Header() {
     const pathname = usePathname();
-    const showShopIcons = pathname === '/shop';
+    const showShopIcons = pathname?.startsWith('/shop');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(null);
     const shopIconsRef = useRef(null);
     const [isHeaderVisible, setIsHeaderVisible] = useState(true);
     const lastScrollY = useRef(0);
     
-    // --- AÑADIDO: Estados y hooks para el carrito ---
+    // --- Estados y hooks para el carrito ---
     const { itemCount } = useCart();
     const [isCartOpen, setCartOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
 
-    // --- AÑADIDO: useEffect para detectar si la vista es móvil ---
+    // --- useEffect para detectar si la vista es móvil ---
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 768);
@@ -61,7 +61,7 @@ export default function Header() {
     const handleSearchClick = () => alert('Mostrar búsqueda');
     const handleBookmarkClick = () => alert('Mostrar guardados');
 
-    // --- MODIFICADO: Esta función ahora abre el carrito ---
+    // --- Esta función ahora abre el carrito ---
     const handleCartClick = () => {
         setCartOpen(true);
     };
@@ -72,7 +72,7 @@ export default function Header() {
     const handleMouseLeave = () => setActiveDropdown(null);
 
     return (
-        // --- AÑADIDO: Un React Fragment <> para poder renderizar los modales junto al header ---
+        // --- Un React Fragment <> para poder renderizar los modales junto al header ---
         <>
             <header className={`header ${!isHeaderVisible ? 'hidden' : ''}`}>
                 <div className="header-left">
@@ -80,9 +80,8 @@ export default function Header() {
                         <span>Onovatech</span>
                     </Link>
                     <nav className="nav desktop-nav">
-                        {/* Tu navegación de escritorio no ha cambiado */}
                         <ul>
-                           <li 
+                            <li 
                                 className="dropdown-item" 
                                 onMouseEnter={() => handleMouseEnter('tienda')}
                                 onMouseLeave={handleMouseLeave}
@@ -127,7 +126,7 @@ export default function Header() {
                                 <button className="icon-button" onClick={handleSearchClick}>
                                     <Search size={22}/>
                                 </button>
-                                {/* --- MODIFICADO: Botón del carrito con su wrapper y badge --- */}
+                                {/* Botón del carrito con su wrapper y badge */}
                                 <button className="icon-button cart-button-wrapper" onClick={handleCartClick}>
                                     <ShoppingCart size={22}/>
                                     {itemCount > 0 && <span className="cart-badge">{itemCount}</span>}
@@ -148,21 +147,17 @@ export default function Header() {
                 </div>
                 
                 <div className={`mobile-menu ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
-                   {/* Tu menú móvil no ha cambiado. El botón de carrito aquí también llama a handleCartClick */}
+                   {/* El botón de carrito aquí también llama a handleCartClick */}
                    <button className="mobile-menu-close" onClick={closeMobileMenu}>
                         <X size={23}/>
                     </button>
                     <nav className="mobile-nav">
-                        <ul>
-                           {/* ... tus enlaces de menú móvil ... */}
-                        </ul>
-                        
                         {showShopIcons && (
                             <div className="mobile-shop-icons">
                                 <button className="icon-button" onClick={handleSearchClick}>
                                     <Search size={25}/> <span>Buscar</span>
                                 </button>
-                                {/* --- MODIFICADO: Este botón también abre el carrito --- */}
+                                {/* Este botón también abre el carrito --- */}
                                 <button className="icon-button cart-button-wrapper" onClick={handleCartClick}>
                                     <ShoppingCart size={25}/> <span>Carrito</span>
                                     {itemCount > 0 && <span className="cart-badge">{itemCount}</span>}
@@ -181,7 +176,7 @@ export default function Header() {
                 </div>
             </header>
 
-            {/* --- AÑADIDO: Lógica que renderiza el modal o el sidebar fuera del <header> --- */}
+            {/* Lógica que renderiza el modal o el sidebar fuera del <header> --- */}
             {isMobile ? (
                 <CartSidebar isOpen={isCartOpen} onClose={() => setCartOpen(false)} />
             ) : (

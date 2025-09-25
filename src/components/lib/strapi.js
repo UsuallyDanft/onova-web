@@ -1,4 +1,4 @@
-export async function queryAPI(path) {
+export async function queryAPI(path, init = {}) {
     const strapiHost = process.env.NEXT_PUBLIC_STRAPI_URL;
     const strapiToken = process.env.STRAPI_API_TOKEN;
   
@@ -11,13 +11,19 @@ export async function queryAPI(path) {
       return null;
     }
   
-    const url = new URL(path, strapiHost);
+    const relativePath = path.startsWith('/') ? path : `/${path}`;
+    const url = new URL(relativePath, strapiHost);
   
     try {
       const response = await fetch(url.href, {
         headers: {
           'Authorization': `Bearer ${strapiToken}`,
+          ...init.headers,
         },
+        // Evita respuestas cacheadas durante navegación entre páginas
+        cache: 'no-store',
+        next: { revalidate: 0 },
+        ...init,
       });
   
       if (!response.ok) {
