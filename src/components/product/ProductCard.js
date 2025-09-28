@@ -71,7 +71,8 @@ export default function ProductCard({ product }) {
             style={{ objectFit: 'cover' }}
             onError={(e) => { e.target.src = '/placeholder-product.jpg'; }}
           />
-          <Link href={`/shop/product/${productData.slug}`} className="details-link">
+          <Link 
+              href={`/shop/product/${productData.slug}`} className="details-link" onClick={(e) => e.stopPropagation()}>
             <ArrowUpRight size={20} />
           </Link>
           <div 

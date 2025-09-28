@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { ShoppingCart, Heart, ChevronLeft, ChevronRight, Plus, Minus } from 'lucide-react';
+import { Heart, ChevronLeft, ChevronRight, Plus, Minus, Trash2 } from 'lucide-react';
 import { useCart } from '@/components/context/cartContext';
 import './ProductDetails.css';
 
@@ -12,7 +12,7 @@ const THUMB_WIDTH = 64;
 const THUMB_GAP = 12;
 
 export default function ProductDetails({ product }) {
-  const { addToCart, getItemQuantity } = useCart();
+  const { addToCart, getItemQuantity, updateQuantity, removeFromCart } = useCart();
   const router = useRouter(); 
   const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL?.replace('/api', '');
 
@@ -42,57 +42,46 @@ export default function ProductDetails({ product }) {
 
   const [currentImage, setCurrentImage] = useState(0);
   const [thumbnailStartIndex, setThumbnailStartIndex] = useState(0);
-  const [quantity, setQuantity] = useState(1);
 
   const quantityInCart = getItemQuantity(normalized.id);
-  const maxPurchasable = Math.max(0, (normalized.stock || 0) - quantityInCart);
-
-  const handleAddToCart = () => {
-    if (maxPurchasable <= 0) return;
-    const productWithImage = { ...product, imageUrl: normalized.images[0] };
-    const quantityToAdd = Math.min(quantity, maxPurchasable);
-    addToCart(productWithImage, quantityToAdd);
-  };
-
-  // --- LÓGICA CORREGIDA ---
-  const handleBuyNow = () => {
-    const itemAlreadyInCart = quantityInCart > 0;
-
-    // Si el producto no está en el carrito pero hay stock, lo agregamos primero.
-    if (!itemAlreadyInCart && maxPurchasable > 0) {
-      const productWithImage = { ...product, imageUrl: normalized.images[0] };
-      const quantityToAdd = Math.min(quantity, maxPurchasable);
-      addToCart(productWithImage, quantityToAdd);
-    }
-    
-    // Si el producto ya estaba en el carrito o se acaba de agregar, vamos al checkout.
-    if (itemAlreadyInCart || maxPurchasable > 0) {
-       router.push('/shop/checkout');
-    }
-  };
+  const totalStock = normalized.stock || 0;
+  const productWithImage = { ...product, imageUrl: normalized.images[0] };
 
   const handleIncreaseQuantity = () => {
-    setQuantity(prev => Math.min(prev + 1, maxPurchasable));
+    if (quantityInCart >= totalStock) return;
+    addToCart(productWithImage, 1);
   };
   const handleDecreaseQuantity = () => {
-    setQuantity(prev => Math.max(1, prev - 1));
+    if (quantityInCart > 0) {
+      updateQuantity(normalized.id, quantityInCart - 1);
+    }
+  };
+  
+  const handleEmptyProductFromCart = () => {
+    removeFromCart(normalized.id);
   };
 
-  const handlePrevThumb = () => {
-    setThumbnailStartIndex(prev => Math.max(0, prev - 1));
+  const handleBuyNow = () => {
+    if (quantityInCart === 0 && totalStock > 0) {
+      addToCart(productWithImage, 1);
+    }
+    if (totalStock > 0 || quantityInCart > 0) {
+      router.push('/shop/checkout');
+    }
   };
+
+  const handlePrevThumb = () => setThumbnailStartIndex(prev => Math.max(0, prev - 1));
   const handleNextThumb = () => {
     const maxIndex = normalized.images.length - THUMBNAILS_VISIBLE;
     setThumbnailStartIndex(prev => Math.min(prev + 1, maxIndex));
   };
-
   const showCarousel = normalized.images.length > THUMBNAILS_VISIBLE;
 
   return (
     <main className="product-details-page">
       <div className={`details-container ${normalized.images.length === 1 ? 'single-image-layout' : ''}`}>
         <div className="gallery">
-          <div className="main-image-container">
+         <div className="main-image-container">
             <Image
               src={normalized.images[currentImage]}
               alt={normalized.name}
@@ -115,10 +104,10 @@ export default function ProductDetails({ product }) {
         </div>
 
         <div className="info">
-          <h1 className="title">{normalized.name}</h1>
+           <h1 className="title">{normalized.name}</h1>
           <p className="price">${Number(normalized.price).toFixed(2)}</p>
-          <p className={`stock ${maxPurchasable > 0 ? 'has-stock' : 'no-stock'}`}>
-            {maxPurchasable > 0 ? `Disponibles: ${maxPurchasable}` : 'sin stock'}
+          <p className={`stock ${totalStock > 0 ? 'has-stock' : 'no-stock'}`}>
+            {totalStock > 0 ? `Disponibles: ${totalStock}` : 'sin stock'}
           </p>
           
           {normalized.description && (
@@ -126,37 +115,35 @@ export default function ProductDetails({ product }) {
           )}
           
           <div className="quantity-selector-container">
-            <label htmlFor="quantity" className="quantity-label">Cantidad</label>
-            <div className="quantity-selector">
-              <button className="quantity-btn" onClick={handleDecreaseQuantity} disabled={quantity <= 1}>
-                <Minus size={16} />
-              </button>
-              <span className="quantity-input">{quantity}</span>
-              <button className="quantity-btn" onClick={handleIncreaseQuantity} disabled={quantity >= maxPurchasable}>
-                <Plus size={16} />
-              </button>
+            <label className="quantity-label">Agregar articulo al carrito</label>
+            <div className="quantity-control-wrapper">
+              <div className="quantity-selector">
+                <button className="quantity-btn" onClick={handleDecreaseQuantity} disabled={quantityInCart <= 0}>
+                  <Minus size={16} />
+                </button>
+                <span className="quantity-input">{quantityInCart}</span>
+                <button className="quantity-btn" onClick={handleIncreaseQuantity} disabled={quantityInCart >= totalStock}>
+                  <Plus size={16} />
+                </button>
+              </div>
+              
+              {quantityInCart > 0 && (
+                <button className="remove-item-btn" onClick={handleEmptyProductFromCart} aria-label="Vaciar carrito de este producto">
+                  <Trash2 size={16} />
+                  <span>Vaciar Carrito</span>
+                </button>
+              )}
             </div>
           </div>
 
           <div className="actions">
-            <div className="main-actions">
-              <button
-                className="add-btn"
-                onClick={handleAddToCart}
-                disabled={maxPurchasable <= 0}
-              >
-                <ShoppingCart size={20} />
-                <span>{maxPurchasable > 0 ? 'Añadir al carrito' : 'Sin Stock'}</span>
-              </button>
-              <button
-                 className="buy-now-btn"
-                 onClick={handleBuyNow}
-                 /* --- LÓGICA CORREGIDA --- */
-                 disabled={maxPurchasable <= 0 && quantityInCart === 0}
-              >
-                <span>Comprar Ahora</span>
-              </button>
-            </div>
+            <button
+              className="buy-now-btn"
+              onClick={handleBuyNow}
+              disabled={totalStock <= 0}
+            >
+              <span>{totalStock > 0 ? 'Comprar Ahora' : 'Sin Stock'}</span>
+            </button>
             <button className="wish-btn" aria-label="Agregar a favoritos">
               <Heart size={24} />
             </button>
