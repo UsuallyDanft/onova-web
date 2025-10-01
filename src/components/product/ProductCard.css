@@ -1,30 +1,24 @@
-/* ProductCard Component Styles */
+/* --- Main Card Container --- */
 .product-card {
   background: var(--color-light);
   border-radius: 20px;
   border: 2px solid #d0d0d0;
   overflow: hidden;
-  transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   width: 100%;
-  max-width: 280px;
+  max-width: 360px;
   margin: 0 auto;
+  transition: all 0.3s ease;
 }
 
-.product-card:hover {
-  border-color: var(--color-dark-blue);
-  transform: translateY(-3px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-}
-
-/* Sección de imagen del producto */
+/* --- Image Section --- */
 .product-image-container {
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
   overflow: hidden;
-  border-radius: 2  0px 20px 0 0;
+  border-radius: 20px 20px 0 0;
 }
 
 .product-image {
@@ -41,18 +35,49 @@
   transition: transform 0.3s ease;
 }
 
-.product-card:hover .product-image img {
-  transform: scale(1.05);
+/* --- Details Section --- */
+.product-details {
+  padding: 16px;
+  background: var(--color-light);
+  border-radius: 0 0 20px 20px;
+  text-align: center;
 }
 
-/* Botón de ir a detalles */
+.product-name {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--color-dark-gray);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.product-price {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--color-dark-blue);
+}
+
+.product-stock {
+  margin: 8px 0 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--text-secondary);
+}
+
+/* --- Interactive Elements --- */
 .details-link {
   position: absolute;
   top: 12px;
   right: 12px;
   width: 40px;
   height: 40px;
-  background: #d0d0d0;
+  background: var(--bg-secondary);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -64,17 +89,6 @@
   z-index: 1;
 }
 
-.product-card:hover .details-link {
-  transform: translateY(-3px);
-}
-
-.details-link:hover {
-  background: var(--color-dark-blue);
-  color: white;
-  transform: translateY(-3px);
-}
-
-/* Sección de acciones */
 .product-actions {
   position: absolute;
   bottom: 0;
@@ -90,17 +104,6 @@
   transform: translateY(100%);
   transition: transform 0.3s ease;
   z-index: 2;
-  pointer-events: auto;
-}
-
-/* Área específica para activar hover */
-.hover-trigger-area {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 40px;
-  z-index: 1;
   pointer-events: auto;
 }
 
@@ -123,25 +126,20 @@
   margin: 0;
 }
 
-.action-btn:hover {
-  transform: translateY(-2px);
-}
-
-.cart-btn:hover {
-  background: var(--color-dark-blue);
-  color: var(--color-light);
-}
-
 .favorite-btn.active {
   color: white;
 }
 
-.favorite-btn:hover {
-  background: var(--color-dark-blue);
-  color: var(--color-light);
+.hover-trigger-area {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  z-index: 1;
+  pointer-events: auto;
 }
 
-/* Indicadores de imágenes */
 .image-indicators {
   display: flex;
   justify-content: center;
@@ -163,66 +161,85 @@
   background: var(--color-dark-blue);
 }
 
+/* --- Hover States (Desktop) --- */
+
+.product-card:hover {
+  border-color: var(--color-dark-blue);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.05);
+}
+
+.product-card:hover .details-link {
+  transform: translateY(-3px);
+}
+
+.details-link:hover {
+  background: var(--color-dark-blue);
+  color: white;
+  transform: translateY(-3px);
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+}
+
+.cart-btn:hover {
+  background: var(--color-light);
+  color: var(--color-dark-gray);
+}
+
+.favorite-btn:hover {
+  background: var(--color-light);
+  color: var(--color-dark-gray);
+}
+
 .indicator:hover {
   background: var(--color-dark-blue);
 }
 
-/* Sección de detalles */
-.product-details {
-  padding: 16px;
-  background: var(--color-light);
-  border-radius: 0 0 20px 20px;
-  text-align: center;
-}
+/* --- Responsive Design --- */
 
-.product-name {
-  margin: 0 0 8px 0;
-  font-size: 16px;
-  font-weight: bold;
-  color: var(--color-dark-gray);
-  line-height: 1.4;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  -webkit-line-clamp: 2; 
-  line-clamp: 2;
-}
-
-.product-price {
-  margin: 0;
-  font-size: 18px;
-  font-weight: bold;
-  color: var(--color-dark-blue);
-}
-
-.product-stock {
-  margin: 8px 0 0 ;
-  font-size: 16px;
-  font-weight: bold;
-  color: var(--text-secondary);
-}
-
-/* Responsive Design */
 @media (max-width: 768px) {
   .product-card {
     max-width: 300px;
   }
-  
+
   .product-details {
     padding: 12px;
   }
-  
+
   .product-name {
     font-size: 14px;
   }
-  
+
   .product-price {
     font-size: 16px;
   }
   
   .action-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .hover-trigger-area {
+    display: none;
+  }
+
+  .product-actions,
+  .product-actions.visible {
+    left: 50%;
+    bottom: 12px;
+    right: auto;
+    transform: translateX(-50%) translateY(0);
+    width: auto;
+    border-radius: 50px;
     padding: 6px 8px;
-    margin: 0 2px;
+    opacity: 1;
+    transition: none;
   }
 }
 
@@ -230,15 +247,71 @@
   .product-card {
     max-width: 280px;
   }
-  
-  .product-actions {
+
+  .product-actions,
+  .product-actions.visible {
     padding: 8px;
   }
-  
+
   .details-link {
     width: 38px;
     height: 38px;
     top: 8px;
     right: 8px;
+  }
+}
+
+/* Efecto de "pulsación" para el enlace de detalles */
+.details-link:active {
+  transform: scale(0.92);
+  filter: brightness(0.9); 
+  transition: transform 0.1s ease; 
+}
+
+/* Efecto de "pulsación" para el botón del carrito */
+.cart-btn:active {
+  transform: translateY(-2px) scale(0.95); /* Combina el movimiento con un ligero encogimiento */
+  filter: brightness(0.9);
+  transition: transform 0.1s ease;
+}
+
+/* --- Desactivar efectos hover en dispositivos táctiles --- */
+@media (hover: none) and (pointer: coarse) {
+  .product-card:hover {
+    border-color: #d0d0d0;
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .product-card:hover .product-image img {
+    transform: none;
+  }
+
+  .product-card:hover .details-link {
+    transform: none;
+  }
+
+  .details-link:hover {
+    background: var(--bg-secondary);
+    color: var(--color-dark-gray);
+    transform: none;
+  }
+
+  .action-btn:hover {
+    transform: none;
+  }
+
+  .cart-btn:hover,
+  .favorite-btn:hover {
+    background: transparent;
+    color: white;
+  }
+
+  .indicator:hover {
+    background: #909091;
+  }
+  
+  .indicator.active:hover {
+     background: var(--color-dark-blue);
   }
 }

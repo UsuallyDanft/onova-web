@@ -2,6 +2,7 @@
 
 import { queryAPI } from '@/components/lib/strapi'; 
 import ShopClientPage from './ShopClientPage'; 
+import Breadcrumbs from '@/components/ui/Breadcrumbs';
 
 export default async function ShopPageContainer() {
   
@@ -18,5 +19,9 @@ export default async function ShopPageContainer() {
   const tags = tagsData?.data ?? [];
 
   // 3. Pasar todos los datos al componente cliente
-  return <ShopClientPage products={products} categories={categories} tags={tags} />;
+  return (
+    <div>
+      <Breadcrumbs/>
+      <ShopClientPage products={products} categories={categories} tags={tags} />;
+    </div>);
 }

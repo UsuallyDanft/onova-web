@@ -1,0 +1,78 @@
+.breadcrumbs-wrapper {
+  width: 100%;
+  background-color: var(--background-secondary);
+  border-bottom: 1px solid var(--border-color);
+  padding: 15px 0; /* Espaciado vertical */
+  margin-bottom: 10px;
+}
+
+/* Contenedor del contenido (la lista <ol>)
+  - Se centra y se alinea con el ancho máximo del contenido de tu sitio.
+  - El padding coincide con el de tus páginas principales.
+*/
+.breadcrumbs-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 32px;
+  font-size: 0.9rem;
+}
+
+/* Estructura de la lista ordenada */
+.breadcrumbs-container ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px; /* Aumentamos el espacio para que respire mejor */
+}
+
+/* Cada elemento de la lista */
+.breadcrumbs-container li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary); /* Color base para el texto */
+}
+
+/* Estilo de los enlaces (páginas anteriores)
+  - Color de texto secundario por defecto.
+  - Al pasar el mouse, cambia el fondo a lavanda (--color-lavender) y el texto a un azul más oscuro (--accent-hover) para una interacción clara.
+*/
+.breadcrumbs-container a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.breadcrumbs-container a:hover {
+  background-color: var(--color-dark-blue);
+  color: var(--color-light);
+}
+
+/* Estilo para la página actual (no es un enlace)
+  - Usa el color de texto principal (--text-primary) y un mayor peso para destacarla.
+*/
+.breadcrumbs-container span[aria-current="page"] {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Estilo del ícono separador */
+.breadcrumbs-container .separator {
+  color: var(--border-color); /* Un color suave que no compita con el texto */
+}
+
+/* Ajuste para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .breadcrumbs-container {
+    padding: 0 24px;
+  }
+  .breadcrumbs-wrapper {
+    margin-bottom: 24px;
+  }
+}
