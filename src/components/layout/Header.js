@@ -11,6 +11,7 @@ import { useGSAP } from "@gsap/react";
 import { useCart } from '@/components/context/cartContext';
 import CartModal from '@/components/shop/cartModal';
 import CartSidebar from '@/components/shop/cartSidebar';
+import SearchModal from '@/components/shop/SearchModal';
 
 export default function Header() {
     const pathname = usePathname();
@@ -25,6 +26,7 @@ export default function Header() {
     const { itemCount } = useCart();
     const [isCartOpen, setCartOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const [isSearchModalOpen, setIsSearchModalOpen] = useState(false); 
 
     useEffect(() => {
         const handleResize = () => {
@@ -57,7 +59,7 @@ export default function Header() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const handleSearchClick = () => alert('Mostrar búsqueda');
+    const handleSearchClick = () => setIsSearchModalOpen(true);
     const handleBookmarkClick = () => alert('Mostrar guardados');
     const handleCartClick = () => setCartOpen(true);
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -189,6 +191,8 @@ export default function Header() {
                 <CartSidebar isOpen={isCartOpen} onClose={() => setCartOpen(false)} />
             ) : (
                 <CartModal isOpen={isCartOpen} onClose={() => setCartOpen(false)} />
+            )}
+            {isSearchModalOpen && (<SearchModal isOpen={isSearchModalOpen} onClose={() => setIsSearchModalOpen(false)}/>
             )}
         </>
     );
