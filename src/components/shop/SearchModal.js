@@ -1,153 +1,254 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image'; // 1. Importar el componente Image
-import { X, Search, ShoppingCart } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useCart } from '@/components/context/cartContext';
-import { queryAPI } from '@/components/lib/strapi';
-import './SearchModal.css';
+import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { X, Search, ArrowRight, Package } from 'lucide-react';
+// Removed queryAPI import - now using API route
+import './searchModal.css';
 
 const SearchModal = ({ isOpen, onClose }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [products, setProducts] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
+  const searchInputRef = useRef(null);
+  const searchCache = useRef(new Map());
+  const abortControllerRef = useRef(null);
 
-  const { addToCart, getItemQuantity } = useCart();
-  const router = useRouter();
-
-  // Limpiar estado cuando el modal se abre
+  // Focus en el input cuando se abre el modal
   useEffect(() => {
-    if (isOpen) {
-      setProducts([]);
-      setSearchQuery('');
+    if (isOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
     }
   }, [isOpen]);
 
-  // Búsqueda dinámica cuando el usuario escribe
+  // Limpiar búsqueda cuando se cierra el modal
   useEffect(() => {
-    const searchProducts = async () => {
-      if (searchQuery.trim().length < 2) {
-        setProducts([]);
-        return;
-      }
-      setIsLoading(true);
-      try {
-        const fetchedProducts = await queryAPI('products', {
-          _q: searchQuery,
-          populate: ['images', 'category'],
-        });
-        setProducts(fetchedProducts.data || []);
-      } catch (error) {
-        console.error("Error searching products:", error);
-        setProducts([]);
-      } finally {
-        setIsLoading(false);
+    if (!isOpen) {
+      setSearchQuery('');
+      setSearchResults([]);
+      setHasSearched(false);
+    }
+  }, [isOpen]);
+
+  // Cleanup AbortController al desmontar
+  useEffect(() => {
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
       }
     };
+  }, []);
 
-    const debounceSearch = setTimeout(() => {
-      searchProducts();
-    }, 300); // Espera 300ms después de que el usuario deja de escribir
+  const handleSearch = async (query) => {
+    if (!query.trim()) {
+      setSearchResults([]);
+      setHasSearched(false);
+      return;
+    }
 
-    return () => clearTimeout(debounceSearch);
-  }, [searchQuery]);
+    // Cancelar búsqueda anterior si existe
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
 
+    // Verificar caché primero
+    const cacheKey = query.toLowerCase().trim();
+    if (searchCache.current.has(cacheKey)) {
+      setSearchResults(searchCache.current.get(cacheKey));
+      setHasSearched(true);
+      return;
+    }
 
-  const handleAddToCart = (product) => {
-    addToCart(product);
+    setIsLoading(true);
+    setHasSearched(true);
+
+    // Crear nuevo AbortController para esta búsqueda
+    abortControllerRef.current = new AbortController();
+
+    try {
+      // Usar la API route para buscar productos
+      const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`, {
+        signal: abortControllerRef.current.signal
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      if (data?.data) {
+        // Guardar en caché
+        searchCache.current.set(cacheKey, data.data);
+        setSearchResults(data.data);
+      } else {
+        setSearchResults([]);
+      }
+    } catch (error) {
+      if (error.name !== 'AbortError') {
+        console.error('Error al buscar productos:', error);
+        setSearchResults([]);
+      }
+    } finally {
+      setIsLoading(false);
+      abortControllerRef.current = null;
+    }
   };
 
-  const handleViewDetails = (product) => {
-    router.push(`/shop/product/${product.slug}`);
-    onClose(); // Cierra el modal al navegar
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    
+    // Debounce para evitar muchas consultas
+    clearTimeout(handleInputChange.timeout);
+    handleInputChange.timeout = setTimeout(() => {
+      handleSearch(value);
+    }, 150);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch(searchQuery);
+    }
+  };
+
+  const formatPrice = (price) => {
+    return typeof price === 'number' ? price.toFixed(2) : '0.00';
+  };
+
+  const getImageUrl = (product) => {
+    const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL?.replace('/api', '');
+    
+    // Buscar imagen en diferentes ubicaciones posibles
+    let imageUrl = null;
+    
+    if (product.attributes?.images?.data?.[0]?.attributes?.url) {
+      imageUrl = product.attributes.images.data[0].attributes.url;
+    } else if (product.images?.[0]?.url) {
+      imageUrl = product.images[0].url;
+    } else if (product.attributes?.image?.data?.attributes?.url) {
+      imageUrl = product.attributes.image.data.attributes.url;
+    }
+    
+    if (imageUrl) {
+      const finalUrl = imageUrl.startsWith('http') ? imageUrl : `${STRAPI_URL}${imageUrl}`;
+      return finalUrl;
+    }
+    
+    return '/placeholder-product-1.jpg';
+  };
+
+  const getProductName = (product) => {
+    return product.attributes?.name || product.name || 'Producto sin nombre';
+  };
+
+  const getProductPrice = (product) => {
+    return product.attributes?.price || product.price || 0;
+  };
+
+  const getProductSlug = (product) => {
+    return product.attributes?.slug || product.slug || 'producto';
+  };
+
+  const getProductCategories = (product) => {
+    const categories = product.attributes?.categories?.data || product.categories || [];
+    return categories.map(cat => cat.attributes?.name || cat.name || 'Sin categoría').join(', ');
   };
 
   if (!isOpen) return null;
 
   return (
     <div className="search-modal-overlay" onClick={onClose}>
-      <div className="search-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="search-modal" onClick={e => e.stopPropagation()}>
         <div className="search-modal-header">
-          <div className="search-input-wrapper">
-            <Search className="search-icon" size={20} />
-            <input
-              type="text"
-              placeholder="Buscar productos..."
-              className="search-input"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              autoFocus
-            />
+          <div className="search-modal-title">
+            <Search className="search-icon" />
+            <h2>Buscar productos</h2>
           </div>
-          <button onClick={onClose} className="close-btn">
+          <button className="close-button" onClick={onClose}>
             <X size={24} />
           </button>
         </div>
+        
+        <div className="search-modal-content">
+          <div className="search-input-container">
+            <Search className="search-input-icon" size={20} />
+            <input
+              ref={searchInputRef}
+              type="text"
+              placeholder="Buscar productos por nombre o descripción..."
+              value={searchQuery}
+              onChange={handleInputChange}
+              onKeyPress={handleKeyPress}
+              className="search-input"
+            />
+          </div>
 
-        <div className="search-modal-body">
-          {isLoading && <div className="loading-spinner"></div>}
-          
-          {!isLoading && products.length > 0 && (
-            <div className="search-modal-results">
-              <div className="search-modal-items">
-                {products.map((product) => {
-                  const itemInCartQuantity = getItemQuantity(product.id);
-                  const availableStock = product.stock - itemInCartQuantity;
-                  const imageUrl = product.images?.data?.[0]?.attributes?.url 
-                    ? `${process.env.NEXT_PUBLIC_STRAPI_HOST}${product.images.data[0].attributes.url}`
-                    : '/placeholder.png';
-
-                  return (
-                    <div key={product.id} className="search-modal-item">
-                      <Image
-                        src={imageUrl}
-                        alt={product.name}
-                        className="search-modal-item-image"
-                        width={60}
-                        height={60}
-                      />
-                      <div className="search-modal-item-info">
-                        <h3 className="search-modal-item-name">{product.name}</h3>
-                        <div className="search-modal-item-price">
-                          ${product.price?.toFixed(2)}
-                        </div>
-                        <div className="search-modal-item-stock">
-                          {availableStock > 0 ? `${availableStock} disponibles` : 'Agotado'}
-                        </div>
-                      </div>
-                      <div className="search-modal-item-actions">
-                        <button 
-                          onClick={() => handleViewDetails(product)}
-                          className="details-btn"
-                        >
-                          Ver detalles
-                        </button>
-                        <button 
-                          onClick={() => handleAddToCart(product)}
-                          className="add-to-cart-btn"
-                          disabled={availableStock <= 0}
-                        >
-                          <ShoppingCart size={16} />
-                        </button>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+          {isLoading && (
+            <div className="search-loading">
+              <div className="loading-spinner"></div>
+              <p>Buscando productos...</p>
             </div>
           )}
 
-          {!isLoading && products.length === 0 && searchQuery.length >= 2 && (
-             <div className="search-hint">
-                <p>No se encontraron resultados</p>
-             </div>
+          {!isLoading && hasSearched && searchResults.length === 0 && searchQuery && (
+            <div className="search-empty">
+              <Package size={48} className="empty-search-icon" />
+              <p>No se encontraron productos</p>
+              <span>Intenta con otros términos de búsqueda</span>
+            </div>
           )}
 
-          {!isLoading && searchQuery.length < 2 && (
-            <div className="search-welcome">
-              <Search size={48} className="search-welcome-icon" />
-              <p>Comienza a escribir para buscar productos</p>
+          {!isLoading && !hasSearched && !searchQuery && (
+            <div className="search-placeholder">
+              <Search size={48} className="placeholder-icon" />
+              <p>Escribe para buscar productos</p>
+              <span>Busca por nombre, descripción o categoría</span>
+            </div>
+          )}
+
+          {!isLoading && searchResults.length > 0 && (
+            <div className="search-results">
+              <div className="search-results-header">
+                <span className="results-count">
+                  {searchResults.length} producto{searchResults.length !== 1 ? 's' : ''} encontrado{searchResults.length !== 1 ? 's' : ''}
+                </span>
+              </div>
+              
+              <div className="search-results-list">
+                {searchResults.map((product) => {
+                  return (
+                    <Link 
+                      key={product.id} 
+                      href={`/shop/product/${getProductSlug(product)}`}
+                      className="search-result-item"
+                      onClick={onClose}
+                    >
+                      <div className="search-result-image">
+                        <Image 
+                          src={getImageUrl(product)} 
+                          alt={getProductName(product)}
+                          width={80}
+                          height={80}
+                          loading="lazy"
+                          placeholder="blur"
+                          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                        />
+                      </div>
+                      <div className="search-result-details">
+                        <h3 className="search-result-name">{getProductName(product)}</h3>
+                        <p className="search-result-category">{getProductCategories(product)}</p>
+                        <p className="search-result-price">${formatPrice(getProductPrice(product))}</p>
+                      </div>
+                      <div className="search-result-action">
+                        <ArrowRight size={20} />
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           )}
         </div>

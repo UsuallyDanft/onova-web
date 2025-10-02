@@ -18,6 +18,18 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
+## Environment Variables
+
+This project requires Strapi configuration. Create a `.env.local` file in the root directory with the following variables:
+
+```bash
+# Strapi API Configuration
+NEXT_PUBLIC_STRAPI_URL=http://localhost:1337/api
+NEXT_PUBLIC_STRAPI_API_TOKEN=your_strapi_api_token_here
+```
+
+**Note:** Make sure your Strapi server is running on `http://localhost:1337` and that you have a valid API token. You can find your API token in your Strapi admin panel under Settings > API Tokens.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
