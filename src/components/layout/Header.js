@@ -116,8 +116,7 @@ export default function Header() {
                     <div className="desktop-icons">
                         {showShopIcons && (
                             <div ref={shopIconsRef} className="shop-icons-container">
-                                {/* AÑADIDA CLASE "hide-on-mobile" */}
-                                <button className="icon-button hide-on-mobile" onClick={handleSearchClick}>
+                                <button className="icon-button" onClick={handleSearchClick}>
                                     <Search size={22}/>
                                 </button>
                                 <button className="icon-button cart-button-wrapper" onClick={handleCartClick}>

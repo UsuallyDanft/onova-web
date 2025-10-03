@@ -61,7 +61,7 @@
 
 .search-modal-title h2 {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1.25rem; /* 20px */
   font-weight: 600;
   color: #111827;
 }
@@ -287,7 +287,7 @@
   transform: translateX(2px);
 }
 
-/* Responsive Design */
+/* === Responsive Design === */
 @media (max-width: 640px) {
   .search-modal {
     margin: 10px;
@@ -296,19 +296,43 @@
   }
   
   .search-modal-header {
-    padding: 16px 20px;
+    padding: 16px; /* Reducido */
+  }
+
+  .search-modal-title h2 {
+    font-size: 1.125rem; /* 18px */
   }
   
   .search-modal-content {
-    padding: 20px;
+    padding: 16px; /* Reducido */
+  }
+
+  .search-input {
+    font-size: 15px; /* Ligeramente más pequeño */
+    padding: 12px 12px 12px 40px;
+  }
+
+  .search-input-icon {
+    left: 12px;
   }
   
+  .search-empty p,
+  .search-placeholder p {
+    font-size: 15px; /* Reducido */
+  }
+
+  .search-empty span,
+  .search-placeholder span {
+    font-size: 13px; /* Reducido */
+  }
+
   .search-result-item {
-    padding: 12px;
+    padding: 10px; /* Más compacto */
+    gap: 12px; /* Espacio entre elementos */
   }
   
   .search-result-image {
-    margin-right: 12px;
+    margin-right: 0; /* Eliminado porque usamos gap */
   }
   
   .search-result-image img {
@@ -317,15 +341,21 @@
   }
   
   .search-result-name {
-    font-size: 14px;
+    font-size: 14px; /* Un poco más pequeño */
+    margin-bottom: 4px;
   }
   
   .search-result-category {
-    font-size: 12px;
+    font-size: 12px; /* Más pequeño */
+    margin-bottom: 6px;
   }
   
   .search-result-price {
-    font-size: 14px;
+    font-size: 14px; /* Un poco más pequeño */
+  }
+
+  .search-result-action {
+      margin-left: 8px;
   }
 }
 
