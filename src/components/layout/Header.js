@@ -155,7 +155,7 @@ export default function Header() {
                                     </div>
                                 )}
                             </li>
-                             <li>
+                            <li>
                                 <div className="mobile-nav-item">
                                     <Link href="/comunidad" className={pathname.startsWith('/comunidad') ? 'active' : ''} onClick={closeMobileMenu}>Comunidad</Link>
                                     <button className="mobile-dropdown-toggle" onClick={() => toggleMobileDropdown('comunidad')}><ChevronDown size={22} className={mobileDropdownOpen === 'comunidad' ? 'open' : ''} /></button>

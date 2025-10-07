@@ -5,11 +5,14 @@
   border: 2px solid #d0d0d0;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
   width: 100%;
   max-width: 360px;
   margin: 0 auto;
   transition: all 0.3s ease;
+}
+
+.product-image.clickable {
+  cursor: pointer;
 }
 
 /* --- Image Section --- */
@@ -71,23 +74,6 @@
 }
 
 /* --- Interactive Elements --- */
-.details-link {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 40px;
-  height: 40px;
-  background: var(--bg-secondary);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-dark-gray);
-  text-decoration: none;
-  opacity: 1;
-  transition: all 0.3s ease;
-  z-index: 1;
-}
 
 .product-actions {
   position: absolute;
@@ -177,11 +163,6 @@
   transform: translateY(-3px);
 }
 
-.details-link:hover {
-  background: var(--color-dark-blue);
-  color: white;
-  transform: translateY(-3px);
-}
 
 .action-btn:hover {
   transform: translateY(-2px);
@@ -261,12 +242,6 @@
   }
 }
 
-/* Efecto de "pulsación" para el enlace de detalles */
-.details-link:active {
-  transform: scale(0.92);
-  filter: brightness(0.9); 
-  transition: transform 0.1s ease; 
-}
 
 /* Efecto de "pulsación" para el botón del carrito */
 .cart-btn:active {
@@ -283,19 +258,23 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
 
+  /* --- [ REGLA AÑADIDA ] --- */
+  .image-nav-btn:hover {
+    background-color: var(--color-light); /* Mantiene el color de fondo original */
+    color: var(--color-dark-gray);       /* Mantiene el color de texto original */
+    transform: translateY(-50%) scale(1);  /* Anula el efecto de escala del hover */
+  }
+  /* -------------------------- */
+
   .product-card:hover .product-image img {
     transform: none;
   }
 
-  .product-card:hover .details-link {
+  .product-card:hover {
     transform: none;
   }
 
-  .details-link:hover {
-    background: var(--bg-secondary);
-    color: var(--color-dark-gray);
-    transform: none;
-  }
+
 
   .action-btn:hover {
     transform: none;
@@ -313,5 +292,73 @@
   
   .indicator.active:hover {
      background: var(--color-dark-blue);
+  }
+}
+
+/* --- [NUEVO] Estilos para los botones de navegación de la imagen --- */
+.image-nav-buttons{
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  pointer-events: none; /* Evita que interfieran con otros elementos */
+}
+
+.image-nav-btn {
+  transform: translateY(-50%);
+  z-index: 1;
+  background-color: var(--color-light);
+  color: var(--color-dark-gray);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+  opacity: 0; /* Ocultos por defecto en escritorio */
+  pointer-events: none; /* Desactivados cuando están ocultos */
+}
+
+
+/* Mostrar botones al pasar el cursor sobre la imagen (solo en escritorio) */
+@media (hover: hover) and (pointer: fine) {
+  .product-image-container:hover .image-nav-btn {
+    opacity: 1;
+    pointer-events: auto; /* Activados al mostrarse */
+  }
+}
+
+.image-nav-btn:hover {
+  background-color: var(--color-dark-blue);
+  color: var(--color-light);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.image-nav-btn:active {
+  transform: translateY(-50%) scale(0.95);
+  filter: brightness(0.9);
+}
+
+/* Hacer los botones visibles permanentemente en móviles */
+@media (max-width: 768px) {
+  .image-nav-btn {
+    opacity: 1;
+    pointer-events: auto;
+    width: 30px;
+    height: 30px;
+  }
+
+  .prev-btn {
+    left: 8px;
+  }
+
+  .next-btn {
+    right: 8px;
   }
 }

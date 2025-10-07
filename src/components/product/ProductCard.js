@@ -1,15 +1,16 @@
-"use client";
-import React, { useState, useEffect } from 'react';
+"use-client";
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ShoppingCart, Heart, ArrowUpRight } from 'lucide-react';
+import { useRouter } from 'next/navigation'; // Importado
+import { ShoppingCart, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 import './ProductCard.css';
 import { useCart } from '../context/cartContext';
 
 export default function ProductCard({ product }) {
-  // Extraer funciones del contexto del carrito
-  const { addToCart, getItemQuantity, items } = useCart();
-  
+  const { addToCart, getItemQuantity } = useCart();
+  const router = useRouter(); // 1. Inicializa el router
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
   const [showActions, setShowActions] = useState(false);
@@ -22,47 +23,47 @@ export default function ProductCard({ product }) {
     price: product?.price || '0.00',
     slug: product?.slug || 'producto-ejemplo',
     images: product?.images?.map(img => {
-      // Si la URL ya es absoluta (empieza con http), úsala directamente.
       if (img.url.startsWith('http')) {
         return img.url;
       }
-      // Si no, es una URL relativa, así que añádele el dominio de Strapi.
       return `${STRAPI_URL}${img.url}`;
     }) || ['/placeholder-product-1.jpg'],
     stock: product?.stock || 0,
   };
   
-  // Calcular el stock disponible restando la cantidad en el carrito
   const quantityInCart = getItemQuantity(productData.id);
   const availableStock = productData.stock - quantityInCart;
 
-  const imageUrl = productData.images.length > 0 ? productData.images[0] : '/placeholder-product-1.jpg';
-
-  const handleImageClick = () => {
+  const handleNextImage = (e) => {
+    e.stopPropagation(); 
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % productData.images.length);
   };
+
+  const handlePrevImage = (e) => {
+    e.stopPropagation();
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + productData.images.length) % productData.images.length);
+  };
   
-  // condicion para comprobar se hay stock
-  const handleAddToCart = () => {
-    if (availableStock <= 0) {
-      return;
-    }
-    
-    const productWithImage = { ...product, imageUrl: imageUrl };
-    addToCart(productWithImage, 1);
-    console.log('Agregado al carrito:', productData.name);
+  // 2. Crea la función que maneja la navegación
+  const handleNavigate = () => {
+    router.push(`/shop/product/${productData.slug}`);
   };
 
-  const handleToggleFavorite = () => { setIsFavorite(!isFavorite); };
+  const handleAddToCart = () => {
+    if (availableStock <= 0) return;
+    
+    const imageUrl = productData.images.length > 0 ? productData.images[0] : '/placeholder-product-1.jpg';
+    const productWithImage = { ...product, imageUrl: imageUrl };
+    addToCart(productWithImage, 1);
+  };
+
+  const handleToggleFavorite = () => setIsFavorite(!isFavorite);
 
   return (
     <div className="product-card">
       <div className="product-image-container">
-        <div 
-          className="product-image"
-          onClick={handleImageClick}
-          style={{ cursor: 'pointer' }}
-        >
+        {/* 3. MODIFICACIÓN DEL JSX: Quitamos <Link> y añadimos onClick */}
+        <div className="product-image clickable" onClick={handleNavigate}>
           <Image
             src={productData.images[currentImageIndex]}
             alt={productData.name}
@@ -71,22 +72,29 @@ export default function ProductCard({ product }) {
             style={{ objectFit: 'cover' }}
             onError={(e) => { e.target.src = '/placeholder-product.jpg'; }}
           />
-          <Link 
-              href={`/shop/product/${productData.slug}`} className="details-link" onClick={(e) => e.stopPropagation()}>
-            <ArrowUpRight size={20} />
-          </Link>
+          {productData.images.length > 1 && (
+            <div className="image-nav-buttons">
+              <button className="image-nav-btn" onClick={handlePrevImage} title="Anterior">
+                <ChevronLeft size={20} />
+              </button>
+              <button className="image-nav-btn" onClick={handleNextImage} title="Siguiente">
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          )}
           <div 
             className="hover-trigger-area"
             onMouseEnter={() => setShowActions(true)}
             onMouseLeave={() => setShowActions(false)}
           ></div>
         </div>
+        {/* Fin de la modificación */}
+
         <div 
           className={`product-actions ${showActions ? 'visible' : ''}`}
           onMouseEnter={() => setShowActions(true)}
           onMouseLeave={() => setShowActions(false)}
         >
-          {/* Desactiva el boton cuando no hay mas stock */}
           <button 
             className="action-btn cart-btn" 
             onClick={handleAddToCart} 
@@ -110,7 +118,10 @@ export default function ProductCard({ product }) {
             <div 
               key={index}
               className={`indicator ${index === currentImageIndex ? 'active' : ''}`}
-              onClick={() => setCurrentImageIndex(index)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrentImageIndex(index);
+              }}
             />
           ))}
         </div>
@@ -118,7 +129,6 @@ export default function ProductCard({ product }) {
       <div className="product-details">
         <h3 className="product-name">{productData.name}</h3>
         <p className="product-price">{parseFloat(productData.price).toFixed(2)} $</p>
-        {/* muestra el stock disponible (opcionalmente)*/}
         <p className="product-stock">{availableStock > 0 ? `${availableStock} disponibles` : 'Sin stock'}</p> 
       </div>
     </div>
