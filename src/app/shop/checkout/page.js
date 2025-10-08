@@ -1,5 +1,5 @@
-import CartSummary from "./components/CartSummary";
-import PaymentOptions from "./components/PaymentOptions";
+import CartSummary from "@/components/checkout/CartSummary";
+import PaymentOptions from "@/components/checkout/PaymentOptions";
 
 export default function CheckoutPage() {
   return (
