@@ -1,0 +1,223 @@
+/* ============================================= */
+/* === ESTILOS DEL MENÚ DE USUARIO           === */
+/* ============================================= */
+
+.user-menu {
+  position: relative;
+  display: inline-block;
+}
+
+/* --- Esqueleto de Carga (Sin cambios) --- */
+.user-menu-skeleton {
+  padding: 0.25rem;
+}
+.skeleton-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+@keyframes loading {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+/* --- Botón que abre el menú (NUEVOS ESTILOS) --- */
+.user-menu-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  
+  /* Ajustamos el padding y el radio para crear una "cápsula" */
+  padding: 4px 8px 4px 4px;
+  border-radius: 9999px; /* Esto lo hace completamente redondeado */
+  
+  /* Transición suave para el efecto hover */
+  transition: background-color 0.3s ease;
+}
+
+/* ★ MEJORA: Un hover más sutil y elegante */
+.user-menu-trigger:hover {
+  background-color: rgba(250, 250, 255, 0.1); /* Fondo translúcido sutil */
+}
+
+/* ★ MEJORA: Avatar con mejor contraste y estilo */
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  
+  /* 1. Contraste: Fondo blanco translúcido y borde sutil */
+  background-color: rgba(250, 250, 255, 0.9);
+  border: 1px solid rgba(250, 250, 255, 0.2);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* 2. Color de la inicial: Usamos el azul oscuro del header para que resalte */
+  color: var(--color-dark-blue);
+  
+  /* 3. Fuente de la inicial: Usamos una fuente con más presencia */
+  font-family: var(--font-monserrat);
+  font-weight: 700; /* Más gruesa */
+  font-size: 1rem;  /* Un poco más grande */
+}
+.chevron {
+  color: var(--bg-primary); 
+  transition: transform 0.2s;
+}
+.chevron.open {
+  transform: rotate(180deg);
+}
+
+/* --- Contenedor Principal del Menú Desplegable --- */
+.user-menu-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  /* CAMBIO: Se usa el fondo primario para el contenedor completo */
+  background-color: var(--bg-primary); 
+  border-radius: 20px;
+  box-shadow: 0 10px 40px var(--shadow-color);
+  min-width: 280px;
+  z-index: 1000;
+  animation: slideDown 0.2s ease-out;
+  overflow: hidden;
+  border: 1px solid var(--border-color); /* Un borde sutil ayuda a la definición */
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Cabecera del Menú --- */
+.user-menu-header {
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  /* ★ MEJORA CLAVE: Fondo oscuro y translúcido para contraste */
+  background-color: rgba(30, 39, 73, 0.2); /* Basado en --color-darker-blue */
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+.user-avatar-large {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  color: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+.user-info {
+  flex: 1;
+  min-width: 0;
+}
+.user-name {
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
+  color: var(--text-primary); /* Texto oscuro para mejor lectura */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.user-email {
+  font-size: 0.875rem;
+  margin: 0.25rem 0 0 0;
+  color: var(--text-secondary); /* Texto secundario */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Elementos de Navegación del Menú --- */
+.user-menu-divider {
+  height: 1px;
+  background-color: var(--border-color);
+  margin: 0.5rem; /* Espaciado para separar la sección de logout */
+}
+
+/* ★ MEJORA: Ocultamos el divisor que no necesitamos */
+.user-menu-header + .user-menu-divider {
+  display: none;
+}
+
+.user-menu-nav {
+  padding: 0.5rem;
+  background-color: var(--bg-secondary); /* Fondo blanco para las opciones */
+}
+
+/* ★ MEJORA: Estilo para el item activo/hover como en la imagen */
+.user-menu-item.active,
+.user-menu-item:hover {
+  background-color: var(--color-lavender); 
+  color: var(--accent-color);
+}
+
+.user-menu-item.active svg,
+.user-menu-item:hover svg {
+  color: var(--accent-color);
+}
+
+.user-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: 12px;
+  transition: background-color 0.2s, color 0.2s;
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  background: none;
+  font-size: 0.9375rem;
+  font-family: inherit;
+  text-align: left;
+}
+.user-menu-item svg {
+  flex-shrink: 0;
+  /* ★ MEJORA: Íconos más oscuros para mejor contraste */
+  color: var(--text-primary); 
+  transition: color 0.2s;
+}
+
+/* --- Botón de Cerrar Sesión --- */
+.logout-button-container {
+    padding: 0 0.5rem 0.5rem 0.5rem;
+    background-color: var(--bg-secondary);
+}
+.logout-button {
+  color: var(--color-red-alert);
+}
+.logout-button svg {
+  color: var(--color-red-alert);
+}
+.logout-button:hover {
+  background-color: rgba(191, 1, 61, 0.1);
+  color: var(--color-red-alert);
+}
+.logout-button:hover svg {
+  color: var(--color-red-alert);
+}
+
+/* --- Ajustes Responsivos --- */
+@media (max-width: 768px) {
+  .user-menu-dropdown {
+    right: -1rem;
+    min-width: 260px;
+  }
+}

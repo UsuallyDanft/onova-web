@@ -1,17 +1,17 @@
 "use client";
-// --- 'useEffect' para detectar el tamaño de la ventana ---
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import './Header.css';
-import { User, ShoppingCart, Search, Bookmark, Menu, X, ChevronDown } from 'lucide-react';
+import { User, ShoppingCart, Search, Bookmark, Menu, X, ChevronDown, LogOut } from 'lucide-react';
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-// --- Importaciones para el carrito ---
 import { useCart } from '@/components/context/cartContext';
+import { useAuth } from '@/components/context/authContext';
 import CartModal from '@/components/shop/cartModal';
 import CartSidebar from '@/components/shop/cartSidebar';
 import SearchModal from '@/components/shop/SearchModal';
+import UserMenu from './UserMenu';
 
 export default function Header() {
     const pathname = usePathname();
@@ -23,7 +23,9 @@ export default function Header() {
     const lastScrollY = useRef(0);
     
     const [mobileDropdownOpen, setMobileDropdownOpen] = useState(null);
+    const [isMobileUserMenuOpen, setIsMobileUserMenuOpen] = useState(false); // Estado para menú de usuario móvil
     const { itemCount } = useCart();
+    const { isAuthenticated, user, logout } = useAuth();
     const [isCartOpen, setCartOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const [isSearchModalOpen, setIsSearchModalOpen] = useState(false); 
@@ -63,14 +65,24 @@ export default function Header() {
     const handleBookmarkClick = () => alert('Mostrar guardados');
     const handleCartClick = () => setCartOpen(true);
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+    
     const closeMobileMenu = () => {
         setIsMobileMenuOpen(false);
         setMobileDropdownOpen(null);
+        setIsMobileUserMenuOpen(false); // También resetea el menú de usuario
     }
+
     const handleMouseEnter = (menu) => setActiveDropdown(menu);
     const handleMouseLeave = () => setActiveDropdown(null);
+    
     const toggleMobileDropdown = (menu) => {
         setMobileDropdownOpen(mobileDropdownOpen === menu ? null : menu);
+    };
+
+    const handleLogout = () => {
+        logout();
+        closeMobileMenu();
+        window.location.href = '/';
     };
 
     return (
@@ -84,7 +96,6 @@ export default function Header() {
                         <span>Onovatech</span>
                     </Link>
                     <nav className="nav desktop-nav">
-                        {/* ... (la navegación de escritorio no cambia) ... */}
                         <ul>
                             <li className="dropdown-item" onMouseEnter={() => handleMouseEnter('tienda')} onMouseLeave={handleMouseLeave}>
                                 <Link href="/shop" className={pathname === '/shop' ? 'active' : ''}>Tienda <ChevronDown size={16} className="dropdown-icon" /></Link>
@@ -128,15 +139,13 @@ export default function Header() {
                                 </button>
                             </div>
                         )}
-                        {/* AÑADIDA CLASE "hide-on-mobile" */}
-                        <Link href="/login" className="icon-link hide-on-mobile">
-                            <User size={22}/>
-                        </Link>
+                        <div className="hide-on-mobile">
+                            <UserMenu />
+                        </div>
                     </div>
                 </div>
                 
                 <div className={`mobile-menu ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
-                    {/* ... (el contenido del menú deslizable no cambia) ... */}
                     <button className="mobile-menu-close" onClick={closeMobileMenu}>
                         <X size={23}/>
                     </button>
@@ -179,8 +188,39 @@ export default function Header() {
                                 <button className="icon-button" onClick={handleBookmarkClick}><Bookmark size={25}/> <span>Guardados</span></button>
                             </div>
                         )}
-                        <div className="mobile-user">
-                            <Link href="/login" className="icon-link" onClick={closeMobileMenu}><User size={25}/> <span>Iniciar Sesión</span></Link>
+                        
+                        {/* --- SECCIÓN DE USUARIO MÓVIL ACTUALIZADA --- */}
+                        <div className="mobile-user-section">
+                            {isAuthenticated ? (
+                                <>
+                                <div className="mobile-user-header" onClick={() => setIsMobileUserMenuOpen(!isMobileUserMenuOpen)}>
+                                    <div className="mobile-user-info">
+                                    <User size={25} />
+                                    <span>{user?.username || 'Mi Cuenta'}</span>
+                                    </div>
+                                    <ChevronDown size={22} className={isMobileUserMenuOpen ? 'open' : ''} />
+                                </div>
+
+                                {isMobileUserMenuOpen && (
+                                    <div className="mobile-user-submenu">
+                                    <Link href="/perfil" onClick={closeMobileMenu}>Mi Perfil</Link>
+                                    <Link href="/pedidos" onClick={closeMobileMenu}>Mis Pedidos</Link>
+                                    <Link href="/configuracion" onClick={closeMobileMenu}>Configuración</Link>
+                                    <button onClick={handleLogout} className="mobile-logout-button">
+                                        <LogOut size={18} />
+                                        <span>Cerrar Sesión</span>
+                                    </button>
+                                    </div>
+                                )}
+                                </>
+                            ) : (
+                                <div className="mobile-user">
+                                <Link href="/login" className="icon-link" onClick={closeMobileMenu}>
+                                    <User size={25}/> 
+                                    <span>Iniciar Sesión</span>
+                                </Link>
+                                </div>
+                            )}
                         </div>
                     </nav>
                 </div>

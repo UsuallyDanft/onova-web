@@ -1,0 +1,67 @@
+/* src/components/ui/Tooltip.css */
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-box {
+  position: absolute;
+  background-color: var(--color-blue-ok);
+  color: var(--color-light);
+  text-align: center;
+  padding: 10px 15px;
+  border-radius: 20px;
+  z-index: 10;
+  min-width: 150px;
+  box-shadow: 0 4px 8px var(--shadow-color);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(10px); /* Estado inicial (oculto) */
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+
+/* Solo cuando la clase 'visible' está presente, el tooltip aparece */
+.tooltip-box.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0); /* Estado final (visible) */
+}
+
+
+/* El pequeño triángulo o flecha (estilo globo de texto) */
+.tooltip-box::after {
+  content: '';
+  position: absolute;
+  border-width: 8px;
+  border-style: solid;
+}
+
+/* Posición Arriba (Top) */
+.tooltip-top {
+  bottom: 125%;
+  left: 50%;
+  /* El transform se maneja en las reglas de visibilidad */
+}
+
+.tooltip-top::after {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-color: var(--color-blue-ok) transparent transparent transparent;
+}
+
+/* Posición Abajo (Bottom) */
+.tooltip-bottom {
+  top: 125%;
+  left: 50%;
+  /* El transform se maneja en las reglas de visibilidad */
+}
+
+.tooltip-bottom::after {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-color: transparent transparent var(--color-blue-ok) transparent;
+}

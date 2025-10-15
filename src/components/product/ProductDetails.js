@@ -10,6 +10,8 @@ import Twemoji from 'react-twemoji';
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
+// Importamos nuestro componente híbrido
+import Tooltip from '../ui/Tooltip';
 import BlockRenderer from './BlockRenderer';
 
 const THUMBNAILS_VISIBLE = 5;
@@ -22,6 +24,7 @@ export default function ProductDetails({ product }) {
   const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL?.replace('/api', '');
 
   const normalized = useMemo(() => {
+    // ... (lógica de normalización sin cambios)
     const images = Array.isArray(product?.images)
       ? product.images.map(img => {
           const url = typeof img === 'string' ? img : img?.url;
@@ -52,6 +55,7 @@ export default function ProductDetails({ product }) {
   const [thumbnailStartIndex, setThumbnailStartIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [isLongDescOpen, setIsLongDescOpen] = useState(false);
+  const [showBuyNowTooltip, setShowBuyNowTooltip] = useState(false);
 
   const contentWrapperRef = useRef(null);
 
@@ -66,9 +70,10 @@ export default function ProductDetails({ product }) {
     }
   }, [isLongDescOpen]);
 
+  // --- ESTA LÍNEA ASEGURA QUE LA LÓGICA ES PARA EL PRODUCTO ESPECÍFICO ---
   const quantityInCart = getItemQuantity(normalized.id);
   const totalStock = normalized.stock || 0;
-  const productWithImage = { ...product, imageUrl: normalized.images[0] };
+  const productWithImage = { ...product, id: normalized.id, imageUrl: normalized.images[0] };
 
   const handleIncreaseQuantity = () => {
     if (quantityInCart >= totalStock) return;
@@ -86,9 +91,14 @@ export default function ProductDetails({ product }) {
   };
 
   const handleBuyNow = () => {
-    if (quantityInCart === 0 && totalStock > 0) {
-      addToCart(productWithImage, 1);
+    if (quantityInCart === 0) {
+      setShowBuyNowTooltip(true);
+      setTimeout(() => {
+        setShowBuyNowTooltip(false);
+      }, 1800);
+      return; 
     }
+    
     if (totalStock > 0 || quantityInCart > 0) {
       router.push('/shop/checkout');
     }
@@ -100,8 +110,13 @@ export default function ProductDetails({ product }) {
     setThumbnailStartIndex(prev => Math.min(prev + 1, maxIndex));
   };
   const showCarousel = normalized.images.length > THUMBNAILS_VISIBLE;
-
   const lightboxSlides = normalized.images.map(src => ({ src }));
+
+  useEffect(() => {
+    if (quantityInCart > 0) {
+      setShowBuyNowTooltip(false);
+    }
+  }, [quantityInCart]);
 
   return (
     <>
@@ -109,13 +124,7 @@ export default function ProductDetails({ product }) {
         <div className={`details-container ${normalized.images.length === 1 ? 'single-image-layout' : ''}`}>
           <div className="gallery">
             <div className="main-image-container" onClick={() => setIsLightboxOpen(true)}>
-              <Image
-                src={normalized.images[currentImage]}
-                alt={normalized.name}
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                style={{ objectFit: 'cover' }}
-              />
+              <Image src={normalized.images[currentImage]} alt={normalized.name} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }}/>
             </div>
             {normalized.images.length > 1 && (
               <div className="thumbs-carousel-wrapper">
@@ -129,71 +138,48 @@ export default function ProductDetails({ product }) {
               </div>
             )}
           </div>
-
           <div className="info">
             <h1 className="title">{normalized.name}</h1>
             <p className="price">${Number(normalized.price).toFixed(2)}</p>
-            <p className={`stock ${totalStock > 0 ? 'has-stock' : 'no-stock'}`}>
-              {totalStock > 0 ? `Disponibles: ${totalStock}` : 'sin stock'}
-            </p>
-
-            {normalized.description && (
-  <Twemoji tag="p" className="description" options={{ className: 'twemoji' }}>
-    {normalized.description}
-  </Twemoji>
-)}
-
+            <p className={`stock ${totalStock > 0 ? 'has-stock' : 'no-stock'}`}>{totalStock > 0 ? `Disponibles: ${totalStock}` : 'sin stock'}</p>
+            {normalized.description && (<Twemoji tag="p" className="description" options={{ className: 'twemoji' }}>{normalized.description}</Twemoji>)}
             <div className="quantity-selector-container">
               <label className="quantity-label">Agregar articulo al carrito</label>
               <div className="quantity-control-wrapper">
                 <div className="quantity-selector">
-                  <button className="quantity-btn" onClick={handleDecreaseQuantity} disabled={quantityInCart <= 0}>
-                    <Minus size={16} />
-                  </button>
+                  <button className="quantity-btn" onClick={handleDecreaseQuantity} disabled={quantityInCart <= 0}><Minus size={16} /></button>
                   <span className="quantity-input">{quantityInCart}</span>
-                  <button className="quantity-btn" onClick={handleIncreaseQuantity} disabled={quantityInCart >= totalStock}>
-                    <Plus size={16} />
-                  </button>
+                  <button className="quantity-btn" onClick={handleIncreaseQuantity} disabled={quantityInCart >= totalStock}><Plus size={16} /></button>
                 </div>
-
-                {quantityInCart > 0 && (
-                  <button className="remove-item-btn" onClick={handleEmptyProductFromCart} aria-label="Vaciar carrito de este producto">
-                    <Trash2 size={16} />
-                    <span>Vaciar Carrito</span>
-                  </button>
-                )}
+                {quantityInCart > 0 && (<button className="remove-item-btn" onClick={handleEmptyProductFromCart} aria-label="Vaciar carrito de este producto"><Trash2 size={16} /><span>Vaciar Carrito</span></button>)}
               </div>
             </div>
-
             <div className="actions">
-              <button
-                className="buy-now-btn"
-                onClick={handleBuyNow}
-                disabled={totalStock <= 0}
+              <Tooltip 
+                text="Primero agrega productos al carrito"
+                position="top"
+                isOpen={showBuyNowTooltip}
+                trigger="click"
               >
-                <span>{totalStock > 0 ? 'Comprar Ahora' : 'Sin Stock'}</span>
-              </button>
-              <button className="wish-btn" aria-label="Agregar a favoritos">
-                <Heart size={24} />
-              </button>
+                <button
+                  className="buy-now-btn"
+                  onClick={handleBuyNow}
+                  disabled={totalStock <= 0}
+                >
+                  <span>{totalStock > 0 ? 'Comprar Ahora' : 'Sin Stock'}</span>
+                </button>
+              </Tooltip>
+              <button className="wish-btn" aria-label="Agregar a favoritos"><Heart size={24} /></button>
             </div>
           </div>
         </div>
-
         {normalized.longDescription && (
           <section className="long-description-section">
-            <button
-              className="long-description-header"
-              onClick={() => setIsLongDescOpen(!isLongDescOpen)}
-              aria-expanded={isLongDescOpen}
-            >
+            <button className="long-description-header" onClick={() => setIsLongDescOpen(!isLongDescOpen)} aria-expanded={isLongDescOpen}>
               <h3>Más detalles</h3>
               <ChevronDown className={`chevron-icon ${isLongDescOpen ? 'open' : ''}`} size={28} />
             </button>
-            <div
-              ref={contentWrapperRef}
-              className={`long-description-content ${isLongDescOpen ? 'open' : ''}`}
-            >
+            <div ref={contentWrapperRef} className={`long-description-content ${isLongDescOpen ? 'open' : ''}`}>
               <div className="content-inner">
                   <BlockRenderer content={normalized.longDescription} STRAPI_URL={STRAPI_URL} />
               </div>
@@ -201,13 +187,7 @@ export default function ProductDetails({ product }) {
           </section>
         )}
       </main>
-
-      <Lightbox
-        open={isLightboxOpen}
-        close={() => setIsLightboxOpen(false)}
-        slides={lightboxSlides}
-        index={currentImage}
-      />
+      <Lightbox open={isLightboxOpen} close={() => setIsLightboxOpen(false)} slides={lightboxSlides} index={currentImage}/>
     </>
   );
 }
