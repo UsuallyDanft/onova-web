@@ -10,7 +10,7 @@ import Twemoji from 'react-twemoji';
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
-// Importamos nuestro componente híbrido
+// Componente híbrido de tooltip
 import Tooltip from '../ui/Tooltip';
 import BlockRenderer from './BlockRenderer';
 
@@ -24,7 +24,6 @@ export default function ProductDetails({ product }) {
   const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL?.replace('/api', '');
 
   const normalized = useMemo(() => {
-    // ... (lógica de normalización sin cambios)
     const images = Array.isArray(product?.images)
       ? product.images.map(img => {
           const url = typeof img === 'string' ? img : img?.url;
@@ -70,7 +69,6 @@ export default function ProductDetails({ product }) {
     }
   }, [isLongDescOpen]);
 
-  // --- ESTA LÍNEA ASEGURA QUE LA LÓGICA ES PARA EL PRODUCTO ESPECÍFICO ---
   const quantityInCart = getItemQuantity(normalized.id);
   const totalStock = normalized.stock || 0;
   const productWithImage = { ...product, id: normalized.id, imageUrl: normalized.images[0] };

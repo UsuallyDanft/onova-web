@@ -1,3 +1,4 @@
+/* --- WELCOME SECTION --- */
 .welcolme-section {
     display: flex;
     align-items: center;
@@ -64,6 +65,7 @@
     object-fit: contain;
 }
 
+/* --- INFO SECTION --- */
 .info-section{
     display: flex;
     align-items: center;
@@ -95,6 +97,7 @@
     margin: 0;
 } 
 
+/* --- CONTENT SECTION (EXPLORA) --- */
 .content-section{
     background-color: var(--color-light);
     display: flex;
@@ -122,7 +125,7 @@
     gap: 2rem;
     padding: 2rem 0;
 }
-/* Contenedor de cada tarjeta completa (imagen + título) */
+
 .content-card {
   width: 25%;
   max-width: 350px;
@@ -152,7 +155,6 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* Overlay de descripción */
 .content-item-overlay {
   position: absolute;
   bottom: 0;
@@ -181,13 +183,10 @@
   font-family: var(--font-lato);
 }
 
-/* Estilos para la imagen */
 .content-item-img {
-  object-fit: cover; /* ✨ La propiedad clave: escala la imagen para cubrir sin distorsión */
-  /* object-position: center;  puedes usar esto para centrar una parte específica de la imagen */
+  object-fit: cover;
 }
 
-/* Título debajo de cada tarjeta */
 .content-item-title {
   font-size: 1.5rem;
   font-weight: 700;
@@ -197,10 +196,9 @@
   font-family: var(--font-monserrat);
 }
 
-/* Unificamos TODO lo del ícono en una sola regla */
 .icon-conten {
-  position: absolute;   /* ✨ Clave: Lo saca del flujo normal para posicionarlo en la esquina */
-  z-index: 2;           /* ✨ Clave: Lo pone por encima de la imagen */
+  position: absolute;
+  z-index: 2;
   top: 1.5rem;
   right: 1.5rem;
   background-color: #ffffff;
@@ -220,6 +218,8 @@
     background-color: var(--color-dark-blue);
     color: var(--color-light);
 }
+
+/* --- CONTACT SECTION --- */
 .contac-section{
     display: flex;
     flex-direction: column;
@@ -267,68 +267,69 @@
     filter: drop-shadow(0 10px 4px rgba(0, 0, 0, 0.2));
     }
 
-    .final-section {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: var(--color-light);
-        width: 100%;
-        height: 90vh;
-        box-sizing: border-box;
-        overflow-x: hidden;
-    }
-    .text-sectionB {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 0.9rem;
-        margin: 0 5rem;
-    }
-    
-    .text-sectionB h1 {
-        font-size: 4rem;
-        font-weight: 800;
-        line-height: 1.2;
-        color: var(--color-dark-gray);
-        margin: 0;
-    }
-    
-    .text-sectionB p {
-        font-size: 1.4rem;
-        line-height: 1.6;
-        max-width: 500px;
-        color: var(--color-dark-gray);
-        margin: 0;
-    }
-    
-    .explore-buttonB {
-        background-color: var(--color-dark-gray);
-        color: var(--color-lavender);
-        border: none;
-        border-radius: 50px;
-        padding: 14px 36px;
-        font-size: 1.2rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: transform 0.2s ease, background-color 0.2s ease;
-        align-self: flex-start;
-    }
-    
-    .explore-buttonB:hover {
-        transform: scale(1.05);
-        background-color: var(--color-dark-gray);
-    }
-    
-    .image-sectionB {
-        flex: 1;
-        position: relative;
-        height: 550px;
-        margin-right: 4rem;
-    }
-    
-    .responsive-imageB {
-        object-fit: contain;
-    }
+/* --- FINAL SECTION (UNETE) --- */
+.final-section {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--color-light);
+	width: 100%;
+	height: 90vh;
+	box-sizing: border-box;
+	overflow-x: hidden;
+}
+.text-sectionB {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 0.9rem;
+	margin: 0 5rem;
+}
+
+.text-sectionB h1 {
+	font-size: 4rem;
+	font-weight: 800;
+	line-height: 1.2;
+	color: var(--color-dark-gray);
+	margin: 0;
+}
+
+.text-sectionB p {
+	font-size: 1.4rem;
+	line-height: 1.6;
+	max-width: 500px;
+	color: var(--color-dark-gray);
+	margin: 0;
+}
+
+.explore-buttonB {
+	background-color: var(--color-dark-gray);
+	color: var(--color-lavender);
+	border: none;
+	border-radius: 50px;
+	padding: 14px 36px;
+	font-size: 1.2rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: transform 0.2s ease, background-color 0.2s ease;
+	align-self: flex-start;
+}
+
+.explore-buttonB:hover {
+	transform: scale(1.05);
+	background-color: var(--color-dark-gray);
+}
+
+.image-sectionB {
+	flex: 1;
+	position: relative;
+	height: 550px;
+	margin-right: 4rem;
+}
+
+.responsive-imageB {
+	object-fit: contain;
+}
 
 /* --- ESTILOS RESPONSIVOS --- */
 
@@ -336,17 +337,17 @@
 @media (max-width: 1024px) {
     .text-section,
     .text-sectionB {
-      margin: 0 3rem; /* Reduce el margen lateral */
+      margin: 0 3rem;
     }
   
     .text-section h1,
     .text-sectionB h1 {
-      font-size: 3.2rem; /* Reduce el tamaño de la fuente del título */
+      font-size: 3.2rem;
     }
   
     .text-section p,
     .text-sectionB p {
-      font-size: 1.2rem; /* Reduce el tamaño de la fuente del párrafo */
+      font-size: 1.2rem;
     }
   
     .info-item h2 {
@@ -357,45 +358,44 @@
     }
   
     .content-items {
-      gap: 1.5rem; /* Reduce el espacio entre las tarjetas */
+      gap: 1.5rem;
     }
   
     .content-card {
-      width: 30%; /* Ajusta el ancho de las tarjetas para tablets */
-      max-width: 250px; /* Tamaño máximo para tablets */
+      width: 30%;
+      max-width: 250px;
     }
     
     .content-item-title {
-      font-size: 1.4rem; /* Tamaño apropiado para tablets */
+      font-size: 1.4rem;
     }
   
     .contac-items {
-      gap: 2rem; /* Reduce el espacio entre los logos */
+      gap: 2rem;
     }
   }
   
   
   /* --- Pantallas Pequeñas (Móviles) - hasta 768px --- */
   @media (max-width: 768px) {
-    /* --- Sección de Bienvenida --- */
     .welcolme-section {
-      flex-direction: column; /* Apila el texto sobre la imagen */
-      height: auto; /* Altura automática para adaptarse al contenido */
-      padding: 2rem 1rem; /* Padding reducido */
+      flex-direction: column;
+      height: auto;
+      padding: 2rem 1rem;
       text-align: center;
       margin: 0;
       overflow-x: hidden;
     }
   
     .text-section {
-      margin: 0; /* Sin margen lateral */
-      padding: 0; /* Sin padding extra */
-      align-items: center; /* Centra los elementos */
+      margin: 0;
+      padding: 0;
+      align-items: center;
       max-width: 100%;
     }
   
     .text-section h1 {
-      font-size: 2.5rem; /* Tamaño de fuente más pequeño para móviles */
+      font-size: 2.5rem;
       margin: 0 0 1rem 0;
       padding: 0;
     }
@@ -408,14 +408,13 @@
     }
   
     .image-section {
-      order: -1; /* Mueve la imagen arriba del texto */
-      height: 300px; /* Reduce la altura de la imagen */
+      order: -1;
+      height: 300px;
       width: 90%;
-      margin: 0 auto 2rem auto; /* Centra la imagen */
+      margin: 0 auto 2rem auto;
       max-width: 100%;
     }
   
-    /* --- Separadores --- */
     .separation-1 {
       height: 150px;
     }
@@ -424,10 +423,9 @@
       height: 100px;
     }
   
-    /* --- Sección de Información --- */
     .info-section {
       height: auto;
-      padding: 2rem 1rem; /* Padding reducido */
+      padding: 2rem 1rem;
       text-align: center;
       margin: 0;
     }
@@ -450,29 +448,28 @@
       max-width: 100%;
     }
   
-    /* --- Sección de Contenido --- */
     .content-section {
       height: auto;
       padding: 2rem 0;
-      text-align: center; /* Centra el contenido */
+      text-align: center;
     }
     
     .content-title {
-      text-align: center; /* Centra el título */
+      text-align: center;
     }
     
     .content-title h2 {
-      text-align: center; /* Asegura que el título esté centrado */
+      text-align: center;
     }
   
     .content-items {
-      flex-direction: column; /* Apila las tarjetas verticalmente */
+      flex-direction: column;
       align-items: center;
       gap: 2rem;
     }
   
     .content-card {
-      width: 85%; /* Las tarjetas ocupan más ancho */
+      width: 85%;
       max-width: 400px;
     }
     
@@ -481,38 +478,36 @@
     }
     
     .content-item-title {
-      font-size: 1.3rem; /* Título más pequeño en móvil */
+      font-size: 1.3rem;
     }
   
-    /* --- Sección de Contacto --- */
     .contac-section {
       height: auto;
-      padding: 2rem 1rem; /* Padding reducido */
+      padding: 2rem 1rem;
       margin: 0;
     }
   
     .contac-items {
-      flex-wrap: wrap; /* Permite que los logos se envuelvan en varias líneas */
-      gap: 1.8rem; /* Espacio moderado entre las imágenes */
-      justify-content: center; /* Centra las imágenes */
-      padding: 0 1rem; /* Padding adicional a los lados */
+      flex-wrap: wrap;
+      gap: 1.8rem;
+      justify-content: center;
+      padding: 0 1rem;
     }
   
     .contac-item {
-      width: auto; /* Ancho automático para los logos */
-      max-width: 75px; /* Tamaño intermedio */
+      width: auto;
+      max-width: 75px;
     }
     
     .contac-item img {
-      width: 75px !important; /* Tamaño intermedio */
+      width: 75px !important;
       height: 75px !important;
     }
     
-    /* --- Sección Final --- */
     .final-section {
-      flex-direction: column; /* Apila los elementos */
+      flex-direction: column;
       height: auto;
-      padding: 2rem 1rem; /* Padding reducido */
+      padding: 2rem 1rem;
       text-align: center;
       margin: 0;
     }
@@ -520,7 +515,7 @@
     .text-sectionB {
       margin: 0;
       padding: 0;
-      align-items: center; /* Centra los elementos */
+      align-items: center;
       max-width: 100%;
     }
   
@@ -528,7 +523,7 @@
       font-size: 2.5rem;
       margin: 0 0 1rem 0;
       padding: 0;
-    }
+  }
   
     .text-sectionB p {
       font-size: 1rem;
@@ -540,7 +535,7 @@
     .image-sectionB {
       height: 300px;
       width: 90%;
-      margin: 2rem auto 0 auto; /* Centra la imagen */
+      margin: 2rem auto 0 auto;
       max-width: 100%;
     }
   }

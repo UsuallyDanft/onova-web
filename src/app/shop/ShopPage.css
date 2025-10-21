@@ -39,8 +39,6 @@
     grid-template-columns: 240px 1fr;
     gap: 24px;
   }
-  
-  /* Responsive adjustments handled by ProductSidebar component */
 }
 
 /* Overlay/backdrop para el menú móvil */
@@ -62,7 +60,6 @@
   }
   
   .shop-sidebar {
-    /* Mantener visible para que el menú móvil funcione */
     display: block;
     position: static;
   }

@@ -1,62 +1,48 @@
+// src/app/shop/product/[slug]/page.js
+
 import { queryAPI } from '@/components/lib/strapi';
 import ProductDetails from '@/components/product/ProductDetails';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
+import { notFound } from 'next/navigation';
 
-export default async function ProductDetailPage(props) {
-  const params = await props.params;
+export default async function ProductDetailPage({ params }) {
   const { slug } = params;
 
-  const query = `api/products?filters[slug][$eq]=${encodeURIComponent(slug)}&populate[images][fields]=url&populate[categories][fields]=name&populate[tags][fields]=name`;
-  const response = await queryAPI(query);
-  const productRaw = response?.data?.[0] || null;
+  // 1. Usamos la consulta exacta que funcionó en api.rest
+  const queryString = `api/products?filters[slug][$eq]=${slug}&populate[images][fields]=url&populate[categories][fields]=name&populate[tag][fields]=name&populate[digital_inventories][fields]=saleStatus`;
 
-  if (!productRaw) {
-    return (
-      <div style={{ padding: 24 }}>
-        <h2>Producto no encontrado</h2>
-        <p>El producto solicitado no existe o fue retirado.</p>
-      </div>
-    );
+  const response = await queryAPI(queryString);
+
+  // Si la respuesta es nula o no hay productos, mostramos un 404.
+  if (!response || !response.data || response.data.length === 0) {
+    notFound();
   }
 
-  const attrs = productRaw.attributes || {};
-  const imagesFlat = Array.isArray(productRaw.images)
-    ? productRaw.images.map(img => (typeof img === 'string' ? { url: img } : { url: img?.url }))
-    : [];
-  const imagesFromAttrs = attrs.images?.data?.map(img => ({ url: img?.attributes?.url })) || [];
-  const images = [...imagesFlat, ...imagesFromAttrs].filter(Boolean);
+  // Obtenemos el producto.
+  const productRaw = response.data[0];
 
-  // Mantenemos la variable `dataSource` para los demás campos, ya que funcionó
-  const dataSource = productRaw.attributes || productRaw;
+  // 2. Calculamos el stock real a partir del inventario digital.
+  const inventories = productRaw.digital_inventories || [];
+  const availableStock = inventories.filter(
+    (inv) => inv.saleStatus === 'Available'
+  ).length;
 
-  const categories = (dataSource.categories?.data || []).map(c => (
-    c?.attributes ? { id: c.id, name: c.attributes?.name } : { id: c?.id, name: c?.name }
-  ));
-  const tags = (dataSource.tags?.data || []).map(t => (
-    t?.attributes ? { id: t.id, name: t.attributes?.name } : { id: t?.id, name: t?.name }
-  ));
-
-  const descSource = dataSource.description ?? '';
-  const description = Array.isArray(descSource)
-    ? descSource.map(block => block?.children?.map(ch => ch?.text).join(' ') || '').join('\n\n')
-    : String(descSource || '');
-    
-  const longDescription = dataSource.longDescription || null;
-
+  // 3. Creamos el objeto 'product' final con todos los datos limpios.
   const product = {
     id: productRaw.id,
-    name: dataSource.name,
-    slug: dataSource.slug,
-    price: dataSource.price,
-    stock: dataSource.stock ?? 0,
-    description,
-    longDescription,
-    images,
-    categories,
-    tags,
-    createdAt: dataSource.createdAt,
+    name: productRaw.name,
+    slug: productRaw.slug,
+    price: productRaw.price,
+    description: productRaw.description,
+    longDescription: productRaw.longDescription,
+    images: productRaw.images,
+    categories: productRaw.categories,
+    tag: productRaw.tag,
+    createdAt: productRaw.createdAt,
+    stock: availableStock, 
   };
 
+  // 4. Pasamos el objeto 'product' limpio al componente cliente.
   return (
     <div>
       <Breadcrumbs productName={product.name} />

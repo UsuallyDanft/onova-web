@@ -6,22 +6,38 @@ import Breadcrumbs from '@/components/ui/Breadcrumbs';
 
 export default async function ShopPageContainer() {
   
-  // 1. Ejecutar todas las consultas a la API en paralelo para eficiencia
+  const queryString = 'api/products?populate[images][fields]=url&populate[categories][fields]=name&populate[tag][fields]=name&populate[digital_inventories][fields]=saleStatus';
+
   const [productsData, categoriesData, tagsData] = await Promise.all([
-    queryAPI('api/products?populate[images][fields]=url&populate[categories][fields]=name&populate[tags][fields]=name'), // Obtenemos productos con sus relaciones
-    queryAPI('api/categories'),          // Obtenemos todas las categorías
-    queryAPI('api/tags')                 // Obtenemos todos los tags
+    queryAPI(queryString),
+    queryAPI('api/categories'),
+    queryAPI('api/tags')
   ]);
 
-  // 2. Extraer los datos de forma segura, asignando un array vacío si algo falla
   const products = productsData?.data ?? [];
   const categories = categoriesData?.data ?? [];
   const tags = tagsData?.data ?? [];
 
-  // 3. Pasar todos los datos al componente cliente
+  // Procesar los productos para calcular el stock real
+  const productsWithStock = products.map(product => {
+    // 1. Accedemos directamente a la propiedad del producto
+    const inventories = product.digital_inventories || [];
+    
+    // 2. Filtramos accediendo directamente a la propiedad del inventario
+    const availableStock = inventories.filter(
+      inv => inv.saleStatus === 'Available'
+    ).length;
+
+    // Devolvemos el producto con su nuevo stock calculado
+    return {
+      ...product,
+      stock: availableStock, 
+    };
+  });
+
   return (
     <div>
       <Breadcrumbs/>
-      <ShopClientPage products={products} categories={categories} tags={tags} />;
+      <ShopClientPage products={productsWithStock} categories={categories} tags={tags} />;
     </div>);
 }

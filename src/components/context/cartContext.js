@@ -2,14 +2,14 @@
 
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 
-// 1. ESTADO INICIAL: Define cómo se ve un carrito vacío.
+// 1. ESTADO INICIAL
 const initialState = {
   items: [],
   total: 0,
   itemCount: 0,
 };
 
-// 2. ACCIONES: Constantes para evitar errores de tipeo al llamar las acciones.
+// 2. ACCIONES
 const CART_ACTIONS = {
   ADD_ITEM: 'ADD_ITEM',
   REMOVE_ITEM: 'REMOVE_ITEM',
@@ -22,22 +22,32 @@ const CART_ACTIONS = {
 const cartReducer = (state, action) => {
   switch (action.type) {
     case CART_ACTIONS.ADD_ITEM: {
-      const existingItem = state.items.find(item => item.id === action.payload.id);
+      const newItem = action.payload;
+      const existingItem = state.items.find(item => item.id === newItem.id);
       let newItems;
 
       if (existingItem) {
-        // Si el producto ya existe, actualiza su cantidad
-        newItems = state.items.map(item =>
-          item.id === action.payload.id
-            ? { ...item, quantity: item.quantity + action.payload.quantity }
-            : item
-        );
+        newItems = state.items.map(item => {
+          if (item.id === newItem.id) {
+            //Calcula la nueva cantidad y la limita al stock disponible.
+            let newQuantity = item.quantity + newItem.quantity;
+            if (newQuantity > item.stock) {
+              console.warn(`Cantidad excede el stock. Se ajustó a ${item.stock}.`);
+              newQuantity = item.stock; // Limita la cantidad al stock máximo.
+            }
+            return { ...item, quantity: newQuantity };
+          }
+          return item;
+        });
       } else {
-        // Si es un producto nuevo, lo añade al array
-        newItems = [...state.items, action.payload];
+         // Si la cantidad inicial excede el stock, ajústala.
+         if (newItem.quantity > newItem.stock) {
+            console.warn(`Cantidad inicial excede el stock. Se ajustó a ${newItem.stock}.`);
+            newItem.quantity = newItem.stock;
+         }
+        newItems = [...state.items, newItem];
       }
       
-      // Recalcula el total y la cantidad de items después de cualquier cambio
       const newTotal = newItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
       const newItemCount = newItems.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -53,11 +63,24 @@ const cartReducer = (state, action) => {
     }
 
     case CART_ACTIONS.UPDATE_QUANTITY: {
+      const { id, quantity } = action.payload;
+      const itemToUpdate = state.items.find(item => item.id === id);
+      
+      if (!itemToUpdate) return state;
+
+      //Limita la cantidad actualizada al stock del producto.
+      let newQuantity = quantity;
+      if (newQuantity > itemToUpdate.stock) {
+        console.warn(`Cantidad excede el stock. Se ajustó a ${itemToUpdate.stock}.`);
+        newQuantity = itemToUpdate.stock;
+      }
+
       const newItems = state.items.map(item =>
-        item.id === action.payload.id
-          ? { ...item, quantity: action.payload.quantity }
+        item.id === id
+          ? { ...item, quantity: newQuantity }
           : item
       );
+
       const newTotal = newItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
       const newItemCount = newItems.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -65,11 +88,9 @@ const cartReducer = (state, action) => {
     }
 
     case CART_ACTIONS.CLEAR_CART:
-      // Resetea el estado al inicial para vaciar el carrito
       return initialState;
 
     case CART_ACTIONS.LOAD_CART:
-      // Carga el estado guardado desde localStorage
       return action.payload;
 
     default:
@@ -77,7 +98,7 @@ const cartReducer = (state, action) => {
   }
 };
 
-// 4. CREACIÓN DEL CONTEXTO Y HOOK PERSONALIZADO
+// 4. CREACIÓN DEL CONTEXTO Y HOOK
 const CartContext = createContext();
 export const useCart = () => {
   const context = useContext(CartContext);
@@ -91,7 +112,6 @@ export const useCart = () => {
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
 
-  // Cargar carrito desde localStorage al iniciar la app
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
@@ -103,21 +123,19 @@ export const CartProvider = ({ children }) => {
     }
   }, []);
 
-  // Guardar carrito en localStorage cada vez que el estado cambie
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(state));
   }, [state]);
 
-  // 6. FUNCIONES PÚBLICAS: Lo que los componentes podrán llamar
   const addToCart = (product, quantity = 1) => {
     const cartItem = {
       id: product.id,
-      name: product.attributes?.name || product.name,
-      price: product.attributes?.price || product.price,
-      image: product.imageUrl, // Asume que el objeto product ya tiene la URL de la imagen formateada
-      slug: product.attributes?.slug || product.slug,
+      name: product.name,
+      price: product.price,
+      image: product.imageUrl, 
+      slug: product.slug,
       quantity,
-      stock: product.attributes?.stock || product.stock || 0,
+      stock: product.stock || 0,
     };
     dispatch({ type: CART_ACTIONS.ADD_ITEM, payload: cartItem });
   };
@@ -143,7 +161,6 @@ export const CartProvider = ({ children }) => {
     return item ? item.quantity : 0;
   };
 
-  // 7. VALOR DEL CONTEXTO: Expone el estado y las funciones a los componentes hijos
   const value = {
     ...state,
     addToCart,

@@ -1,3 +1,6 @@
+/* ======================================= */
+/* --- Estilos Generales del Footer --- */
+/* ======================================= */
 
 .footer {
     background-color: var(--color-dark-gray);
@@ -9,7 +12,7 @@
     overflow-x: hidden;
 }
 
-
+/* --- Contenedor Principal (Grid) --- */
 .footer-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -17,11 +20,16 @@
     margin-bottom: 40px;
 }
 
+/* --- Títulos (h3, h4) de las Columnas --- */
 .footer-column h3, .footer-column h4 {
     color: var(--color-light);
     margin-bottom: 20px;
     font-family: var(--font-monserrat);
 }
+
+/* ======================================= */
+/* --- Columna 1: Sobre la Empresa y Redes --- */
+/* ======================================= */
 
 .footer-logo {
     font-size: 2rem;
@@ -32,6 +40,26 @@
     line-height: 1.6;
     margin-bottom: 20px;
 }
+
+.social-icons {
+    display: flex;
+    gap: 15px; 
+}
+
+.social-icons a {
+    color: #ccc;
+    font-size: 24px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #fff;
+    transform: translateY(-3px);
+}
+
+/* ======================================= */
+/* --- Columnas 2 y 3: Listas de Enlaces --- */
+/* ======================================= */
 
 .footer-links ul {
     list-style: none;
@@ -54,22 +82,9 @@
     text-decoration: underline;
 }
 
-
-.social-icons {
-    display: flex;
-    gap: 15px; 
-}
-
-.social-icons a {
-    color: #ccc;
-    font-size: 24px;
-    transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.social-icons a:hover {
-    color: #fff;
-    transform: translateY(-3px);
-}
+/* ======================================= */
+/* --- Columna 4: Newsletter --- */
+/* ======================================= */
 
 .newsletter-form {
     display: flex;
@@ -101,8 +116,10 @@
     background-color: #0056b3;
 }
 
+/* ======================================= */
+/* --- Barra Inferior (Copyright) --- */
+/* ======================================= */
 
-/* Barra inferior del footer */
 .footer-bottom {
     text-align: center;
     padding-top: 20px;
@@ -110,48 +127,51 @@
     font-size: 0.9em;
 }
 
-/* Responsive Design para el Footer */
+/* ======================================= */
+/* --- Diseño Responsivo (Media Queries) --- */
+/* ======================================= */
+
 @media (max-width: 768px) {
     .footer {
-        padding: 40px 15px 15px 15px; /* Padding más reducido para evitar desbordamiento */
+        padding: 40px 15px 15px 15px; 
         margin: 0;
         width: 100%;
     }
     
     .footer-container {
-        grid-template-columns: 1fr; /* Una sola columna en móviles */
+        grid-template-columns: 1fr; 
         gap: 30px;
         margin-bottom: 30px;
-        text-align: center; /* Centra el contenido */
+        text-align: center; 
     }
     
     .footer-column h3, .footer-column h4 {
-        font-size: 1.4rem; /* Reduce el tamaño de los títulos */
+        font-size: 1.4rem; 
         margin-bottom: 15px;
     }
     
     .footer-logo {
-        font-size: 1.8rem; /* Reduce el tamaño del logo */
+        font-size: 1.8rem;
     }
     
     .footer-about p {
-        font-size: 0.95rem; /* Texto más pequeño */
+        font-size: 0.95rem;
         line-height: 1.5;
         max-width: 350px;
-        margin: 0 auto 20px auto; /* Centra el párrafo */
+        margin: 0 auto 20px auto;
     }
     
     .social-icons {
-        justify-content: center; /* Centra los iconos sociales */
+        justify-content: center;
         gap: 20px;
     }
     
     .social-icons a {
-        font-size: 28px; /* Iconos más grandes para móvil */
+        font-size: 28px;
     }
     
     .footer-links ul li {
-        margin-bottom: 15px; /* Más espacio entre enlaces */
+        margin-bottom: 15px; 
     }
     
     .footer-links a {
@@ -161,11 +181,11 @@
     .newsletter-form {
         flex-direction: column;
         max-width: 300px;
-        margin: 0 auto; /* Centra el formulario */
+        margin: 0 auto; 
     }
     
     .newsletter-form input {
-        padding: 15px; /* Botones más grandes para móvil */
+        padding: 15px; 
         font-size: 1rem;
     }
     
@@ -183,7 +203,7 @@
 
 @media (max-width: 480px) {
     .footer {
-        padding: 20px 10px 10px 10px; /* Padding mínimo para pantallas muy pequeñas */
+        padding: 20px 10px 10px 10px; 
         margin: 0;
         width: 100%;
     }
@@ -222,6 +242,7 @@
     }
 }
 
+/* --- Ajuste para Desktop (Newsletter) --- */
 @media (min-width: 769px) {
     .newsletter-form {
         flex-direction: row;    

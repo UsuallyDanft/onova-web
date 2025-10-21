@@ -27,3 +27,18 @@ Content-Type: {{contentType}}
 GET {{strapiHost}}/api/products?filters[slug][$eq]=&populate=*
 Authorization: Bearer {{strapiToken}}
 Content-Type: {{contentType}}
+
+### Petición específica que usa la aplicación
+GET {{strapiHost}}/api/products?populate[images][fields]=url&populate[categories][fields]=name&populate[tags][fields]=name&populate[digital_inventories][fields]=saleStatus
+Authorization: Bearer {{strapiToken}}
+Content-Type: {{contentType}}
+
+### Obtener todos los productos con todas sus relaciones
+GET {{strapiHost}}/api/products?populate=*
+Authorization: Bearer {{strapiToken}}
+Content-Type: {{contentType}}
+
+### Petición específica para la página de detalles del producto
+GET {{strapiHost}}/api/products?filters[slug][$eq]=product-1&populate[images][fields]=url&populate[categories][fields]=name&populate[tag][fields]=name&populate[digital_inventories][fields]=saleStatus
+Authorization: Bearer {{strapiToken}}
+Content-Type: {{contentType}}

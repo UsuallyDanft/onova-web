@@ -47,8 +47,6 @@ export default function LoginPage() {
   return (
     <main className="login-page">
       <div className="login-container">
-
-        {/* --- TÍTULO Y SUBTÍTULO RESTAURADOS --- */}
         <div className="login-header">
           <h1 className="welcome-title">Bienvenido de Nuevo</h1>
           <p className="welcome-subtitle">Inicia sesión para continuar</p>
@@ -91,8 +89,7 @@ export default function LoginPage() {
             <span>{loading ? 'Iniciando...' : 'Iniciar Sesión'}</span>
           </button>
         </form>
-
-        {/* --- ENLACE A REGISTRO RESTAURADO --- */}
+        
         <div className="signup-link">
           <p>
             ¿No tienes una cuenta?{' '}

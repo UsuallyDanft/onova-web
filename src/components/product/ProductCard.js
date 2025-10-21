@@ -2,14 +2,15 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation'; // Importado
+import { useRouter } from 'next/navigation';
 import { ShoppingCart, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 import './ProductCard.css';
 import { useCart } from '../context/cartContext';
 
 export default function ProductCard({ product }) {
   const { addToCart, getItemQuantity } = useCart();
-  const router = useRouter(); // 1. Inicializa el router
+  // 1. Inicializa el router
+  const router = useRouter();
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -44,7 +45,7 @@ export default function ProductCard({ product }) {
     setCurrentImageIndex((prevIndex) => (prevIndex - 1 + productData.images.length) % productData.images.length);
   };
   
-  // 2. Crea la función que maneja la navegación
+  // 2. función que maneja la navegación
   const handleNavigate = () => {
     router.push(`/shop/product/${productData.slug}`);
   };
@@ -62,7 +63,6 @@ export default function ProductCard({ product }) {
   return (
     <div className="product-card">
       <div className="product-image-container">
-        {/* 3. MODIFICACIÓN DEL JSX: Quitamos <Link> y añadimos onClick */}
         <div className="product-image clickable" onClick={handleNavigate}>
           <Image
             src={productData.images[currentImageIndex]}
@@ -88,7 +88,6 @@ export default function ProductCard({ product }) {
             onMouseLeave={() => setShowActions(false)}
           ></div>
         </div>
-        {/* Fin de la modificación */}
 
         <div 
           className={`product-actions ${showActions ? 'visible' : ''}`}

@@ -2,10 +2,9 @@
 
 import React, { Fragment } from 'react';
 import Twemoji from 'react-twemoji';
-import Image from 'next/image'; // 👈 Importamos el componente Image de Next.js
+import Image from 'next/image';
 
 const renderText = (children) => {
-  // ... (esta función no necesita cambios)
   if (!children) return null;
   return children.map((child, index) => {
     let element = <Fragment key={index}>{child.text}</Fragment>;
@@ -17,14 +16,12 @@ const renderText = (children) => {
   });
 };
 
-// 👇 Le pasamos STRAPI_URL como prop para las imágenes
 const BlockRenderer = ({ content, STRAPI_URL }) => {
   if (!Array.isArray(content)) {
     return null;
   }
 
   return content.map((block, index) => {
-    // Extraemos las propiedades del bloque
     const { type, level, children, format, image } = block;
 
     switch (type) {
@@ -61,9 +58,8 @@ const BlockRenderer = ({ content, STRAPI_URL }) => {
           </ListTag>
         );
       
-      // --- 👇 NUEVOS BLOQUES AÑADIDOS ---
 
-      case 'quote': // NUEVO: Soporte para citas
+      case 'quote': // Soporte para citas
         return (
           <blockquote key={index}>
             <Twemoji options={{ className: 'twemoji' }}>
@@ -72,7 +68,7 @@ const BlockRenderer = ({ content, STRAPI_URL }) => {
           </blockquote>
         );
 
-      case 'image': // NUEVO: Soporte para imágenes
+      case 'image': // Soporte para imágenes
         if (!image?.url || !STRAPI_URL) return null;
 
         const imageUrl = image.url.startsWith('http') 
@@ -84,25 +80,21 @@ const BlockRenderer = ({ content, STRAPI_URL }) => {
             <Image
               src={imageUrl}
               alt={image.alternativeText || 'Imagen de la descripción'}
-              width={image.width || 800} // Usamos el ancho de Strapi o un valor por defecto
-              height={image.height || 600} // Usamos el alto de Strapi o un valor por defecto
+              width={image.width || 800} 
+              height={image.height || 600} 
               style={{ maxWidth: '100%', height: 'auto', borderRadius: '8px' }}
             />
           </figure>
         );
 
-      case 'code': // NUEVO: Soporte para bloques de código
+      case 'code': // Soporte para bloques de código
         const codeText = children.map(child => child.text).join('\n');
         return (
           <pre key={index}>
             <code>{codeText}</code>
           </pre>
         );
-      
-      // --- 👆 FIN DE NUEVOS BLOQUES ---
-
       default:
-        // No mostramos la advertencia para tipos que no renderizamos
         return null;
     }
   });

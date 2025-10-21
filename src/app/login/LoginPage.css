@@ -4,7 +4,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: calc(100vh - 70px); /* Resta la altura de tu header */
+    min-height: calc(100vh - 70px);
     padding: 2rem 1rem;
     background-color: var(--bg-primary);
   }

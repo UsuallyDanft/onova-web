@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { X, Search, ArrowRight, Package } from 'lucide-react';
-// Removed queryAPI import - now using API route
 import './searchModal.css';
 
 const SearchModal = ({ isOpen, onClose }) => {
