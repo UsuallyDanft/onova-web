@@ -1,20 +1,19 @@
-export default function CategoryGrid() {
+// [MODIFICADO] src/components/shop/CategoryGrid.js
+import CategoryCard from "@/components/category/CategoryCard";
+import "./CategoryGrid.css"; // Importamos el CSS para el grid
+
+export default function CategoryGrid({ categories }) {
+  // Verificamos si hay categorías para mostrar
+  if (!categories || categories.length === 0) {
+    return <p>No hay categorías disponibles.</p>;
+  }
+
   return (
     <div className="category-grid">
-      <div className="categories-container">
-        <div className="category-card">
-          <h3>Software de Desarrollo</h3>
-          <p>Herramientas para desarrolladores</p>
-        </div>
-        <div className="category-card">
-          <h3>Inteligencia Artificial</h3>
-          <p>Soluciones de IA avanzadas</p>
-        </div>
-        <div className="category-card">
-          <h3>Productividad</h3>
-          <p>Aumenta tu eficiencia</p>
-        </div>
-      </div>
+      {/* Mapeamos las categorías y renderizamos una Card por cada una */}
+      {categories.map(category => (
+        <CategoryCard key={category.id} category={category} />
+      ))}
     </div>
   );
 }

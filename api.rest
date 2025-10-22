@@ -16,6 +16,11 @@ GET {{strapiHost}}/api/categories
 Authorization: Bearer {{strapiToken}}
 Content-Type: {{contentType}}
 
+### Obtener Categorías CON Imágenes
+GET {{strapiHost}}/api/categories?populate=image
+Authorization: Bearer {{strapiToken}}
+Content-Type: {{contentType}}
+
 ### 3. Obtener todas las etiquetas (tags)
 # Similar a las categorías, esto te traerá todas las etiquetas que has creado.
 GET {{strapiHost}}/api/tags

@@ -1,0 +1,59 @@
+/* [CSS ACTUALIZADO] src/components/category/CategoryCard.css */
+
+.category-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.category-card {
+  /* ¡Volvemos a flex! Pone imagen e info lado a lado */
+  display: flex; 
+  align-items: center; /* Centra verticalmente el contenido */
+  
+  /* Colores de globals.css */
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 5px var(--shadow-color);
+
+  border-radius: 20px;
+  overflow: hidden; 
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  /* Eliminamos la altura fija. La altura la definirá la imagen. */
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+/* Contenedor de la Imagen (Cuadrada y más grande) */
+.category-image-container {
+  position: relative;
+  
+  /* Nuevo tamaño: 180px x 180px (puedes ajustar este valor) */
+  width: 180px; 
+  height: 180px;
+  
+  flex-shrink: 0; /* Evita que la imagen se encoja */
+}
+
+/* Contenedor de la Información */
+.category-info {
+  /* Más padding para que respire */
+  padding: 1.5rem 2rem;
+}
+
+.category-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.75rem; /* Título aún más grande */
+  color: var(--accent-color);
+}
+
+.category-info p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}

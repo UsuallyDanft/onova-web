@@ -1,0 +1,20 @@
+/* [CSS ACTUALIZADO] src/app/shop/categories/CategoryClientPage.css */
+
+.categories-page .categories-container {
+  /* Aumentamos el ancho máximo para que no se sienta angosto */
+  max-width: 1400px; /* Antes era 1200px */
+  
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.categories-page h1 {
+  margin-bottom: 0.5rem;
+  font-size: 2.5rem; /* Título de página más grande */
+}
+
+.categories-page p {
+  margin-bottom: 2.5rem; /* Más separación */
+  font-size: 1.1rem;
+  color: var(--text-secondary); /* Usamos color global */
+}
