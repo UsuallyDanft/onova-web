@@ -23,7 +23,7 @@ const CartModal = ({ isOpen, onClose }) => {
   };
 
   const handleCheckout = () => {
-    router.push('/checkout');
+    router.push('/shop/checkout');
     onClose();
   };
 

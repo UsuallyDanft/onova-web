@@ -1,20 +1,34 @@
-import CartSummary from "@/components/checkout/CartSummary";
-import PaymentOptions from "@/components/checkout/PaymentOptions";
+import React from 'react';
+import CartSummary from '@/components/checkout/CartSummary';
+import PaymentOptions from '@/components/checkout/PaymentOptions';
+import Breadcrumbs from '@/components/ui/Breadcrumbs'; 
 
-export default function CheckoutPage() {
+import './CheckoutPage.css';
+
+const CheckoutPage = () => {
+  const breadcrumbs = [
+    { name: 'Inicio', path: '/' },
+    { name: 'Tienda', path: '/shop' },
+    { name: 'Checkout', path: '/shop/checkout' },
+  ];
+
   return (
-    <main className="checkout-page">
+    <main>
+      <Breadcrumbs items={breadcrumbs} />
       <div className="checkout-container">
-        <h1>Checkout - Finalizar Compra</h1>
-        <div className="checkout-layout">
-          <section className="checkout-cart">
-            <CartSummary />
-          </section>
-          <section className="checkout-payment">
-            <PaymentOptions />
-          </section>
+        
+        {/* 3. Columna izquierda (Pasarela) */}
+        <div className="payment-section">
+          <PaymentOptions />
+        </div>
+        
+        {/* 4. Columna derecha (Resumen) */}
+        <div className="summary-section">
+          <CartSummary />
         </div>
       </div>
     </main>
   );
-}
+};
+
+export default CheckoutPage;
