@@ -4,31 +4,44 @@ import { queryAPI } from '@/components/lib/strapi';
 import ShopClientPage from './ShopClientPage'; 
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 
-export default async function ShopPageContainer() {
+// --- ¡CAMBIO 1! ---
+// Aceptamos 'searchParams' para leer los parámetros de la URL
+export default async function ShopPageContainer({ searchParams }) {
   
-  const queryString = 'api/products?populate[images][fields]=url&populate[categories][fields]=name&populate[tag][fields]=name&populate[digital_inventories][fields]=saleStatus';
+  // Leemos el slug de la categoría desde la URL (ej: "categoria-1")
+  const categorySlug = searchParams.category;
+
+  // Tu consulta de productos está bien
+  const productsQuery = 'api/products?populate[images][fields]=url&populate[categories][fields]=name,slug&populate[tag][fields]=name&populate[digital_inventories][fields]=saleStatus';
+  
+  // --- ¡CAMBIO 2! ---
+  // A TU CONSULTA DE CATEGORÍAS LE FALTABA EL 'slug'. LO AÑADIMOS.
+  // (Asumo que la de tags está bien)
+  const categoriesQuery = 'api/categories?fields[0]=name&fields[1]=slug';
+  const tagsQuery = 'api/tags';
 
   const [productsData, categoriesData, tagsData] = await Promise.all([
-    queryAPI(queryString),
-    queryAPI('api/categories'),
-    queryAPI('api/tags')
+    queryAPI(productsQuery),
+    queryAPI(categoriesQuery),
+    queryAPI(tagsQuery)
   ]);
 
   const products = productsData?.data ?? [];
   const categories = categoriesData?.data ?? [];
   const tags = tagsData?.data ?? [];
 
-  // Procesar los productos para calcular el stock real
+  // --- ¡CAMBIO 3! ---
+  // Buscamos el 'name' de la categoría que coincida con el 'slug' de la URL
+  // Si no se encuentra, usamos 'Todos' (el valor por defecto de tu cliente)
+  const initialCategoryName = categories.find(c => c.slug === categorySlug)?.name || 'Todos';
+
+  // El procesamiento de stock sigue igual
   const productsWithStock = products.map(product => {
-    // 1. Accedemos directamente a la propiedad del producto
     const inventories = product.digital_inventories || [];
-    
-    // 2. Filtramos accediendo directamente a la propiedad del inventario
     const availableStock = inventories.filter(
       inv => inv.saleStatus === 'Available'
     ).length;
 
-    // Devolvemos el producto con su nuevo stock calculado
     return {
       ...product,
       stock: availableStock, 
@@ -38,6 +51,14 @@ export default async function ShopPageContainer() {
   return (
     <div>
       <Breadcrumbs/>
-      <ShopClientPage products={productsWithStock} categories={categories} tags={tags} />;
-    </div>);
+      {/* --- ¡CAMBIO 4! --- */}
+      {/* Pasamos el nombre de la categoría inicial al cliente */}
+      <ShopClientPage 
+        products={productsWithStock} 
+        categories={categories} 
+        tags={tags} 
+        initialCategoryName={initialCategoryName} 
+      />
+    </div>
+  );
 }

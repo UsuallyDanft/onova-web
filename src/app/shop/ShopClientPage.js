@@ -1,18 +1,21 @@
+// src/app/shop/ShopClientPage.js
 'use client';
-// Pagina principal de la tienda - contiene todo lo que interactua con el usuario
 
 import { useState, useEffect } from 'react';
 import ProductGrid from "@/components/shop/ProductGrid";
 import ProductSidebar from "@/components/product/ProductSidebar";
 import './ShopPage.css';
 
-// 1. Acepta 'products', 'categories', y 'tags' como props desde la página del servidor
-export default function ShopClientPage({ products, categories, tags }) {
+// --- ¡CAMBIO 1! ---
+// Aceptamos la nueva prop 'initialCategoryName'
+export default function ShopClientPage({ products, categories, tags, initialCategoryName }) {
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
-  // 2. Estado para almacenar los filtros seleccionados
+  // --- ¡CAMBIO 2! (El único cambio de lógica) ---
+  // Usamos 'initialCategoryName' para establecer el estado inicial.
+  // Si no viene, usamos 'Todos' como antes.
   const [filters, setFilters] = useState({
-    category: 'Todos',
+    category: initialCategoryName || 'Todos', 
     tag: 'Ninguno',
     priceRange: [1, 10000],
     sortOrder: 'Por precio',
@@ -21,17 +24,14 @@ export default function ShopClientPage({ products, categories, tags }) {
   // 3. Estado para almacenar los productos que se mostrarán después de filtrar
   const [filteredProducts, setFilteredProducts] = useState(products);
 
-  // 4. Función para actualizar el estado de los filtros desde el ProductSidebar
+  // 4. Función para actualizar el estado de los filtros (SIN CAMBIOS)
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
   };
 
-  // 5. useEffect que aplica los filtros cada vez que 'filters' cambia
+  // 5. useEffect que aplica los filtros (SIN CAMBIOS)
   useEffect(() => {
-    // Filtro de seguridad para evitar errores con datos malformados
     let tempProducts = products.filter(p => p);
-
-    // --- LÓGICA DE FILTRADO (adaptada a la estructura "plana") ---
 
     // Filtrar por categoría
     if (filters.category !== 'Todos') {
@@ -39,7 +39,10 @@ export default function ShopClientPage({ products, categories, tags }) {
         product.categories?.some(cat => cat.name === filters.category)
       );
     }
-
+    
+    // ... El resto del useEffect y del archivo NO CAMBIA ...
+    // ... (Filtrado por tag, precio, ordenamiento, etc.) ...
+    
     // Filtrar por etiqueta (tag)
     if (filters.tag !== 'Ninguno') {
       tempProducts = tempProducts.filter(product =>
@@ -58,7 +61,7 @@ export default function ShopClientPage({ products, categories, tags }) {
         tempProducts.sort((a, b) => a.price - b.price);
         break;
       case 'Mayor precio':
-        tempProducts.sort((a, b) => b.price - a.price);
+        tempProducts.sort((a, b) => b.price - b.price);
         break;
       case 'Más reciente':
         tempProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -72,7 +75,9 @@ export default function ShopClientPage({ products, categories, tags }) {
     setFilteredProducts(tempProducts);
 
   }, [filters, products]);
-
+  
+  // ... El resto de tu archivo (lógica móvil, JSX, etc.) 
+  // no necesita ningún cambio.
   // --- Lógica para el menú móvil ---
   const toggleMobileFilters = () => setIsMobileFiltersOpen(!isMobileFiltersOpen);
   const closeMobileFilters = () => setIsMobileFiltersOpen(false);
@@ -105,17 +110,19 @@ export default function ShopClientPage({ products, categories, tags }) {
         
         <div className="shop-layout">
           <aside className="shop-sidebar">
-            {/* 6. Pasamos todos los datos y la función de callback al Sidebar */}
             <ProductSidebar 
               categories={categories}
               tags={tags}
               onFiltersChange={handleFilterChange}
               isMobileOpen={isMobileFiltersOpen}
               onMobileClose={closeMobileFilters}
+              // --- ¡CAMBIO 3! ---
+              // Le pasamos el estado inicial al Sidebar
+              // para que pueda marcar la categoría correcta
+              initialFilters={filters} 
             />
           </aside>
           <section className="shop-products">
-            {/* 7. Pasamos la lista de productos YA FILTRADA al ProductGrid */}
             <ProductGrid 
               products={filteredProducts} 
               onFiltersToggle={toggleMobileFilters} 

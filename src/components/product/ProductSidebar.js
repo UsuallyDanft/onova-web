@@ -1,3 +1,4 @@
+// src/components/product/ProductSidebar.js
 'use client';
 
 import { useState } from 'react';
@@ -5,18 +6,20 @@ import { Range } from 'react-range';
 import { ChevronDown, X } from 'lucide-react';
 import './ProductSidebar.css';
 
+// --- ACEPTA LA PROP 'initialFilters' ---
 export default function ProductSidebar({ 
   onFiltersChange, 
   isMobileOpen, 
   onMobileClose, 
   categories = [], 
-  tags = [] 
+  tags = [],
+  initialFilters 
 }) {
-  // Estado local para controlar los valores de los inputs del sidebar
-  const [priceRange, setPriceRange] = useState([1, 10000]);
-  const [category, setCategory] = useState('Todos');
-  const [sortOrder, setSortOrder] = useState('Por precio');
-  const [tag, setTag] = useState('Ninguno');
+  // USA 'initialFilters' PARA INICIALIZAR LOS ESTADOS ---
+  const [priceRange, setPriceRange] = useState(initialFilters?.priceRange || [1, 10000]);
+  const [category, setCategory] = useState(initialFilters?.category || 'Todos');
+  const [sortOrder, setSortOrder] = useState(initialFilters?.sortOrder || 'Por precio');
+  const [tag, setTag] = useState(initialFilters?.tag || 'Ninguno');
 
   // Opciones estáticas para el dropdown de orden
   const sortOptions = ['Por precio', 'Menor precio', 'Mayor precio', 'Más popular (en desarrollo)', 'Más reciente', 'Mejor valorados (en desarrollo)'];
@@ -99,7 +102,7 @@ export default function ProductSidebar({
             className="select-input"
           >
             <option value="Todos">Todos</option>
-            {categories.map(cat => (
+            {categories.filter(cat => cat && cat.name).map(cat => (
               <option key={cat.id} value={cat.name}>{cat.name}</option>
             ))}
           </select>

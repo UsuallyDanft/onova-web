@@ -1,16 +1,16 @@
-// [MODIFICADO] src/components/shop/CategoryGrid.js
+// src/components/shop/CategoryGrid.js
 import CategoryCard from "@/components/category/CategoryCard";
-import "./CategoryGrid.css"; // Importamos el CSS para el grid
+import "./CategoryGrid.css";
 
 export default function CategoryGrid({ categories }) {
-  // Verificamos si hay categorías para mostrar
+  // verifica si hay categorías para mostrar
   if (!categories || categories.length === 0) {
     return <p>No hay categorías disponibles.</p>;
   }
 
   return (
     <div className="category-grid">
-      {/* Mapeamos las categorías y renderizamos una Card por cada una */}
+      {/* Mapea las categorías y renderizamos una Card por cada una */}
       {categories.map(category => (
         <CategoryCard key={category.id} category={category} />
       ))}
