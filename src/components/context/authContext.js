@@ -4,7 +4,6 @@ import React, { createContext, useContext, useReducer, useEffect } from 'react';
 
 const initialState = {
   user: null,
-  jwt: null,
   isAuthenticated: false,
   isLoading: true,
 };
@@ -22,7 +21,6 @@ const authReducer = (state, action) => {
       return {
         ...state,
         user: action.payload.user,
-        jwt: action.payload.jwt,
         isAuthenticated: true,
         isLoading: false,
       };
@@ -31,7 +29,6 @@ const authReducer = (state, action) => {
       return {
         ...state,
         user: null,
-        jwt: null,
         isAuthenticated: false,
         isLoading: false,
       };
@@ -67,16 +64,15 @@ export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
-    const loadSession = () => {
+    const loadSession = async () => {
       try {
-        const jwt = localStorage.getItem('jwt');
-        const userStr = localStorage.getItem('user');
+        const response = await fetch('/api/auth/me');
+        const data = await response.json();
         
-        if (jwt && userStr) {
-          const user = JSON.parse(userStr);
+        if (response.ok && data.user) {
           dispatch({
             type: AUTH_ACTIONS.LOGIN,
-            payload: { user, jwt },
+            payload: { user: data.user },
           });
         } else {
           dispatch({ type: AUTH_ACTIONS.SET_LOADING, payload: false });
@@ -90,28 +86,72 @@ export const AuthProvider = ({ children }) => {
     loadSession();
   }, []);
 
-  const login = (user, jwt) => {
-    localStorage.setItem('jwt', jwt);
-    localStorage.setItem('user', JSON.stringify(user));
-    dispatch({
-      type: AUTH_ACTIONS.LOGIN,
-      payload: { user, jwt },
-    });
+  const login = async (identifier, password) => {
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ identifier, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        dispatch({
+          type: AUTH_ACTIONS.LOGIN,
+          payload: { user: data.user },
+        });
+        return { success: true, user: data.user };
+      } else {
+        return { success: false, error: data.error };
+      }
+    } catch (error) {
+      console.error('Error en login:', error);
+      return { success: false, error: 'Error de conexión' };
+    }
   };
 
-  const logout = () => {
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('user');
-    dispatch({ type: AUTH_ACTIONS.LOGOUT });
+  const logout = async () => {
+    try {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+      });
+    } catch (error) {
+      console.error('Error en logout:', error);
+    } finally {
+      dispatch({ type: AUTH_ACTIONS.LOGOUT });
+    }
   };
 
   const updateUser = (userData) => {
     const updatedUser = { ...state.user, ...userData };
-    localStorage.setItem('user', JSON.stringify(updatedUser));
     dispatch({
       type: AUTH_ACTIONS.UPDATE_USER,
       payload: updatedUser,
     });
+  };
+
+  const refreshSession = async () => {
+    try {
+      const response = await fetch('/api/auth/me');
+      const data = await response.json();
+      
+      if (response.ok && data.user) {
+        dispatch({
+          type: AUTH_ACTIONS.LOGIN,
+          payload: { user: data.user },
+        });
+        return { success: true, user: data.user };
+      } else {
+        dispatch({ type: AUTH_ACTIONS.LOGOUT });
+        return { success: false };
+      }
+    } catch (error) {
+      console.error('Error al refrescar la sesión:', error);
+      return { success: false };
+    }
   };
 
   const value = {
@@ -119,6 +159,7 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     updateUser,
+    refreshSession,
   };
 
   return (

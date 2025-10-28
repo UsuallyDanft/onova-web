@@ -1,15 +1,19 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { X, Trash2, Plus, Minus, ShoppingCart } from 'lucide-react';
 import { useCart } from '@/components/context/cartContext';
+import { useAuth } from '@/components/context/authContext';
 import { useRouter } from 'next/navigation';
+import AuthTooltip from '../ui/AuthTooltip';
 import './cartModal.css';
 
 const CartModal = ({ isOpen, onClose }) => {
   const { items, total, itemCount, removeFromCart, updateQuantity, clearCart } = useCart();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
+  const [showAuthTooltip, setShowAuthTooltip] = useState(false);
 
   if (!isOpen) return null;
 
@@ -23,6 +27,13 @@ const CartModal = ({ isOpen, onClose }) => {
   };
 
   const handleCheckout = () => {
+    if (!isAuthenticated) {
+      setShowAuthTooltip(true);
+      setTimeout(() => {
+        setShowAuthTooltip(false);
+      }, 3000);
+      return;
+    }
     router.push('/shop/checkout');
     onClose();
   };
@@ -96,13 +107,26 @@ const CartModal = ({ isOpen, onClose }) => {
                 </div>
                 <div className="cart-actions">
                   <button onClick={onClose} className="continue-shopping-btn">Seguir comprando</button>
-                  <button onClick={handleCheckout} className="checkout-btn">Proceder al pago</button>
+                  <button 
+                    onClick={handleCheckout} 
+                    className="checkout-btn"
+                    title={!isAuthenticated ? 'Inicia sesión para proceder al pago' : ''}
+                  >
+                    Proceder al pago
+                  </button>
                 </div>
               </div>
             </>
           )}
         </div>
       </div>
+      <AuthTooltip 
+        isOpen={showAuthTooltip} 
+        onClose={() => {
+          setShowAuthTooltip(false);
+          onClose(); // Cerrar también el modal del carrito
+        }} 
+      />
     </div>
   );
 };

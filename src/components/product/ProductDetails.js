@@ -3,8 +3,9 @@
 import React, { useMemo, useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Heart, ChevronLeft, ChevronRight, Plus, Minus, Trash2, ChevronDown } from 'lucide-react';
+import { Heart, ChevronLeft, ChevronRight, Plus, Minus, Trash2, ChevronDown, Lock } from 'lucide-react';
 import { useCart } from '@/components/context/cartContext';
+import { useAuth } from '@/components/context/authContext';
 import './ProductDetails.css';
 import Twemoji from 'react-twemoji';
 import Lightbox from "yet-another-react-lightbox";
@@ -12,6 +13,7 @@ import "yet-another-react-lightbox/styles.css";
 
 // Componente híbrido de tooltip
 import Tooltip from '../ui/Tooltip';
+import AuthTooltip from '../ui/AuthTooltip';
 import BlockRenderer from './BlockRenderer';
 
 const THUMBNAILS_VISIBLE = 5;
@@ -20,6 +22,7 @@ const THUMB_GAP = 12;
 
 export default function ProductDetails({ product }) {
   const { addToCart, getItemQuantity, updateQuantity, removeFromCart } = useCart();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
   const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL?.replace('/api', '');
 
@@ -55,6 +58,7 @@ export default function ProductDetails({ product }) {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [isLongDescOpen, setIsLongDescOpen] = useState(false);
   const [showBuyNowTooltip, setShowBuyNowTooltip] = useState(false);
+  const [showAuthTooltip, setShowAuthTooltip] = useState(false);
 
   const contentWrapperRef = useRef(null);
 
@@ -89,6 +93,14 @@ export default function ProductDetails({ product }) {
   };
 
   const handleBuyNow = () => {
+    if (!isAuthenticated) {
+      setShowAuthTooltip(true);
+      setTimeout(() => {
+        setShowAuthTooltip(false);
+      }, 3000);
+      return;
+    }
+
     if (quantityInCart === 0) {
       setShowBuyNowTooltip(true);
       setTimeout(() => {
@@ -186,6 +198,10 @@ export default function ProductDetails({ product }) {
         )}
       </main>
       <Lightbox open={isLightboxOpen} close={() => setIsLightboxOpen(false)} slides={lightboxSlides} index={currentImage}/>
+      <AuthTooltip 
+        isOpen={showAuthTooltip} 
+        onClose={() => setShowAuthTooltip(false)} 
+      />
     </>
   );
 }

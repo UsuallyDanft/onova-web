@@ -27,16 +27,16 @@ export default function UserMenu() {
     };
   }, [isOpen]);
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     setIsOpen(false);
     window.location.href = '/';
   };
 
   if (isLoading) {
     return (
-      <div className="user-menu-skeleton">
-        <div className="skeleton-avatar"></div>
+      <div className="user-menu-spinner-container">
+        <div className="user-menu-spinner"></div>
       </div>
     );
   }
@@ -104,14 +104,16 @@ export default function UserMenu() {
           </nav>
 
           <div className="user-menu-divider"></div>
-
-          <button 
-            className="user-menu-item logout-button"
-            onClick={handleLogout}
-          >
-            <LogOut size={18} />
-            <span>Cerrar Sesión</span>
-          </button>
+          
+          <div className="logout-button-container">
+            <button 
+              className="user-menu-item logout-button"
+              onClick={handleLogout}
+            >
+              <LogOut size={18} />
+              <span>Cerrar Sesión</span>
+            </button>
+          </div>
         </div>
       )}
     </div>

@@ -2,10 +2,11 @@
 
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { LogIn, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { LogIn, Mail, Lock, Eye, EyeOff, X } from 'lucide-react';
+import { useAuth } from '@/components/context/authContext';
 import './LoginPage.css';
 
 export default function LoginPage() {
@@ -14,31 +15,48 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const router = useRouter();
-  const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
+  const searchParams = useSearchParams();
+  const { login, isAuthenticated } = useAuth();
+
+  // Redirigir si ya está autenticado
+  useEffect(() => {
+    if (isAuthenticated) {
+      const redirectTo = searchParams.get('redirect') || '/';
+      router.push(redirectTo);
+    }
+  }, [isAuthenticated, router, searchParams]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleGoBack = () => {
+    // Si hay un parámetro redirect, volver a esa página
+    const redirectTo = searchParams.get('redirect');
+    if (redirectTo) {
+      router.push(redirectTo);
+    } else {
+      // Si no hay redirect, volver a la página anterior en el historial
+      router.back();
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    
     try {
-      const response = await fetch(`${STRAPI_URL}/api/auth/local`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.error?.message || 'Credenciales incorrectas.');
+      const result = await login(formData.identifier, formData.password);
+      
+      if (result.success) {
+        const redirectTo = searchParams.get('redirect') || '/';
+        router.push(redirectTo);
+      } else {
+        setError(result.error);
       }
-      localStorage.setItem('jwt', data.jwt);
-      localStorage.setItem('user', JSON.stringify(data.user));
-      window.location.href = '/';
     } catch (err) {
-      setError(err.message);
+      setError('Error de conexión. Inténtalo de nuevo.');
     } finally {
       setLoading(false);
     }
@@ -47,6 +65,14 @@ export default function LoginPage() {
   return (
     <main className="login-page">
       <div className="login-container">
+        <button 
+          className="close-button"
+          onClick={handleGoBack}
+          title="Volver a la página anterior"
+        >
+          <X size={20} />
+        </button>
+        
         <div className="login-header">
           <h1 className="welcome-title">Bienvenido de Nuevo</h1>
           <p className="welcome-subtitle">Inicia sesión para continuar</p>
